@@ -26,30 +26,30 @@ DNS's choice of transport protocol matters for how it behaves on the network:
 
 - TCP focuses on accuracy and reliable delivery, while UDP trades away those checks to maximize raw speed.
   
-
 ---
 
-## Task 1 — What is DNS?
+## Task 1: What is DNS?
 
 DNS, which stands for Domain Name System, is an application-layer protocol that runs on port 53 and primarily uses UDP for speed, falling back to TCP for large data transfers. It translates human-readable domain names into machine-readable IP addresses and vice versa, allowing network devices to locate and route traffic to internet resources. 
 
 **Q: What does DNS stand for?**
+
 A: Domain Name System
 
 ---
 
-## Task 2 — Domain Hierarchy
+## Task 2: Domain Hierarchy
 
 DNS names are structured as a hierarchy, read right to left in terms of authority:
 
 | Component | Definition | Example |
 |---|---|---|
 | **Root Domain** | The unnamed top of the DNS tree, represented by `.` | `.` |
-| **TLD (Top-Level Domain)** | Rightmost label of a domain. Split into **gTLD** (generic — `.com`, `.org`, `.edu`, `.gov`, historically purpose-based) and **ccTLD** (country code — `.ca`, `.co.uk`, geography-based) | `.com` |
+| **TLD (Top-Level Domain)** | Rightmost label of a domain. Split into **gTLD** (generic - `.com`, `.org`, `.edu`, `.gov`, historically purpose-based) and **ccTLD** (country code - `.ca`, `.co.uk`, geography-based) | `.com` |
 | **Second-Level Domain** | Sits directly left of the TLD. Max 63 characters + TLD; only `a-z`, `0-9`, hyphens (no leading/trailing or consecutive hyphens) | `tryhackme` in `tryhackme.com` |
 | **Subdomain** | Sits left of the second-level domain, separated by a period. Same character/length rules as second-level domains (63 chars max per label); unlimited number of subdomains allowed, but full domain name capped at 253 characters | `admin` in `admin.tryhackme.com` |
 
-**Diagram — domain hierarchy tree:**
+**Diagram: domain hierarchy tree:**
 
 ```mermaid
 graph TD
@@ -75,7 +75,7 @@ graph TD
 
 ---
 
-## Task 3 — Record Types
+## Task 3: Record Types
 
 | Record | Resolves to | Example |
 |---|---|---|
@@ -91,14 +91,18 @@ graph TD
 
 ---
 
-## Task 4 — Making a Request (DNS Resolution Process)
+## Task 4: Making a Request (DNS Resolution Process)
 
 ### The DNS server hierarchy
 
-- **Recursive DNS Server**: Usually run by your ISP (or a chosen alternative like `1.1.1.1` / `8.8.8.8`). Acts on the client's behalf, doing the legwork of querying other servers and caching results locally. If it has already cached the answer, it returns it immediately — no further lookup needed.
-- **Root DNS Server**: The top of the DNS hierarchy. Doesn't know the final IP — its job is to point the recursive resolver to the correct **TLD server** based on the domain's TLD (e.g. `.com`).
-- **TLD Server**: Holds records pointing to the **authoritative (nameserver)** responsible for a given domain within that TLD.
-- **Authoritative DNS Server (Nameserver)**: The source of truth for a domain's DNS records. This is where any DNS record updates are actually made. Domains typically have multiple nameservers for redundancy.
+- **Recursive DNS Server**: This is the "middleman" that does the searching for you. Usually run by your internet provider (or one you pick yourself, like `1.1.1.1`). When you ask for a website, this server checks if it already knows the answer from a recent search(it checks its local cache). If it does, it answers right away. If not, it goes and finds out for you.
+
+- **Root DNS Server**: Think of this as the starting point of every search. It doesn't know the actual answer, but it knows which direction to send you based on the ending of the domain (like `.com` or `.gov`). (DNS backbone of the internet. It recognizes the TLD of .com(example) and gives the correct TLD server that deals with .com addresses)
+
+- **TLD Server**: This server knows which specific server is actually in charge of a domain. It doesn't have the final answer either; it just tells you exactly where to go next to get it.
+
+- **Authoritative DNS Server (Nameserver)**: This is the final stop. The server that actually owns and stores the real answer for a domain. Any changes to a domain's DNS info happen here first. Most domains have more than one of these as a backup, in case one goes down. (Stores DNS records for particular domain names)
+
 
 ### Resolution flow
 
