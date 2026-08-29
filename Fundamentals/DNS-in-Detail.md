@@ -127,6 +127,17 @@ sequenceDiagram
 Easier to remember:
 
 
+```mermaid
+graph TD
+    A[Request domain name] --> B[Computer checks local cache]
+    B -->|Found in cache| Z[Request ends here]
+    B -->|Not found| C[Request sent to Recursive DNS Server]
+    C -->|Found locally| Z
+    C -->|Not found — journey begins| D[Root DNS Server<br/>DNS backbone of the internet]
+    D -->|Recognizes TLD, e.g. .com| E[Correct TLD Server<br/>for .com addresses]
+    E --> F[Authoritative DNS Server<br/>stores records for the domain]
+    F --> Z
+```
 
 
 
