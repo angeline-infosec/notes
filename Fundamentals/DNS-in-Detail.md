@@ -124,7 +124,13 @@ sequenceDiagram
     Recursive-->>Client: 5. Returns answer (caches it locally)
 ```
 
-**TTL (Time To Live)**: every DNS record includes a TTL value, in seconds, specifying how long the record can be cached before it must be looked up again. This is what makes caching — and the "cache hit" shortcut at step 2 — possible, reducing repeated lookups for popular domains.
+Easier to remember:
+
+
+
+
+
+**TTL (Time To Live)**: every DNS record includes a TTL value, in seconds, specifying how long the record can be cached before it must be looked up again. This is what makes caching and the "cache hit" shortcut at step 2 possible, reducing repeated lookups for popular domains.
 
 **Q&A**
 - What field specifies how long a DNS record should be cached for? **TTL**
@@ -133,7 +139,7 @@ sequenceDiagram
 
 ---
 
-## Task 5 — Practical
+## Task 5: Practical
 
 **Q&A**
 - CNAME of `shop.website.thm`: **shops.myshopify.com**
