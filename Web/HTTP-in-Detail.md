@@ -8,7 +8,7 @@ Before getting into the topic itself, a few underlying concepts will make the re
 
 ---
 
-## Task 1 — What is HTTP(S)?
+## Task 1: What is HTTP(S)?
 
 **HTTP (HyperText Transfer Protocol)** is the foundational application-layer protocol used to transfer data across the World Wide Web — HTML, images, videos, API responses, and more. It was developed by Tim Berners-Lee and his team between 1989–1991.
 
@@ -43,7 +43,7 @@ A **server** is hardware/software that processes requests from clients and retur
 
 ---
 
-## Task 2 — Requests and Responses
+## Task 2: Requests and Responses
 
 ### URLs (Uniform Resource Locator)
 A URL tells the browser exactly how and where to find a resource. Breaking down `http://user:password@tryhackme.com:80/view-room?id=1#task3`:
@@ -96,7 +96,7 @@ Content-Length: 98
 
 ---
 
-## Task 3 — HTTP Methods
+## Task 3: HTTP Methods
 
 HTTP methods are standardized actions a client uses to tell the server what it wants to do with a resource. The four you'll use constantly:
 
@@ -115,7 +115,7 @@ HTTP methods are standardized actions a client uses to tell the server what it w
 
 ---
 
-## Task 4 — HTTP Status Codes
+## Task 4: HTTP Status Codes
 
 Status codes are returned in the first line of every response and fall into five ranges:
 
@@ -153,7 +153,7 @@ Status codes are returned in the first line of every response and fall into five
 
 ---
 
-## Task 5 — Headers
+## Task 5: Headers
 
 Headers carry extra metadata alongside a request or response. None are strictly *required*, but without them a website won't function or render properly.
 
@@ -183,7 +183,7 @@ Headers carry extra metadata alongside a request or response. None are strictly 
 
 ---
 
-## Task 6 — Cookies
+## Task 6: Cookies
 
 Because HTTP is **stateless**, the server has no built-in memory of who you are between requests. Cookies solve this: small pieces of data the server asks your browser to store (via `Set-Cookie`), which your browser then sends back automatically on every subsequent request (via the `Cookie` header). This is how a site "remembers" you're logged in, your preferences, or that you've visited before.
 
@@ -209,7 +209,7 @@ Cookie values used for authentication are typically not plain-text passwords but
 
 ---
 
-## Task 7 — Making Requests (Practical)
+## Task 7: Making Requests (Practical)
 
 | Action | Result / Flag |
 |---|---|
