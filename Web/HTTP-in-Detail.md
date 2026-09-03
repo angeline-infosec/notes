@@ -4,5 +4,5 @@ _Learn about how you request content from a web server using the HTTP protocol_
 
 ## Background Concepts
 
-Before getting into the topic itself, a few underlying concepts make the rest of this easier to follow.
+Before getting into the topic itself, a few underlying concepts will make the rest easier to follow.
 
