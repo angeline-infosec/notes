@@ -6,5 +6,3 @@ _Learn about how you request content from a web server using the HTTP protocol_
 
 Before getting into the topic itself, a few underlying concepts will make the rest easier to follow.
 
-
-oooppp
