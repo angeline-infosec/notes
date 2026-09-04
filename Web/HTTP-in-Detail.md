@@ -275,6 +275,12 @@ Cookie values used for authentication are typically not plain-text passwords but
 
 **A note on privacy**: cookies are a meaningful contributor to your *passive* online data trail - sites can track behavior across visits (and sometimes across other sites, via third-party cookies) without you actively providing information each time.
 
+
+<img width="784" height="800" alt="image" src="https://github.com/user-attachments/assets/ac5e030a-7eb9-4237-8d4b-51482c7924eb" />
+
+
+
+
 **Q&A**
 - Header used to save cookies to your computer: **Set-Cookie**
 
