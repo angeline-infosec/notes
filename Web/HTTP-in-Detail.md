@@ -208,9 +208,12 @@ When an HTTP server responds, the first line always contains a status code (200 
 
 ## Task 5: Headers
 
-Headers carry extra metadata alongside a request or response. None are strictly *required*, but without them a website won't function or render properly.
+Headers are additional bits of data you can send to the web server when making requests.
+Although no headers are strictly required when making an HTTP request, you’ll find it difficult to view a website properly.
 
 **Common request headers (client → server):**
+
+﻿These are headers that are sent from the client (usually your browser) to the server.
 
 | Header | Purpose |
 |---|---|
@@ -218,13 +221,17 @@ Headers carry extra metadata alongside a request or response. None are strictly 
 | `User-Agent` | Browser/software + version, so the server can format content appropriately |
 | `Content-Length` | Size of the data being sent (e.g. a form submission) |
 | `Accept-Encoding` | Compression methods the client supports |
-| `Cookie` | Data sent back to help the server "remember" the client (see Task 6) |
+| `Cookie` | Data sent back to help the server "remember" the client |
+
+Cookie: Data sent to the server to help remember your information (see cookies task for more information).
 
 **Common response headers (server → client):**
 
+These are the headers that are returned to the client (usually your browser) from the server after a request.
+
 | Header | Purpose |
 |---|---|
-| `Set-Cookie` | Instructs the client to store data, sent back on future requests |
+| `Set-Cookie` | Information to store that gets sent back to the web server on each request  |
 | `Cache-Control` | How long to cache this content before re-requesting |
 | `Content-Type` | What kind of data is being returned (HTML, JSON, image, etc.) |
 | `Content-Encoding` | Compression method used on the response body |
@@ -238,7 +245,9 @@ Headers carry extra metadata alongside a request or response. None are strictly 
 
 ## Task 6: Cookies
 
-Because HTTP is **stateless**, the server has no built-in memory of who you are between requests. Cookies solve this: small pieces of data the server asks your browser to store (via `Set-Cookie`), which your browser then sends back automatically on every subsequent request (via the `Cookie` header). This is how a site "remembers" you're logged in, your preferences, or that you've visited before.
+Because HTTP is a **stateless** protocol, each request is handled independently. The server doesn't inherently remember previous requests from the same client. Cookies solve this: small pieces of data the server asks your browser to store (via `Set-Cookie`), which your browser then sends back automatically on every subsequent request (via the `Cookie` header). This is how a site "remembers" you're logged in, your preferences, or that you've visited before.
+
+Cookies are a major part of your digital footprint, specifically contributing to your passive online data trail
 
 ```mermaid
 sequenceDiagram
@@ -253,9 +262,18 @@ sequenceDiagram
     Server-->>Client: 200 OK — "Welcome back, adam"
 ```
 
-Cookie values used for authentication are typically not plain-text passwords but **tokens** — random, hard-to-guess secret strings that identify a session.
+1. **First visit**: Client sends a `GET /` request — no cookie exists yet, since this is a new visit.
+2. Server has no idea who this is, so it responds with a webpage containing a form asking for a name.
+3. Client fills in the form and sends it back as a `POST /` request with `name=adam`.
+4. Server saves that data and replies with a `Set-Cookie: name=adam` header — instructing the browser to store this.
+5. On the *next* request, the client automatically attaches that stored cookie: `GET /` with `Cookie: name=adam`.
+6. Server sees the cookie, recognizes the returning visitor, and skips the form — responding directly with "Welcome back, adam."
 
-**A note on privacy**: cookies are a meaningful contributor to your *passive* online data trail — sites can track behavior across visits (and sometimes across other sites, via third-party cookies) without you actively providing information each time.
+The core point it illustrates: HTTP itself has no memory between requests (steps 1–2 prove that the server doesn't recognize the client at all). The cookie set in step 4 is what lets step 6 "remember" who's asking, even though every request is technically independent.
+
+Cookie values used for authentication are typically not plain-text passwords but **tokens**, random hard-to-guess secret strings that identify a session.
+
+**A note on privacy**: cookies are a meaningful contributor to your *passive* online data trail - sites can track behavior across visits (and sometimes across other sites, via third-party cookies) without you actively providing information each time.
 
 **Q&A**
 - Header used to save cookies to your computer: **Set-Cookie**
