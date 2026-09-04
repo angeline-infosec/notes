@@ -2,12 +2,6 @@
 _Learn about how you request content from a web server using the HTTP protocol_
 
 
-## Background Concepts
-
-Before getting into the topic itself, a few underlying concepts will make the rest easier to follow.
-
----
-
 ## Task 1: What is HTTP(S)?
 
 **HTTP (HyperText Transfer Protocol)** is the foundational application-layer protocol used to transfer data across the World Wide Web — HTML, images, videos, API responses, and more. It was developed by Tim Berners-Lee and his team between 1989–1991.
