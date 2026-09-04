@@ -4,18 +4,42 @@ _Learn about how you request content from a web server using the HTTP protocol_
 
 ## Task 1: What is HTTP(S)?
 
-**HTTP (HyperText Transfer Protocol)** is the foundational application-layer protocol used to transfer data across the World Wide Web — HTML, images, videos, API responses, and more. It was developed by Tim Berners-Lee and his team between 1989–1991.
+### **HTTP (HyperText Transfer Protocol)** 
+
+HTTP stands for Hypertext Transfer Protocol. It is the foundational application-layer protocol used to transfer all types of data across the World Wide Web (HTML, images, videos, API responses, and more). It was developed by Tim Berners-Lee and his team between 1989–1991.
 
 **Key features of HTTP:**
 - **Client-Server Model**: A client (usually your browser) sends a request; a web server sends back a response.
-- **Stateless Protocol**: Each request is handled independently — the server doesn't inherently remember previous requests from the same client. (This is exactly why cookies exist — see Task 6.)
-- **Data Delivery**: HTTP fetches all kinds of resources, including data from **APIs (Application Programming Interfaces)** — structured data (often JSON or XML) that applications exchange with each other, as opposed to a full rendered webpage for a human to view.
+- **Stateless Protocol**: Each request is handled independently. The server doesn't inherently remember previous requests from the same client. (This is exactly why cookies exist)
+- **Data Delivery**: HTTP fetches all kinds of resources like HTML documents, images, videos, and including data from APIs - structured data (often JSON or XML) that applications exchange with each other, as opposed to a full rendered webpage for a human to view.
 
-**HTTPS (HyperText Transfer Protocol Secure)** is HTTP layered with encryption via **SSL/TLS**. It provides two things HTTP alone doesn't:
-1. **Confidentiality** — data in transit is encrypted, so it can't be read if intercepted.
-2. **Authentication** — a certificate confirms you're actually talking to the real server, not an impersonator.
+**API (Application Programming Interface)**: A set of rules and definitions that lets different software systems communicate with each other — what requests can be made, what data format to send/expect, and what responses will look like. It's essentially a contract between two pieces of software, rather than between a human and an interface.
 
-> **Important nuance**: HTTPS being "secure" only means the *connection* is encrypted and the server's identity is verified. It does **not** make a website immune to attacks — vulnerabilities like SQL injection, XSS, weak authentication, or a misconfigured/expired certificate can all still exist on a site served over HTTPS. Encryption in transit ≠ a secure application.
+An analogy about how this interaction happens: 
+API = a waiter in a restaurant.
+
+You (the client/app) don't walk into the kitchen (the server) and cook your own food. You tell the waiter (the API) what you want from the menu. The waiter takes your order to the kitchen using a specific format the kitchen understands, and brings back exactly what you asked for.
+
+* You never see how the kitchen actually works; you just interact through the waiter.
+* The menu is like the API's documentation: it tells you what you're allowed to ask for.
+* If you ask for something not on the menu (a malformed request), the waiter comes back with "sorry, we don't have that," and that's your 400/404 error.
+
+### **HTTPS (HyperText Transfer Protocol Secure)** 
+
+HTTPS stands for HyperText Transfer Protocol Secure. It is the secure version of HTTP. HTTPS data is encrypted so it not only stops people from seeing the data you are receiving and sending, but it also gives you assurances that you're talking to the correct web server and not something impersonating it.
+
+It provides two things HTTP alone doesn't:
+1. **Confidentiality**: data in transit is encrypted, so it can't be read if intercepted.
+2. **Authentication**: a certificate confirms you're actually talking to the real server, not an impersonator.
+
+
+### HTTP vs. HTTPS
+
+HTTP: Data is sent in plain text, making it vulnerable to interception.
+
+HTTPS: The secure version of HTTP. It uses encryption (SSL/TLS) to protect sensitive data. 
+
+> **Important nuance**: HTTPS being "secure" only means the *connection* is encrypted and the server's identity is verified. It does **not** make a website immune to attacks. Vulnerabilities like SQL injection, XSS, weak authentication, or a misconfigured/expired certificate can all still exist on a site served over HTTPS. Encryption in transit ≠ a secure application.
 
 ### A note on SSL/TLS and where they actually sit
 SSL/TLS are often loosely called "transport layer" protocols, but that's not quite accurate in the OSI model sense — they don't replace TCP. Instead, they sit **between the application layer and the transport layer**: your HTTP data gets encrypted by TLS first, then handed down to TCP for actual delivery. TLS is the modern, secure successor to the older (now deprecated) SSL protocol.
