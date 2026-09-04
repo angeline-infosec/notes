@@ -41,11 +41,15 @@ HTTPS: The secure version of HTTP. It uses encryption (SSL/TLS) to protect sensi
 
 > **Important nuance**: HTTPS being "secure" only means the *connection* is encrypted and the server's identity is verified. It does **not** make a website immune to attacks. Vulnerabilities like SQL injection, XSS, weak authentication, or a misconfigured/expired certificate can all still exist on a site served over HTTPS. Encryption in transit ≠ a secure application.
 
-### A note on SSL/TLS and where they actually sit
-SSL/TLS are often loosely called "transport layer" protocols, but that's not quite accurate in the OSI model sense — they don't replace TCP. Instead, they sit **between the application layer and the transport layer**: your HTTP data gets encrypted by TLS first, then handed down to TCP for actual delivery. TLS is the modern, secure successor to the older (now deprecated) SSL protocol.
+### A note on SSL/TLS and where they actually sit:
 
-### Servers — the other half of the conversation
-A **server** is hardware/software that processes requests from clients and returns data, resources, or services over a network. Common types:
+SSL stands for **Secure Sockets Layer**, and **TLS stands for Transport Layer Security**.
+SSL/TLS are often loosely called "transport layer" protocols, but that's not quite accurate in the OSI model sense; they don't replace TCP. Instead, they sit **between the application layer and the transport layer**: your HTTP data gets encrypted by TLS first, then handed down to TCP for actual delivery. TLS is the modern, secure successor to the older (now deprecated) SSL protocol. (SSL and TLS are not the exact same thing, though they do the same job. TLS is the modern, upgraded, and secure successor to SSL. While people still use the term "SSL" out of habit, true SSL is old, broken, and no longer used on the web)
+
+### Servers
+A **server** is hardware/software system that processes requests from clients (browser) and returns data, resources, or services over a network. 
+
+Common types:
 
 | Server Type | Purpose |
 |---|---|
