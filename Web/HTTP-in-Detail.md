@@ -262,12 +262,12 @@ sequenceDiagram
     Server-->>Client: 200 OK — "Welcome back, adam"
 ```
 
-1. **First visit**: Client sends a `GET /` request — no cookie exists yet, since this is a new visit.
+1. **First visit**: Client sends a `GET /` request; no cookie exists yet, since this is a new visit.
 2. Server has no idea who this is, so it responds with a webpage containing a form asking for a name.
 3. Client fills in the form and sends it back as a `POST /` request with `name=adam`.
-4. Server saves that data and replies with a `Set-Cookie: name=adam` header — instructing the browser to store this.
+4. Server saves that data and replies with a `Set-Cookie: name=adam` header, instructing the browser to store this.
 5. On the *next* request, the client automatically attaches that stored cookie: `GET /` with `Cookie: name=adam`.
-6. Server sees the cookie, recognizes the returning visitor, and skips the form — responding directly with "Welcome back, adam."
+6. Server sees the cookie, recognizes the returning visitor, and skips the form, responding directly with "Welcome back, adam."
 
 The core point it illustrates: HTTP itself has no memory between requests (steps 1–2 prove that the server doesn't recognize the client at all). The cookie set in step 4 is what lets step 6 "remember" who's asking, even though every request is technically independent.
 
