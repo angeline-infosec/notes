@@ -67,21 +67,50 @@ Common types:
 
 ## Task 2: Requests and Responses
 
+When we access a website, your browser will need to make requests to a web server for assets such as HTML, Images, and download the responses. Before that, you need to tell the browser specifically how and where to access these resources, this is where URLs will help.
+
 ### URLs (Uniform Resource Locator)
-A URL tells the browser exactly how and where to find a resource. Breaking down `http://user:password@tryhackme.com:80/view-room?id=1#task3`:
+
+A URL tells the browser exactly how and where to find a resource. 
+
+ie, If I want to access a [website], I need to make a [request] from the [web browser] (client) to the [web server] for data/resources like HTML, images, files, etc to get back the response. And for this to work immediately and efficiently, we need to know the location of the resource that we're trying to access. That is where URL comes to play. 
+
+```mermaid
+flowchart TD
+    subgraph Client["🖥️ Web Browser (Client)"]
+        A[Want to access a website]
+    end
+
+    A --> B[["Build a Request"]]
+    URL[/"URL tells the request<br/>WHERE the resource is<br/>(scheme, host, path, etc.)"/] -.provides location.-> B
+
+    B -->|sends request| C
+
+    subgraph Server["🌐 Web Server"]
+        C[Receives request] --> D[Prepares response:<br/>HTML, images, files, etc.]
+    end
+
+    D -->|sends response| E[Browser receives data<br/>and displays the page]
+```
+---
+
+Breaking down `http://user:password@tryhackme.com:80/view-room?id=1#task3`:
+
+<img width="1140" height="270" alt="image" src="https://github.com/user-attachments/assets/2751ea85-286e-4d84-8044-df6c257b5bf4" />
+
 
 | Component | Meaning | From example |
 |---|---|---|
 | **Scheme** | Protocol to use (HTTP, HTTPS, FTP) | `http` |
 | **User** | Optional credentials embedded in the URL | `user:password` |
-| **Host/Domain** | Domain name or IP of the server | `tryhackme.com` |
+| **Host/Domain** | Domain name or IP of the server you wish to access | `tryhackme.com` |
 | **Port** | Port to connect on (default 80 for HTTP, 443 for HTTPS; can technically be 1–65535) | `80` |
-| **Path** | Location/file being requested | `/view-room` |
+| **Path** | Location/file name of the resource you are trying to access. | `/view-room` |
 | **Query String** | Extra parameters sent to the path | `?id=1` |
 | **Fragment** | Jumps to a specific section of the loaded page | `#task3` |
 
 ### Anatomy of a request
-A minimal request can be a single line: `GET / HTTP/1.1` — meaning "retrieve the resource at the root path, using HTTP version 1.1." In practice, requests carry additional **headers** for context (covered fully in Task 5).
+A minimal request can be a single line: `GET / HTTP/1.1`, meaning "retrieve the resource at the root path, using HTTP version 1.1." In practice, requests carry additional **headers** for context (covered fully in Task 5).
 
 ```http
 GET / HTTP/1.1
@@ -105,7 +134,7 @@ Content-Length: 98
 
 <html>...</html>
 ```
-- Line 1: HTTP version + **status code** (`200 OK` = success — see Task 4)
+- Line 1: HTTP version + **status code** (`200 OK` = success)
 - Line 2: Server software/version
 - Line 3: Server's current date/time
 - Line 4: Type of content being returned
@@ -120,14 +149,16 @@ Content-Length: 98
 
 ## Task 3: HTTP Methods
 
-HTTP methods are standardized actions a client uses to tell the server what it wants to do with a resource. The four you'll use constantly:
+HTTP methods are Standardized actions that a client (like your web browser) uses to tell a web server what it wants to do with a specific resource.
+
+HTTP methods are a way for the client to show their intended action when making an HTTP request. There are a lot of HTTP methods but we'll cover the most common ones, although mostly you'll deal with the GET and POST methods:
 
 | Method | Purpose | Example |
 |---|---|---|
-| **GET** | Retrieve information — no data is changed on the server | `GET /articles/5` → fetch article #5 |
-| **POST** | Submit data to create a new record | `POST /users` with body `name=alice` → creates a new user |
-| **PUT** | Submit data to update an existing record | `PUT /users/5` with body `email=new@x.com` → updates user 5's email |
-| **DELETE** | Remove a record | `DELETE /users/5` → deletes user 5 |
+| **GET** | Used to retrieve information from the web server | `GET /articles/5` → fetch article #5 |
+| **POST** | Used for submitting data to the web server and potentially creating new records | `POST /users` with body `name=alice` → creates a new user |
+| **PUT** | Used for submitting data to a web server to update information | `PUT /users/5` with body `email=new@x.com` → updates user 5's email |
+| **DELETE** | Used for deleting information/records from a web server. | `DELETE /users/5` → deletes user 5 |
 
 **Q&A**
 - Create a new user account: **POST**
@@ -139,7 +170,7 @@ HTTP methods are standardized actions a client uses to tell the server what it w
 
 ## Task 4: HTTP Status Codes
 
-Status codes are returned in the first line of every response and fall into five ranges:
+When an HTTP server responds, the first line always contains a status code (200 OK) informing the client of the outcome of their request and also potentially how to handle it. These status codes can be broken down into 5 different ranges:
 
 | Range | Category | Meaning |
 |---|---|---|
