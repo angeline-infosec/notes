@@ -1,7 +1,6 @@
 # _DNS in Detail_
 _Learn how DNS works and how it helps you access internet services._
 
----
 
 ## Background Concepts
 
