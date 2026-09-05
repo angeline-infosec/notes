@@ -26,6 +26,9 @@ Networks are integrated into our everyday life. Be it gathering data for the wea
 
 Take the diagram below as an example, Alice, Bob and Jim have formed their network! We'll come onto this a bit later on.
 
+<img width="846" height="593" alt="image" src="https://github.com/user-attachments/assets/8eb0bb12-306b-4865-b8db-7153ceda926c" />
+
+
 Networks come in all shapes and sizes, which is something that we will also come on to discuss throughout this module. 
 
 Answer the questions below
@@ -45,4 +48,59 @@ Networking is the practice of connecting computers, servers, and other devices t
 - Access Control: Managing who (and what devices) can connect to the network using authentication and authorization.
 - Encryption: Protecting data in transit (like using VPNs or HTTPS) so attackers cannot read it if intercepted.Intrusion Detection/Prevention
 - (IDS/IPS): Monitoring systems that spot and block malicious activity on the network.
+
+
+# Task 2: What is the Internet?
+
+Now that we've learnt what a network is and how one is defined in computing (just devices connected), let's explore the Internet.
+
+The Internet is one giant network that consists of many, many small networks within itself. Using our example from the previous task, let's now imagine that Alice made some new friends named Zayn and Toby that she wants to introduce to Bob and Jim. The problem is that Alice is the only person who speaks the same language as Zayn and Toby. So Alice will have to be the messenger!
+
+<img width="712" height="800" alt="image" src="https://github.com/user-attachments/assets/7a45194b-3168-4245-a95c-68191ab281f3" />
+
+Because Alice can speak both languages, they can communicate to one another through Alice — forming a new network.
+
+The first iteration of the Internet was within the ARPANET project in the late 1960s. This project was funded by the United States Defence Department and was the first documented network in action. However, it wasn't until 1989 when the Internet as we know it was invented by Tim Berners-Lee by the creation of the World Wide Web (WWW). It wasn't until this point that the Internet started to be used as a repository for storing and sharing information, just like it is today.
+
+Let's relate Alice's network of friends to computing devices. The Internet looks like a much larger version of this sort of diagram:
+
+<img width="852" height="579" alt="image" src="https://github.com/user-attachments/assets/15c3896a-d941-4cc9-88f1-36797a46573b" />
+
+As previously stated, the Internet is made up of many small networks all joined together.  These small networks are called private networks, where networks connecting these small networks are called public networks -- or the Internet! So, to recap, a network can be one of two types:
+
+A private network
+A public network
+Devices will use a set of labels to identify themselves on a network, which we will come onto in the task below.
+
+Answer the questions below
+Who invented the World Wide Web?
+Tim Berners-Lee
+Correct Answer
+
+## Some edits I need in this topic:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
