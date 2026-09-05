@@ -79,7 +79,12 @@ Correct Answer
 
 ## Some edits I need in this topic:
 
+### Internet
 
+The Internet is a massive, global network of interconnected networks that allows billions of devices worldwide to communicate and share data.
+
+How the Internet Impacts Cybersecurity
+Attack Surface: The Internet drastically expands an organization's attack surface, exposing internal systems to global threats if they are not properly protected.Public Routing: Data sent over the Internet travels through multiple third-party routers, making encryption (like HTTPS or VPNs) essential to prevent data theft.Edge Defense: Organizations must deploy robust defense mechanisms—like firewalls and proxy servers—at the boundary where their private network meets the public Internet.Cloud Security: Because modern applications and data live on the Internet (the cloud), security has shifted from protecting physical buildings to securing identity and access management (IAM).
 
 
 
