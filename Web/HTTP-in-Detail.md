@@ -63,7 +63,7 @@ Common types:
 - What does the S in HTTPS stand for? **Secure**
 - Challenge flag from the mock webpage's certificate issue: **THM{INVALID_HTTP_CERT}**
 
----
+
 
 ## Task 2: Requests and Responses
 
@@ -145,7 +145,7 @@ Content-Length: 98
 - What HTTP protocol is being used in the above example? **HTTP/1.1**
 - What response header tells the browser how much data to expect? **Content-Length**
 
----
+
 
 ## Task 3: HTTP Methods
 
@@ -166,7 +166,7 @@ HTTP methods are a way for the client to show their intended action when making 
 - Remove a picture you've uploaded: **DELETE**
 - View a news article: **GET**
 
----
+
 
 ## Task 4: HTTP Status Codes
 
@@ -204,7 +204,7 @@ When an HTTP server responds, the first line always contains a status code (200 
 - Server can't reach its database and crashes: **503**
 - Tried to edit your profile without logging in: **401**
 
----
+
 
 ## Task 5: Headers
 
@@ -241,7 +241,7 @@ These are the headers that are returned to the client (usually your browser) fro
 - Tells the browser what type of data is being returned: **Content-Type**
 - Tells the server which website is being requested: **Host**
 
----
+
 
 ## Task 6: Cookies
 
@@ -284,7 +284,7 @@ Cookie values used for authentication are typically not plain-text passwords but
 **Q&A**
 - Header used to save cookies to your computer: **Set-Cookie**
 
----
+
 
 ## Task 7: Making Requests (Practical)
 
