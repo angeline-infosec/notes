@@ -33,6 +33,9 @@ This is why networking underpins cybersecurity as a whole: you cannot protect a 
 The **Internet is made up of many small, interconnected networks**.  
 **These small networks are called private networks**, where **networks connecting these small networks are called public networks, or the Internet!** 
 
+<img width="852" height="579" alt="image" src="https://github.com/user-attachments/assets/ec0f41f6-7333-46a5-8a7b-0ae7b9a83e09" />
+
+
 **A little history:** The earliest version of what became the Internet was **ARPANET**, a project in the late 1960s funded by the U.S. Department of Defense. The Internet as most people experience it today, however, traces back to **1989–1991**, when **Tim Berners-Lee** proposed and then built the **World Wide Web (WWW)**, the system of linked, browsable documents that turned the Internet into the information-sharing tool it is now.
 
 ### How the Internet impacts cybersecurity
@@ -52,46 +55,58 @@ With only about 4.3 billion possible IPv4 addresses (see Task 3) and far more de
 - Who invented the World Wide Web? **Tim Berners-Lee**
 
 
-## Task 3 — Identifying Devices on a Network
+## Task 3: Identifying Devices on a Network
 
-Every device needs two forms of identity on a network — similar to how a person has both a name (which can change) and fingerprints (which can't):
+Every device needs two forms of identity on a network, similar to how a person has both a name (which can change) and fingerprints (which can't):
 
 | Identifier | Networking equivalent | Can it change? |
 |---|---|---|
-| Name | **IP Address** | Yes — dynamic, can be reassigned |
-| Fingerprint | **MAC Address** | No (in principle) — burned into the hardware at manufacture, though it *can* be spoofed at the software level (see below) |
+| Name | **IP Address** | Yes. Dynamic, can be reassigned |
+| Fingerprint | **MAC Address** | No (in principle), burned into the hardware at manufacture, though it *can* be spoofed at the software level (see below) |
 
 ### IP Addresses
 
-An **IP (Internet Protocol) address** is a **32-bit** address (for IPv4) used to identify a device on a network, written as four decimal numbers ("octets") each ranging 0–255, e.g. `192.168.1.1`.
+An **IP (Internet Protocol) address** is a **32-bit unique address used to identify devices on the internet** written as four decimal numbers ("octets") each ranging 0–255, e.g. `192.168.1.1`.
+The first part of the address usually represents the network the device is on (192.168.0.x), and the last part of the address represents the host device (192.168.0.1)
 
-Within an address, the address is generally split into a **network portion** and a **host portion**:
-- The earlier part of the address typically identifies which network the device belongs to (e.g. `192.168.0.x`)
-- The final part identifies the specific device on that network (e.g. `.1`, `.2`, etc.)
+<img width="1140" height="487" alt="image" src="https://github.com/user-attachments/assets/a42d6cd6-6662-4eeb-b56c-de86666a708f" />
 
-**A note on IP addressing & subnetting**: exactly where the line falls between "network portion" and "host portion" is determined by a **subnet mask** (e.g. `255.255.255.0`) or its shorthand, **CIDR notation** (e.g. `/24`). For example, `192.168.1.0/24` means the first 24 bits (three octets) identify the network, leaving the last 8 bits (256 possible values, 254 usable) for individual hosts on that network — so devices `192.168.1.1` through `192.168.1.254` could all sit on that one network. This is a deep topic in its own right and worth its own dedicated writeup as you go further.
+
+**A note on IP addressing & subnetting**: exactly where the line falls between "network portion" and "host portion" is determined by a **subnet mask** (e.g. `255.255.255.0`) or its shorthand, **CIDR notation** (e.g. `/24`). For example, `192.168.1.0/24` means the first 24 bits (three octets) identify the network, leaving the last 8 bits (256 possible values, 254 usable) for individual hosts on that network — so devices `192.168.1.1` through `192.168.1.254` could all sit on that one network. This is a deep topic in its own right and worth its own dedicated write-up as you go further.
 
 **Public vs. private IP addresses:**
-- A **private IP address** identifies a device *within* its local network (e.g. `192.168.1.77`) and isn't reachable directly from the Internet. Private ranges are reserved by standard (RFC 1918): `10.0.0.0/8`, `172.16.0.0/12`, and `192.168.0.0/16`.
-- A **public IP address** identifies a device (or, more often, a whole network via NAT) *on* the Internet, and is issued by an ISP.
+- A private IP address **identifies a device *within* its local network** (e.g. `192.168.1.77`) and isn't reachable directly from the Internet. Private ranges are reserved by standard (RFC 1918): `10.0.0.0/8`, `172.16.0.0/12`, and `192.168.0.0/16`.
+- A public IP address **identifies a device (or, more often, a whole network via NAT) *on* the Internet**, and is issued by an ISP.
 
-Multiple devices on the same private network can share the very same public IP address when talking to the Internet — this is NAT in action (see Task 2).
+Multiple devices on the same private network can share the very same public IP address when talking to the Internet, this is NAT in action (see Task 2).
 
 **IPv4 vs. IPv6:**
 - **IPv4** uses 32-bit addressing → 2³² ≈ 4.29 billion possible addresses. With billions of devices now online, this pool is effectively exhausted.
-- **IPv6** uses 128-bit addressing → 2¹²⁸ ≈ 340 **undecillion** addresses (3.4 × 10³⁸) — vastly larger than the "340 trillion" figure sometimes quoted; the real number is trillions of trillions of trillions larger than IPv4's space. IPv6 also brings efficiency improvements to routing and configuration.
+- **IPv6** uses 128-bit addressing → 2¹²⁸ ≈ 340 **undecillion** addresses (3.4 × 10³⁸). Vastly larger than the "340 trillion" figure sometimes quoted; the real number is trillions of trillions of trillions larger than IPv4's space. IPv6 also brings efficiency improvements to routing and configuration.
 
-**A note on protocols IP relies on**: IP itself is just one layer of the broader **TCP/IP suite**. It handles addressing and routing, while other protocols handle the rest of the conversation — **TCP** and **UDP** carry the actual application data on top of IP, and **ICMP** (see Task 4) handles diagnostics and error reporting. None of these work in isolation; IP gets packets to the right device, but it's the protocols layered above/alongside it that do the rest of the job.
+**A note on protocols IP relies on**(protocols that IP address follows): IP itself is just one layer of the broader **TCP/IP suite**. It handles addressing and routing, while other protocols handle the rest of the conversation. **TCP** and **UDP** carry the actual application data on top of IP, and **ICMP** (see Task 4) handles diagnostics and error reporting. None of these work in isolation; IP gets packets to the right device, but it's the protocols layered above/alongside it that do the rest of the job.
 
 ### MAC Addresses
 
-A **MAC (Media Access Control) address** is a unique identifier burned into a device's network interface at the factory. It's a 12-character hexadecimal number, split into pairs separated by colons, e.g. `a4:c3:f0:85:ac:2d`.
+A **MAC (Media Access Control) address** is a physical address. It is a unique identifier burned into a device's network interface at the factory. It's a 12-character hexadecimal number, split into pairs separated by colons, e.g. `a4:c3:f0:85:ac:2d`.
 - The first 6 characters (24 bits) identify the manufacturer of the network interface.
 - The last 6 characters are a unique identifier for that specific interface.
 
-Unlike an IP address, which is typically **dynamic** (can be reassigned by a network, e.g. via DHCP), a MAC address is intended to be **static** — permanently tied to that one piece of hardware.
+  <img width="1140" height="669" alt="image" src="https://github.com/user-attachments/assets/36f9364f-01f1-4850-a563-b01971ba881a" />
 
-**MAC spoofing**: despite being "burned in," a MAC address is just a value the operating system reports to the network — and most operating systems allow you to override what the network interface presents, without physically altering the hardware chip itself. This is exactly what changing your MAC address to another device's accomplishes: the network layer sees the spoofed value and treats your traffic as if it came from that other device.
+
+Unlike an IP address, which is typically **dynamic** (can be reassigned by a network, e.g. via DHCP), a MAC address is intended to be **static**: permanently tied to that one piece of hardware.
+
+**MAC spoofing**: 
+
+MAC spoofing is the **technique of changing or disguising a device's unique Media Access Control (MAC) address at the software level to impersonate another device or hide its true identity**.
+By using MAC spoofing, attackers can trick a network into thinking their unauthorized device is actually a trusted one. This allows them to bypass security controls, steal data, or remain hidden.
+
+Examples: 
+* Network Access (access to a restricted corporate network, free internet)
+* Eavesdropping and Data Theft (Man-in-the-Middle Attacks) (Intercept traffic, Steal credentials)
+* Disruption (Denial of Service)
+* Anonymity and Hiding Footprints (Evade forensic tracking, Blame others)
 
 This matters for security because some network setups (like paid hotel/cafe Wi-Fi) authorize devices based on MAC address alone. **In the practical lab**, Bob's packets were being blocked because his MAC address wasn't recognized as "paid," while Alice's were let through because hers was. Spoofing your device's MAC address to match Alice's made the router believe the traffic was coming from her already-authorized device — which is why the packets started reaching TryHackMe successfully afterward. This illustrates a real weakness: MAC-based trust assumes a device's stated identity is honest, which spoofing directly breaks.
 
@@ -102,9 +117,9 @@ This matters for security because some network setups (like paid hotel/cafe Wi-F
 - What does "MAC" stand for? **Media Access Control**
 - Flag from spoofing your MAC address to Alice's in the lab: **THM{YOU_GOT_ON_TRYHACKME}**
 
----
 
-## Task 4 — Ping (ICMP)
+
+## Task 4: Ping (ICMP)
 
 **Ping** is a basic diagnostic tool used to test whether a connection to another device exists and how reliable/fast it is. It works by sending an **ICMP echo request** packet to a target and timing how long it takes to receive an **ICMP echo reply** back.
 
