@@ -121,25 +121,25 @@ This matters for security because some network setups (like paid hotel/cafe Wi-F
 
 ## Task 4: Ping (ICMP)
 
-**Ping** is a basic diagnostic tool used to test whether a connection to another device exists and how reliable/fast it is. It works by sending an **ICMP echo request** packet to a target and timing how long it takes to receive an **ICMP echo reply** back.
+**Ping** is a basic **diagnostic tool used to test whether a connection to another device exists and how reliable/fast it is**. It works by sending an **ICMP echo request** packet to a target and timing how long it takes to receive an **ICMP echo reply** back.
 
 ### A note on ICMP
-**ICMP (Internet Control Message Protocol)** is a network-layer protocol used for diagnostics and error reporting between devices — it doesn't carry actual application data the way TCP or UDP do. Its job is purely operational: telling devices things like "this destination is unreachable," "this packet took too long," or, in ping's case, simply confirming "yes, I'm here and reachable." Because it operates below the application layer and isn't meant to transport user data, ICMP is comparatively lightweight — but it's also often restricted or rate-limited by firewalls, since it can be abused for reconnaissance or denial-of-service style attacks (e.g. ICMP floods).
+**ICMP (Internet Control Message Protocol)** is a **network-layer protocol used for diagnostics and error reporting between devices**. It doesn't carry actual application data the way TCP or UDP do. **Its job is purely operational: telling devices things like "this destination is unreachable," "this packet took too long," or, in ping's case, simply confirming "yes, I'm here and reachable."** Because it operates below the application layer and isn't meant to transport user data, ICMP is comparatively lightweight, but it's also often restricted or rate-limited by firewalls, since it can be abused for reconnaissance or denial-of-service-style attacks (e.g. ICMP floods).
 
-**Basic syntax**: `ping <IP address or URL>` — e.g. `ping 192.168.1.254` or `ping google.com`. Ping is built into both Linux and Windows by default.
+**Basic syntax**: `ping <IP address or URL>` 
+
+e.g. `ping 192.168.1.254` or `ping google.com`. Ping is built into both Linux and Windows by default.
 
 **Q&A**
 - What protocol does ping use? **ICMP**
 - Syntax to ping `10.10.10.10`? **ping 10.10.10.10**
 - Flag from pinging `8.8.8.8`: **THM{I_PINGED_THE_SERVER}**
 
----
 
-## Task 5 — Continue Your Learning
+## Task 5: Continue Your Learning
 
 Follow-on room: [Intro to LAN](https://tryhackme.com/room/introtolan)
 
----
 
 ## Key Takeaways
 - Networking = devices connected to share resources; securing the network is inseparable from securing what's on it.
