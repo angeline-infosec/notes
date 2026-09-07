@@ -51,6 +51,13 @@ Network Address Translation (NAT) is a **network service typically running on a 
 
 With only about 4.3 billion possible IPv4 addresses (see Task 3) and far more devices than that connected worldwide, not every device can have its own public IP. **NAT** solves this: **a router translates the private IP addresses of devices on a local network into a single shared public IP address (and back again) when they communicate with the Internet**. This is why dozens of devices on a home network can all browse the web using just one public IP address issued by the ISP. NAT is a major reason IPv4 has lasted as long as it has despite address exhaustion.
 
+### Types of NAT
+
+- Static NAT: One private IP is mapped permanently to one public IP, always the same pairing. Used when a specific internal device (like a mail server) needs to be consistently reachable from the outside.
+- Dynamic NAT: Private IPs are mapped to public IPs from a shared pool, but on a first-come, first-served basis. You don't get the same public IP every time, and the pool has a limited number of addresses to hand out.
+- PAT (Port Address Translation) — also called NAT Overload: The version almost everyone actually uses. Many private IPs share a single public IP, distinguished by port number rather than address. This is how an entire household can be online simultaneously through one ISP-assigned public IP, the router tracks which internal device owns which port and rewrites traffic accordingly on the way out and back in.
+
+
 **Q&A**
 - Who invented the World Wide Web? **Tim Berners-Lee**
 
@@ -84,7 +91,15 @@ Multiple devices on the same private network can share the very same public IP a
 - **IPv4** uses 32-bit addressing → 2³² ≈ 4.29 billion possible addresses. With billions of devices now online, this pool is effectively exhausted.
 - **IPv6** uses 128-bit addressing → 2¹²⁸ ≈ 340 **undecillion** addresses (3.4 × 10³⁸). Vastly larger than the "340 trillion" figure sometimes quoted; the real number is trillions of trillions of trillions larger than IPv4's space. IPv6 also brings efficiency improvements to routing and configuration.
 
-**A note on protocols IP relies on**(protocols that IP address follows): IP itself is just one layer of the broader **TCP/IP suite**. It handles addressing and routing, while other protocols handle the rest of the conversation. **TCP** and **UDP** carry the actual application data on top of IP, and **ICMP** (see Task 4) handles diagnostics and error reporting. None of these work in isolation; IP gets packets to the right device, but it's the protocols layered above/alongside it that do the rest of the job.
+### **A note on protocols IP relies on**(protocols that IP address follows):
+
+IP's job is narrow and specific: **get a packet from a source address to a destination address**. It doesn't do anything else; it doesn't guarantee delivery, doesn't check for errors, and doesn't know or care what's actually inside the packet. That's intentional; IP is designed to be a thin, universal addressing layer that everything else builds on top of. This is why it's usually written as "TCP/IP". IP essentially never operates alone.
+
+The protocols that ride on top of IP are the ones that turn "a packet arrived somewhere" into "an actual conversation happened":
+
+- **TCP (Transmission Control Protocol)**: adds reliability on top of IP's best-effort delivery. It establishes a connection (the three-way handshake), numbers packets so they can be reassembled in the correct order, detects loss, and retransmits missing data. This is why file transfers, web pages, and emails use TCP — losing or scrambling part of the data would break the result.
+- **UDP (User Datagram Protocol)**: skips all of that overhead. No handshake, no guaranteed delivery, no ordering; packets are just fired off. This trade-off is worth it when speed matters more than perfection, e.g. DNS lookups, video calls, or online gaming, where a dropped packet is better resent (or ignored) than waited on.
+- **ICMP (Internet Control Message Protocol)**: doesn't carry user data at all, it's for the network to talk about itself. Things like "this destination is unreachable," "TTL exceeded," or the echo request/reply pair that ping uses to check reachability.
 
 ### MAC Addresses
 
@@ -147,150 +162,3 @@ Follow-on room: [Intro to LAN](https://tryhackme.com/room/introtolan)
 - Devices need two identifiers: an **IP address** (dynamic, "name") and a **MAC address** (static in principle, "fingerprint" — though spoofable in practice).
 - IPv4's 32-bit space (~4.3B addresses) is running out; NAT stretches it further, and IPv6's 128-bit space is the long-term fix.
 - ICMP (used by ping) is a diagnostic protocol, not a data-carrying one — it just answers "is this device reachable, and how fast?"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
------
-
-
-Networks are simply things connected. For example, your friendship circle: you are all connected because of similar interests, hobbies, skills and sorts.
-
-Networks can be found in all walks of life:
-
-A city's public transportation system
-Infrastructure such as the national power grid for electricity
-Meeting and greeting your neighbours
-Postal systems for sending letters and parcels
-But more specifically, in computing, networking is the same idea, just dispersed to technological devices. Take your phone as an example; the reason that you have it is to access things. We'll cover how these devices communicate with each other and the rules that follow.
-
-In computing, a network can be formed by anywhere from 2 devices to billions. These devices include everything from your laptop and phone to security cameras, traffic lights and even farming!
-
-Networks are integrated into our everyday life. Be it gathering data for the weather, delivering electricity to homes or even determining who has the right of way at a road. Because networks are so embedded in the modern-day, networking is an essential concept to grasp in cybersecurity.
-
-Take the diagram below as an example, Alice, Bob and Jim have formed their network! We'll come onto this a bit later on.
-
-<img width="846" height="593" alt="image" src="https://github.com/user-attachments/assets/8eb0bb12-306b-4865-b8db-7153ceda926c" />
-
-
-Networks come in all shapes and sizes, which is something that we will also come on to discuss throughout this module. 
-
-Answer the questions below
-What is the key term for devices that are connected together?
-Network
-Correct Answer
-
-
-## Some edits I need in this topic:
-
-### Networking definition:
-Networking is the practice of connecting computers, servers, and other devices to share data, while implementing strict controls to protect that data from unauthorized access or attacks. It forms the backbone of security because you cannot protect a digital asset unless you secure the network pathway leading to it.
-
-### Core Concepts of Secure Networking:
-- Network Segmentation: Dividing a network into smaller, isolated sub-networks to contain breaches.
-- Firewalls: Security devices that monitor and filter incoming and outgoing network traffic based on rules.
-- Access Control: Managing who (and what devices) can connect to the network using authentication and authorization.
-- Encryption: Protecting data in transit (like using VPNs or HTTPS) so attackers cannot read it if intercepted.Intrusion Detection/Prevention
-- (IDS/IPS): Monitoring systems that spot and block malicious activity on the network.
-
-
-# Task 2: What is the Internet?
-
-Now that we've learnt what a network is and how one is defined in computing (just devices connected), let's explore the Internet.
-
-The Internet is one giant network that consists of many, many small networks within itself. Using our example from the previous task, let's now imagine that Alice made some new friends named Zayn and Toby that she wants to introduce to Bob and Jim. The problem is that Alice is the only person who speaks the same language as Zayn and Toby. So Alice will have to be the messenger!
-
-<img width="712" height="800" alt="image" src="https://github.com/user-attachments/assets/7a45194b-3168-4245-a95c-68191ab281f3" />
-
-Because Alice can speak both languages, they can communicate to one another through Alice — forming a new network.
-
-The first iteration of the Internet was within the ARPANET project in the late 1960s. This project was funded by the United States Defence Department and was the first documented network in action. However, it wasn't until 1989 when the Internet as we know it was invented by Tim Berners-Lee by the creation of the World Wide Web (WWW). It wasn't until this point that the Internet started to be used as a repository for storing and sharing information, just like it is today.
-
-Let's relate Alice's network of friends to computing devices. The Internet looks like a much larger version of this sort of diagram:
-
-<img width="852" height="579" alt="image" src="https://github.com/user-attachments/assets/15c3896a-d941-4cc9-88f1-36797a46573b" />
-
-As previously stated, the Internet is made up of many small networks all joined together.  These small networks are called private networks, where networks connecting these small networks are called public networks -- or the Internet! So, to recap, a network can be one of two types:
-
-A private network
-A public network
-Devices will use a set of labels to identify themselves on a network, which we will come onto in the task below.
-
-Answer the questions below
-Who invented the World Wide Web?
-Tim Berners-Lee
-Correct Answer
-
-## Some edits I need in this topic:
-
-### Internet
-
-The Internet is a massive, global network of interconnected networks that allows billions of devices worldwide to communicate and share data.
-
-How the Internet Impacts Cybersecurity
-Attack Surface: The Internet drastically expands an organization's attack surface, exposing internal systems to global threats if they are not properly protected.Public Routing: Data sent over the Internet travels through multiple third-party routers, making encryption (like HTTPS or VPNs) essential to prevent data theft.Edge Defense: Organizations must deploy robust defense mechanisms—like firewalls and proxy servers—at the boundary where their private network meets the public Internet.Cloud Security: Because modern applications and data live on the Internet (the cloud), security has shifted from protecting physical buildings to securing identity and access management (IAM).
-
-
-# Task 3: Identifying Devices on a Network 
-
-
-
-
-<img width="1140" height="487" alt="image" src="https://github.com/user-attachments/assets/4f174a39-1fe7-4c9d-9f31-ca9732d2956e" />
-
-
-
-
-
-<img width="546" height="145" alt="image" src="https://github.com/user-attachments/assets/a31df245-7af7-429a-a6af-6c6adc7ccaf7" />
-
-
-<img width="383" height="118" alt="image" src="https://github.com/user-attachments/assets/7c00ee36-5cfb-47b9-9fd6-56e12f686a8d" />
-
-
-
-<img width="736" height="177" alt="image" src="https://github.com/user-attachments/assets/0b5c1f9f-2823-4946-ab09-36f10e2f50d4" />
-
-<img width="1140" height="669" alt="image" src="https://github.com/user-attachments/assets/99788cf3-de59-493c-a98e-9c0106ab8808" />
-
-
-
-## Some edits I need in this topic:
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
