@@ -87,11 +87,31 @@ How the Internet Impacts Cybersecurity
 Attack Surface: The Internet drastically expands an organization's attack surface, exposing internal systems to global threats if they are not properly protected.Public Routing: Data sent over the Internet travels through multiple third-party routers, making encryption (like HTTPS or VPNs) essential to prevent data theft.Edge Defense: Organizations must deploy robust defense mechanisms—like firewalls and proxy servers—at the boundary where their private network meets the public Internet.Cloud Security: Because modern applications and data live on the Internet (the cloud), security has shifted from protecting physical buildings to securing identity and access management (IAM).
 
 
+# Task 3: Identifying Devices on a Network 
+
+
+
+
+<img width="1140" height="487" alt="image" src="https://github.com/user-attachments/assets/4f174a39-1fe7-4c9d-9f31-ca9732d2956e" />
 
 
 
 
 
+<img width="546" height="145" alt="image" src="https://github.com/user-attachments/assets/a31df245-7af7-429a-a6af-6c6adc7ccaf7" />
+
+
+<img width="383" height="118" alt="image" src="https://github.com/user-attachments/assets/7c00ee36-5cfb-47b9-9fd6-56e12f686a8d" />
+
+
+
+<img width="736" height="177" alt="image" src="https://github.com/user-attachments/assets/0b5c1f9f-2823-4946-ab09-36f10e2f50d4" />
+
+<img width="1140" height="669" alt="image" src="https://github.com/user-attachments/assets/99788cf3-de59-493c-a98e-9c0106ab8808" />
+
+
+
+## Some edits I need in this topic:
 
 
 
