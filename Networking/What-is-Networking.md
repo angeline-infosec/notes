@@ -26,30 +26,31 @@ This is why networking underpins cybersecurity as a whole: you cannot protect a 
 - What is the key term for devices that are connected together? **Network**
 
 
-## Task 2 — What is the Internet?
+## Task 2: What is the Internet?
 
-**Definition:** The Internet is a massive, global network of interconnected networks that allows billions of devices worldwide to communicate and share data. It's not one network — it's countless smaller networks joined together.
+**Definition:** The **Internet is a massive, global network of interconnected networks** that allows billions of devices worldwide to communicate and share data. It's not one network, it's countless smaller networks(sub-networks) joined together.
 
-- A **private network** is a smaller network (e.g. your home or office network).
-- A **public network** is the network that connects all these private networks together — i.e., the Internet itself.
+The **Internet is made up of many small, interconnected networks**.  
+**These small networks are called private networks**, where **networks connecting these small networks are called public networks, or the Internet!** 
 
-**A little history:** The earliest version of what became the Internet was **ARPANET**, a project in the late 1960s funded by the U.S. Department of Defense — the first documented network of its kind. The Internet as most people experience it today, however, traces to **1989–1991**, when Tim Berners-Lee (at CERN) proposed and then built the **World Wide Web (WWW)** — the system of linked, browsable documents that turned the Internet into the information-sharing tool it is now.
+**A little history:** The earliest version of what became the Internet was **ARPANET**, a project in the late 1960s funded by the U.S. Department of Defense. The Internet as most people experience it today, however, traces back to **1989–1991**, when **Tim Berners-Lee** proposed and then built the **World Wide Web (WWW)**, the system of linked, browsable documents that turned the Internet into the information-sharing tool it is now.
 
 ### How the Internet impacts cybersecurity
 
 - **Expanded attack surface**: connecting to the Internet exposes an organization's internal systems to threats from anywhere in the world, not just local ones.
-- **Public routing**: data crossing the Internet passes through multiple third-party routers you don't control — which is exactly why encryption (HTTPS, VPNs) matters so much for anything sensitive.
-- **Edge defense**: the boundary where a private network meets the public Internet is where defenses like firewalls and proxy servers need to be concentrated.
-- **Cloud security**: since most modern applications and data live on the Internet rather than in a physical building, security has shifted heavily toward identity and access management (IAM) — controlling *who* can reach data, not just *where* the server sits.
+- **Public routing**: data crossing the Internet passes through multiple third-party routers you don't control, which is exactly why encryption (HTTPS, VPNs) matters so much for anything sensitive.
+- **Edge defense**: Organizations must deploy robust defense mechanisms—like firewalls and proxy servers—at the boundary where their private network meets the public Internet.
+- **Cloud security**: since most modern applications and data live on the Internet rather than in a physical building, security has shifted heavily toward identity and access management (IAM) - controlling *who* can reach data, not just *where* the server sits.
 
 ### NAT (Network Address Translation)
 
-With only about 4.3 billion possible IPv4 addresses (see Task 3) and far more devices than that connected worldwide, not every device can have its own public IP. **NAT** solves this: a router translates the private IP addresses of devices on a local network into a single shared public IP address (and back again) when they communicate with the Internet. This is why dozens of devices on a home network can all browse the web using just one public IP address issued by the ISP — NAT is a major reason IPv4 has lasted as long as it has despite address exhaustion.
+Network Address Translation (NAT) is a **network service typically running on a router or firewall. It's used to translate private IP addresses into public IP addresses and vice versa to access the internet**.
+
+With only about 4.3 billion possible IPv4 addresses (see Task 3) and far more devices than that connected worldwide, not every device can have its own public IP. **NAT** solves this: **a router translates the private IP addresses of devices on a local network into a single shared public IP address (and back again) when they communicate with the Internet**. This is why dozens of devices on a home network can all browse the web using just one public IP address issued by the ISP. NAT is a major reason IPv4 has lasted as long as it has despite address exhaustion.
 
 **Q&A**
 - Who invented the World Wide Web? **Tim Berners-Lee**
 
----
 
 ## Task 3 — Identifying Devices on a Network
 
