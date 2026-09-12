@@ -8,13 +8,14 @@
 
 ## How it works
 Normally: `device → ISP → website`
-
-<img width="708" height="599" alt="vpn1" src="https://github.com/user-attachments/assets/7cd6bfa7-73d7-433d-bff4-ca0ad69edc7e" />
-
 With a VPN: `device → encrypted tunnel → VPN server → website`
 
-<img width="719" height="833" alt="vpn2" src="https://github.com/user-attachments/assets/8a3aa9ce-20c9-418f-9722-ed051afd9777" />
-
+<table>
+ <tr>
+<td> <img width="708" height="599" alt="vpn1" src="https://github.com/user-attachments/assets/7cd6bfa7-73d7-433d-bff4-ca0ad69edc7e" />
+<td> <img width="719" height="833" alt="vpn2" src="https://github.com/user-attachments/assets/8a3aa9ce-20c9-418f-9722-ed051afd9777" />
+</tr>
+</table>
 
 The VPN encrypts your traffic and routes it through its own server before it reaches the destination. 
 
@@ -38,8 +39,12 @@ This is the consumer/personal use case- privacy apps, accessing geo-restricted c
 **Site-to-site VPN** - Connects two entire networks to each other, rather than a single device to a network. Typically used to link a branch office's network to headquarters, so devices on either side can talk to each other as if on the same LAN. 
 No individual client software needed; the connection is established at the router/firewall level between the two sites. This is the type that comes up more in CCNA and enterprise network security contexts, since it's about network architecture rather than personal device configuration.
 
-<img width="1472" height="1280" alt="image" src="https://github.com/user-attachments/assets/575f2829-b408-492c-953c-461d9ae06ec5" />
-
+<table>
+  <tr>
+    <td><img width="100%" alt="vpntype1" src="https://github.com/user-attachments/assets/e63ac3e9-8981-49b8-80ff-40070c176939" /></td>
+    <td><img width="100%" alt="vpntype2" src="https://github.com/user-attachments/assets/7329e0a9-e2ef-4c40-bb54-46d46332f47e" /></td>
+  </tr>
+</table>
 
 - **Protocols**: VPN protocols are **sets of rules and algorithms** that **determine how data is encrypted, authenticated, and transmitted between your device and a VPN server**. (Not related - Internet Protocol (IP): Internet protocols are a set of rules that govern how data is formatted, addressed, transmitted, and routed across a network).
  — OpenVPN, WireGuard, IPSec are the main ones. They trade off differently on speed vs. security, worth knowing by name.
