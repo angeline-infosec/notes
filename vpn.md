@@ -12,8 +12,8 @@ With a VPN: `device → encrypted tunnel → VPN server → website`
 
 <table>
  <tr>
-<td> <img width="708" height="599" alt="vpn1" src="https://github.com/user-attachments/assets/7cd6bfa7-73d7-433d-bff4-ca0ad69edc7e" />
-<td> <img width="719" height="833" alt="vpn2" src="https://github.com/user-attachments/assets/8a3aa9ce-20c9-418f-9722-ed051afd9777" />
+<td> <img width="100%" height="599" alt="vpn1" src="https://github.com/user-attachments/assets/7cd6bfa7-73d7-433d-bff4-ca0ad69edc7e" />
+<td> <img width="100%" height="833" alt="vpn2" src="https://github.com/user-attachments/assets/8a3aa9ce-20c9-418f-9722-ed051afd9777" />
 </tr>
 </table>
 
