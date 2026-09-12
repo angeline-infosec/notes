@@ -73,6 +73,10 @@ Every device needs two forms of identity on a network, similar to how a person h
 
 ### IP Addresses
 
+Internet protocols are a set of rules that govern how data is formatted, addressed, transmitted, and routed across a network.
+
+Core Internet Layer Protocols: **Internet Protocol (IP), ICMP, ARP**
+
 An **IP (Internet Protocol) address** is a **32-bit unique address used to identify devices on the internet** written as four decimal numbers ("octets") each ranging 0–255, e.g. `192.168.1.1`.
 The first part of the address usually represents the network the device is on (192.168.0.x), and the last part of the address represents the host device (192.168.0.1)
 
