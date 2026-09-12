@@ -2,6 +2,10 @@
 
 **First, the most important thing:** a VPN does not make you anonymous. Your VPN provider can still see your traffic, you're just shifting who you trust from your ISP to the VPN company. Choose one with a genuine no-logs policy if privacy matters to you.
 
+**VPN is a network service that encrypts network traffic between your device and a VPN server, forming a secure tunnel over the internet. It masks your true IP address by replacing it with the VPN server's IP address for the websites and services you connect to.**
+
+**Why people use it: privacy, security on public networks, and accessing geo-restricted content.**
+
 ## How it works
 Normally: `device → ISP → website`
 
