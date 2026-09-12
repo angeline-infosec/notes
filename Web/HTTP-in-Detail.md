@@ -245,7 +245,9 @@ These are the headers that are returned to the client (usually your browser) fro
 
 ## Task 6: Cookies
 
-Because HTTP is a **stateless** protocol, each request is handled independently. The server doesn't inherently remember previous requests from the same client. Cookies solve this: small pieces of data the server asks your browser to store (via `Set-Cookie`), which your browser then sends back automatically on every subsequent request (via the `Cookie` header). This is how a site "remembers" you're logged in, your preferences, or that you've visited before.
+Because HTTP is a **stateless** protocol, each request is independent. The server doesn't inherently remember previous requests from the same client. Cookies solve this: small pieces of data the server asks your browser to store (via `Set-Cookie`), which your browser then sends back automatically on every subsequent request (via the `Cookie` header). This is how a site "remembers" you're logged in, your preferences, or that you've visited before.
+
+#### **Simple definition: Cookies are small text files that the website stores on your browser to remember information about you. When you revisit the site, your browser sends this cookie back, allowing the site to recognize you and maintain session data, preferences, or tracking information across pages and visits.**
 
 Cookies are a major part of your digital footprint, specifically contributing to your passive online data trail
 
