@@ -1,5 +1,37 @@
 # Python for CyberSecurity
 
+Python is genuinely useful on the defense side—not as core as it is for offense/tooling, but it shows up a lot. Here's where:
+
+**Detection & analysis**
+- Parsing and enriching logs (Zeek, Sysmon, Windows Event Logs) before they hit your SIEM
+- Writing custom correlation rules or Sigma-to-backend conversions
+- Automating IOC lookups against threat intel feeds (VirusTotal, AbuseIPDB APIs)
+
+**Automation / SOAR-style work**
+- Scripting repetitive triage steps (enrich an alert, pull related logs, tag a ticket) — this is basically what SOAR platforms do under the hood, and a lot of custom playbooks are Python
+- Slack/email/ticketing integrations for alert workflows
+
+**Forensics & incident response**
+- Parsing artifacts (registry hives, prefetch, MFT) with libraries like `python-registry`, `Evtx`
+- Memory analysis tooling (Volatility is Python-based)
+
+**Threat hunting**
+- Pulling data from EDR/SIEM APIs (Elastic, Splunk, Microsoft Sentinel all have Python SDKs) and doing custom analysis/pivoting that the UI doesn't support well
+
+**Building small internal tools**
+- Dashboards, log parsers, alert dedup scripts — things that save your team from doing the same manual task 50 times
+
+For someone aiming at Tier 1 SOC: you can function fine without heavy Python day one — most SOC work is SIEM queries, ticketing, and playbooks. But knowing enough Python to write a script that pulls IOCs from an alert and checks them against an API, or parses a CSV of logs, is a real differentiator and shows up in interviews. I'd treat it as a "learn alongside your SOC/CSA work" skill rather than a prerequisite — start with scripts that automate something tedious you're already doing in your labs.
+
+
+
+
+
+
+
+
+
+## Roadmap for Python Learning:
 
 **1. Python fundamentals (2–4 weeks)**
 - *Automate the Boring Stuff with Python* (free online, automatetheboringstuff.com) — practical, not academic. Best starting point.
