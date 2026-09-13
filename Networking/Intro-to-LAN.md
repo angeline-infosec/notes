@@ -3,73 +3,30 @@
 Learn about some of the technologies and designs that power private networks
 
 
-## Task 1 — LAN Topologies
+## Task 1: LAN Topologies
 
-A **topology** is the design/layout of how devices in a network are physically or logically connected. Different topologies trade off cost, scalability, fault tolerance, and ease of troubleshooting.
+A **topology** is the design/layout of how devices in a network are physically or logically connected. Different topologies trade off cost, scalability, fault tolerance, and troubleshooting ease.
 
 | Topology | Layout | Advantages | Disadvantages |
 |---|---|---|---|
-| **Star** | All devices connect individually to one central device (switch/hub) | Highly scalable — easy to add devices; a single failed device doesn't take down the rest of the network | Most expensive (cabling + dedicated hardware); if the central device fails, **everything** connected to it goes down; more devices = more maintenance overhead |
-| **Bus** | All devices share a single "backbone" cable | Cheapest and easiest to set up — minimal cabling/hardware | Prone to slowdown/bottlenecks as traffic grows; hard to troubleshoot (all traffic shares one path); single point of failure — a broken backbone cable takes the whole network down |
-| **Ring** | Devices connect directly to each other in a closed loop; data passes device-to-device around the ring | Simple to troubleshoot (data flows one direction); avoids the heavy bottlenecking seen in bus topology | Not efficient — data may have to pass through many devices to reach its destination; one broken link/device can break the entire ring |
-| **Mesh** | Every device connects directly to some or all other devices (partial vs. full mesh) | Highest redundancy and fault tolerance — multiple paths mean one failure rarely isolates a device; no single point of failure | Very expensive and complex to cable/maintain, especially at scale — a full mesh of *n* devices needs a rapidly growing number of connections |
-
-**Diagrams:**
-
-```mermaid
-graph TD
-    S((Switch / Hub))
-    A[Device A] --- S
-    B[Device B] --- S
-    C[Device C] --- S
-    D[Device D] --- S
-```
-*Star topology — everything routes through the central device.*
-
-```mermaid
-graph LR
-    A[Device A] --- B[Device B] --- C[Device C] --- D[Device D]
-```
-*Bus topology — one shared backbone cable, devices tap into it.*
-
-```mermaid
-graph LR
-    A[Device A] --> B[Device B] --> C[Device C] --> D[Device D] --> A
-```
-*Ring topology — a closed loop, data passed device to device.*
-
-```mermaid
-graph TD
-    A[Device A] --- B[Device B]
-    A --- C[Device C]
-    A --- D[Device D]
-    B --- C
-    B --- D
-    C --- D
-```
-*Mesh topology (full mesh) — every device directly connected to every other.*
+| **Star** | All devices connect individually to one central device (switch/hub) | Highly scalable. Easy to add devices; a single failed device doesn't take down the rest of the network | Most expensive (cabling + dedicated hardware); if the central device fails, **everything** connected to it goes down; more devices = more maintenance overhead |
+| **Bus** | All devices share a single "backbone" cable | Cheapest and easiest to set up. Minimal cabling/hardware | Prone to slowdown/bottlenecks as traffic grows; hard to troubleshoot (all traffic shares one path); single point of failure. A broken backbone cable takes the whole network down |
+| **Ring** | Devices connect directly to each other in a closed loop; data passes device-to-device around the ring | Simple to troubleshoot (data flows one direction); avoids the heavy bottlenecking seen in bus topology | Not efficient. Data may have to pass through many devices to reach its destination; one broken link/device can break the entire ring |
+| **Mesh** | Every device connects directly to some or all other devices (partial vs. full mesh) | Highest redundancy and fault tolerance - multiple paths mean one failure rarely isolates a device; no single point of failure | Very expensive and complex to cable/maintain, especially at scale, a full mesh of *n* devices needs a rapidly growing number of connections |
 
 ### A note on bottlenecks
-A **bottleneck** happens when too much data tries to pass through one point in the network at once, slowing everything down — the network equivalent of one narrow doorway with a crowd trying to get through. Bus topology is especially prone to this since every device shares the same single cable; star topology largely avoids it at the edges (each device has its own dedicated link) but can still bottleneck at the central switch/router if it's undersized for the traffic passing through it.
+A **bottleneck** happens when too much data tries to pass through one point in the network at once, slowing everything down. The network equivalent of one narrow doorway with a crowd trying to get through. Bus topology is especially prone to this since every device shares the same single cable; star topology largely avoids it at the edges (each device has its own dedicated link) but can still bottleneck at the central switch/router if it's undersized for the traffic passing through it.
 
 ### What is a Switch?
-**A switch is a networking device that connects multiple devices and forwards data based on MAC address.** It operates at Layer 2 (Data Link layer) and keeps a table mapping which device (MAC address) is connected to which physical port. When it receives data, it forwards it *only* to the intended port — rather than broadcasting it everywhere like an older hub would — which makes it far more efficient and reduces unnecessary network traffic.
+**A switch is a networking device that connects multiple devices and forwards data based on MAC address.** It helps in efficient data transfer.
+It operates at Layer 2 (Data Link layer) and keeps a table mapping which device (MAC address) is connected to which physical port. When it receives data, it forwards it *only* to the intended port rather than broadcasting it everywhere like an older hub would. This makes it far more efficient and reduces unnecessary network traffic.
 
 ### What is a Router?
-**A router is a networking device that routes data packets between different networks based on IP address.** It operates at Layer 3 (Network layer), connecting a **LAN (Local Area Network) to a WAN (Wide Area Network)** — most commonly, connecting your home or office network to the Internet — and determines the best available path for data to travel.
+**A router is a networking device that routes data packets between different networks based on IP addresses.** It operates at Layer 3 (Network layer), connecting **LAN (Local Area Network) to WAN (Wide Area Network) (Internet)** and determines the best path for data transmission.  
 
-```mermaid
-graph LR
-    Internet(("Internet / WAN"))
-    Router[Router]
-    Switch[Switch]
-    PC1[PC]
-    PC2[PC]
+<img width="1409" height="801" alt="image" src="https://github.com/user-attachments/assets/ebe05687-759b-4bb6-a9bc-05734adca45c" />
 
-    Internet --- Router --- Switch
-    Switch --- PC1
-    Switch --- PC2
-```
+
 *The router is the boundary between the local network (LAN) and the wider Internet (WAN); the switch handles distribution within the LAN itself.*
 
 **Q&A**
@@ -82,7 +39,7 @@ graph LR
 
 ---
 
-## Task 2 — A Primer on Subnetting
+## Task 2: A Primer on Subnetting
 
 **Subnetting** is the process of dividing a large network into smaller, more manageable sub-networks ("subnets"). It maintains scalability and reduces the wastage of IP addresses, while also making networks easier to organize and secure — e.g. keeping an Accounting department's devices logically separate from Human Resources', even though both sit under the same overall network.
 
