@@ -37,13 +37,15 @@ It operates at Layer 2 (Data Link layer) and keeps a table mapping which device 
 - What topology is expensive to set up and maintain? **Star Topology**
 - Flag from the interactive topology-breaking lab: **THM{TOPOLOGY_FLAWS}**
 
----
 
 ## Task 2: A Primer on Subnetting
 
-**Subnetting** is the process of dividing a large network into smaller, more manageable sub-networks ("subnets"). It maintains scalability and reduces the wastage of IP addresses, while also making networks easier to organize and secure — e.g. keeping an Accounting department's devices logically separate from Human Resources', even though both sit under the same overall network.
+**Subnetting** is the process of dividing a large network into smaller, more manageable sub-networks ("subnets"). It maintains scalability and reduces the wastage of IP addresses, while also making networks easier to organize and secure. E.g. keeping an Accounting department's devices logically separate from Human Resources', even though both sit under the same overall network.
 
-Subnetting works via a **subnet mask** — like an IP address, made up of four octets (32 bits total), each ranging 0–255. The subnet mask determines how an IP address is split into a network portion and a host portion (see the subnetting note in the *What is Networking* writeup for a worked example).
+Subnetting works via a **subnet mask**, like an IP address, made up of four octets (32 bits total), each ranging 0–255. The subnet mask determines how an IP address is split into a network portion and a host portion (see the subnetting note in the *What is Networking* writeup for a worked example).
+
+<img width="908" height="801" alt="image" src="https://github.com/user-attachments/assets/a6b9bd5e-b370-4ffa-9e8f-34784fd2dc44" />
+
 
 ### The three address types in a subnet
 
@@ -54,11 +56,14 @@ Subnetting works via a **subnet mask** — like an IP address, made up of four o
 | **Default Gateway** | The device (almost always a router) responsible for forwarding traffic to *other* networks | `192.168.1.254` |
 
 ### A note on the Default Gateway
-Think of the default gateway as the "exit door" of a subnet. Any traffic addressed to a device that *isn't* on the same local subnet gets sent here first, and the gateway device (typically a router) then figures out how to forward it onward — whether that's to another internal subnet or out to the Internet. Without a correctly configured default gateway, a device can talk to others on its own subnet just fine, but has no way to reach anything beyond it.
+
+**The default gateway is the IP address of the router that acts as a gateway (next hop address) and connects your local network to other external networks.**
+
+Think of the default gateway as the "exit door" of a subnet. Any traffic addressed to a device that *isn't* on the same local subnet gets sent here first, and the gateway device (typically a router) then figures out how to forward it onward; whether that's to another internal subnet or out to the Internet. Without a correctly configured default gateway, a device can talk to others on its own subnet just fine, but has no way to reach anything beyond it.
 
 ### Why subnetting matters
 - **Efficiency**: avoids wasting large blocks of IP addresses on networks that don't need them.
-- **Security**: separates traffic — e.g. a café's customer Wi-Fi and internal staff/register network can be fully isolated from each other while both still reach the Internet.
+- **Security**: separates traffic,  E.g. a café's customer Wi-Fi and internal staff/register network can be fully isolated from each other while both still reach the Internet.
 - **Control**: administrators can apply different rules, monitoring, or access restrictions per subnet.
 
 **Q&A**
@@ -69,25 +74,24 @@ Think of the default gateway as the "exit door" of a subnet. Any traffic address
 - Address used to identify devices within a network? **Host address**
 - Device responsible for sending data to another network? **Default Gateway**
 
----
 
-## Task 3 — ARP (Address Resolution Protocol)
+## Task 3: ARP (Address Resolution Protocol)
 
-**ARP is the technology that allows devices to identify themselves on a network by linking their MAC address (physical identifier) to their IP address (logical identifier).** Every device keeps a running log — called a **cache** — of these mappings for other devices it has recently communicated with.
+**ARP is the technology that allows devices to identify themselves on a network by linking their MAC address (physical identifier) to their IP address (logical identifier).** Every device keeps a running log called a **cache** of these mappings for other devices it has recently communicated with.
 
 ### A note on cache
-A **cache** is fast, temporary local storage that holds frequently or recently used data so it can be retrieved quickly without repeating the same lookup process. In ARP's case, the **ARP cache** is a local table on each device storing recent IP-to-MAC address pairings — so a device doesn't have to broadcast a new ARP request every single time it wants to talk to the same neighbor again.
+A **cache** is fast, **temporary local storage that stores frequently used data** so it can be retrieved quickly. 
+
+In ARP's case, the **ARP cache** is a **local table that stores recent pairings of IP addresses and their matching physical MAC addresses**, so a device doesn't have to broadcast a new ARP request every single time it wants to talk to the same neighbor again. 
 
 ### How ARP works
-1. **ARP Request**: A device broadcasts a message to the *entire* network — "Who has this IP address?" — with the destination MAC address set to the broadcast address (`FF:FF:FF:FF:FF:FF`), since it doesn't yet know who it's looking for.
+1. **ARP Request**: A device broadcasts a message to the *entire* network: "Who has this IP address?"  with the destination MAC address set to the broadcast address (`FF:FF:FF:FF:FF:FF`), since it doesn't yet know who it's looking for.
 2. **ARP Reply**: Only the device that actually owns that IP address responds directly (unicast) with its MAC address.
 3. The requesting device stores this new IP–MAC mapping in its ARP cache for future use, avoiding the need to repeat the broadcast next time.
 
-```mermaid
-graph LR
-    A[Requesting Device] -->|"ARP Request (broadcast):<br/>Who has 192.168.1.10?"| N[All devices on the network]
-    N -->|"ARP Reply (unicast):<br/>I have it — here's my MAC"| A
-```
+
+<img width="823" height="864" alt="image" src="https://github.com/user-attachments/assets/f47ca17a-d880-4c99-8f93-80158e459b62" />
+
 
 **Q&A**
 - What does ARP stand for? **Address Resolution Protocol**
@@ -95,11 +99,10 @@ graph LR
 - Address used as a physical identifier for a device? **MAC address**
 - Address used as a logical identifier for a device? **IP address**
 
----
 
-## Task 4 — DHCP (Dynamic Host Configuration Protocol)
+## Task 4: DHCP (Dynamic Host Configuration Protocol)
 
-**DHCP is a network service that automatically assigns IP addresses to devices on a network**, sparing administrators from manually configuring one on every single device. Alongside the IP address itself, DHCP typically also hands out other essential network settings — the **subnet mask**, **default gateway**, and **DNS server** to use.
+DHCP stands for Dynamic Host Configuration Protocol. It is a **network service that automatically assigns IP addresses to devices on a network**, sparing administrators from manually configuring one on every single device. Alongside the IP address itself, DHCP typically also hands out other essential network settings: the **subnet mask**, **default gateway**, and **DNS server** to use.
 
 > Everyday example: when your phone connects to a Wi-Fi network, DHCP is what quietly assigns it a working IP address in the background, with no manual setup needed.
 
@@ -111,16 +114,9 @@ graph LR
 | 3 | **Request** | Client replies: "I'll take that IP address." |
 | 4 | **ACK** (Acknowledge) | Server confirms: "Confirmed — that address is yours to use for X hours." |
 
-```mermaid
-sequenceDiagram
-    participant Client
-    participant DHCPServer as DHCP Server
 
-    Client->>DHCPServer: DHCP Discover — "Is anyone able to give me an IP?"
-    DHCPServer-->>Client: DHCP Offer — "You can have 192.168.1.10"
-    Client->>DHCPServer: DHCP Request — "I'll take 192.168.1.10"
-    DHCPServer-->>Client: DHCP ACK — "Confirmed, valid for 24 hours"
-```
+<img width="636" height="870" alt="image" src="https://github.com/user-attachments/assets/15ef59a5-d337-4241-8c51-68881a7ef793" />
+
 
 **Q&A**
 - DHCP packet used by a device to retrieve an IP address? **DHCP Discover**
@@ -131,9 +127,9 @@ sequenceDiagram
 
 ## Key Takeaways
 - Four core topologies: **Star** (scalable, expensive), **Bus** (cheap, bottleneck-prone), **Ring** (simple flow, single break kills it), **Mesh** (most redundant, most expensive).
-- **Switch** = Layer 2, forwards by MAC address, connects devices within a LAN.
-- **Router** = Layer 3, forwards by IP address, connects a LAN to a WAN/the Internet.
-- **Subnetting** splits a network into smaller pieces for efficiency, security, and control — network address, host address, and default gateway are the three key address roles involved.
+- **Switch** = Layer 2, forwards data by MAC address, connects devices within a LAN.
+- **Router** = Layer 3, forwards data by IP address, connects a LAN to a WAN/the Internet.
+- **Subnetting** splits a network into smaller subnets for efficiency, security, and control. Network address, host address, and default gateway are the three key address roles involved.
 - **ARP** maps IP ↔ MAC via a broadcast Request + unicast Reply, cached locally for reuse.
 - **DHCP** automates IP (and related settings) assignment via the Discover → Offer → Request → ACK exchange.
 
