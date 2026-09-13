@@ -3,174 +3,186 @@
 Learn about some of the technologies and designs that power private networks
 
 
-===
-Intro to LAN
-Learn about some of the technologies and designs that power private networks
+## Task 1 — LAN Topologies
 
-Task 1: Introducing LAN Topologies
-Local Area Network (LAN) Topologies
-Over the years, there has been experimentation and implementation of various network designs. In reference to networking, when we refer to the term "topology", we are actually referring to the design or look of the network at hand. Let's discuss the advantages and disadvantages of these topologies below.
+A **topology** is the design/layout of how devices in a network are physically or logically connected. Different topologies trade off cost, scalability, fault tolerance, and ease of troubleshooting.
 
-Star Topology
-The main premise of a star topology is that devices are individually connected via a central networking device such as a switch or hub. This topology is the most commonly found today because of its reliability and scalability - despite the cost.
-Any information sent to a device in this topology is sent via the central device to which it connects. Let's explore some of these advantages and disadvantages of this topology below:
-Because more cabling and the purchase of dedicated networking equipment is required for this topology, it is more expensive than any of the other topologies. However, despite the added cost, this does provide some significant advantages. For example, this topology is much more scalable in nature, which means that it is very easy to add more devices as the demand for the network increases.
-Unfortunately, the more the network scales, the more maintenance is required to keep the network functional. This increased dependence on maintenance can also make troubleshooting faults much harder. Furthermore, the star topology is still prone to failure - albeit reduced. For example, if the centralised hardware that connects devices fails, these devices will no longer be able to send or receive data. Thankfully, these centralised hardware devices are often robust.
-Bus Topology
-This type of connection relies upon a single connection which is known as a backbone cable. This type of topology is similar to the leaf off of a tree in the sense that devices (leaves) stem from where the branches are on this cable.
-Because all data destined for each device travels along the same cable, it is very quickly prone to becoming slow and bottlenecked if devices within the topology are simultaneously requesting data. This bottleneck also results in very difficult troubleshooting because it quickly becomes difficult to identify which device is experiencing issues with data all travelling along the same route.
-However, with this said, bus topologies are one of the easier and more cost-efficient topologies to set up because of their expenses, such as cabling or dedicated networking equipment used to connect these devices.
-Lastly, another disadvantage of the bus topology is that there is little redundancy in place in case of failures. This disadvantage is because there is a single point of failure along the backbone cable. If this cable were to break, devices can no longer receive or transmit data along the bus.
+| Topology | Layout | Advantages | Disadvantages |
+|---|---|---|---|
+| **Star** | All devices connect individually to one central device (switch/hub) | Highly scalable — easy to add devices; a single failed device doesn't take down the rest of the network | Most expensive (cabling + dedicated hardware); if the central device fails, **everything** connected to it goes down; more devices = more maintenance overhead |
+| **Bus** | All devices share a single "backbone" cable | Cheapest and easiest to set up — minimal cabling/hardware | Prone to slowdown/bottlenecks as traffic grows; hard to troubleshoot (all traffic shares one path); single point of failure — a broken backbone cable takes the whole network down |
+| **Ring** | Devices connect directly to each other in a closed loop; data passes device-to-device around the ring | Simple to troubleshoot (data flows one direction); avoids the heavy bottlenecking seen in bus topology | Not efficient — data may have to pass through many devices to reach its destination; one broken link/device can break the entire ring |
+| **Mesh** | Every device connects directly to some or all other devices (partial vs. full mesh) | Highest redundancy and fault tolerance — multiple paths mean one failure rarely isolates a device; no single point of failure | Very expensive and complex to cable/maintain, especially at scale — a full mesh of *n* devices needs a rapidly growing number of connections |
 
-Ring Topology
-The ring topology (also known as token topology) boasts some similarities. Devices such as computers are connected directly to each other to form a loop, meaning that there is little cabling required and less dependence on dedicated hardware such as within a star topology.
-A ring topology works by sending data across the loop until it reaches the destined device, using other devices along the loop to forward the data. Interestingly, a device will only send received data from another device in this topology if it does not have any to send itself. If the device happens to have data to send, it will send its own data first before sending data from another device.
-Because there is only one direction for data to travel across this topology, it is fairly easy to troubleshoot any faults that arise. However, this is a double-edged sword because it isn't an efficient way of data travelling across a network, as it may have to visit many multiple devices first before reaching the intended device.
-Lastly, ring topologies are less prone to bottlenecks, such as within a bus topology, as large amounts of traffic are not travelling across the network at any one time. The design of this topology does, however, mean that a fault such as cut cable, or broken device will result in the entire networking breaking.
+**Diagrams:**
 
-What is a Switch?
-Switches are dedicated devices within a network that are designed to aggregate multiple other devices such as computers, printers, or any other networking-capable device using ethernet. These various devices plug into a switch's port. Switches are usually found in larger networks such as businesses, schools, or similar-sized networks, where there are many devices to connect to the network. Switches can connect a large number of devices by having ports of 4, 8, 16, 24, 32, and 64 for devices to plug into.
-Switches are much more efficient than their lesser counterpart (hubs/repeaters). Switches keep track of what device is connected to which port. This way, when they receive a packet, instead of repeating that packet to every port like a hub would do, it just sends it to the intended target, thus reducing network traffic.
+```mermaid
+graph TD
+    S((Switch / Hub))
+    A[Device A] --- S
+    B[Device B] --- S
+    C[Device C] --- S
+    D[Device D] --- S
+```
+*Star topology — everything routes through the central device.*
 
-What is a Router?
-It's a router's job to connect networks and pass data between them. It does this by using routing (hence the name router!).
-Routing is the label given to the process of data travelling across networks. Routing involves creating a path between networks so that this data can be successfully delivered.
-Routing is useful when devices are connected by many paths, such as in the example diagram below.
+```mermaid
+graph LR
+    A[Device A] --- B[Device B] --- C[Device C] --- D[Device D]
+```
+*Bus topology — one shared backbone cable, devices tap into it.*
 
-Practical
-Attached to this task is an interactive practical featuring the discussed LAN topologies. Learn about the various ways in which they are vulnerable to breaking. Break the LAN topologies to retrieve the flag.
+```mermaid
+graph LR
+    A[Device A] --> B[Device B] --> C[Device C] --> D[Device D] --> A
+```
+*Ring topology — a closed loop, data passed device to device.*
 
-Answer the questions below
-What does LAN stand for?
-Local Area Network
-Correct Answer
-What is the verb given to the job that Routers perform?
-Routing
-Correct Answer
-What device is used to centrally connect multiple devices on the local network and transmit data to the correct location?
-Switch
-Correct Answer
-What topology is cost-efficient to set up?
-Bus Topology
-Correct Answer
-What topology is expensive to set up and maintain?
-Star Topology
-Correct Answer
-Complete the interactive lab attached to this task. What is the flag given at the end?
-THM{TOPOLOGY_FLAWS}
-Correct Answer
+```mermaid
+graph TD
+    A[Device A] --- B[Device B]
+    A --- C[Device C]
+    A --- D[Device D]
+    B --- C
+    B --- D
+    C --- D
+```
+*Mesh topology (full mesh) — every device directly connected to every other.*
 
-# Some edits I need in this topic:
+### A note on bottlenecks
+A **bottleneck** happens when too much data tries to pass through one point in the network at once, slowing everything down — the network equivalent of one narrow doorway with a crowd trying to get through. Bus topology is especially prone to this since every device shares the same single cable; star topology largely avoids it at the edges (each device has its own dedicated link) but can still bottleneck at the central switch/router if it's undersized for the traffic passing through it.
 
-Make the topology notes/information into a table. Add diagrams for the topologies too. Add mesh topology. 
-Add a brief note on bottelnecks 
-Switch definition: A switch is a networking device that connects different network devices and forwards data packets based on MAC address. It helps in effecient data transfer. 
-Router definition: A router is a networking device that routes data packets between different devices based on IP address. It connects LAN to WANs (The internet) (inlcude a diagram or image showing the lan to wan mechanism) and determines the best path for data transmission. 
+### What is a Switch?
+**A switch is a networking device that connects multiple devices and forwards data based on MAC address.** It operates at Layer 2 (Data Link layer) and keeps a table mapping which device (MAC address) is connected to which physical port. When it receives data, it forwards it *only* to the intended port — rather than broadcasting it everywhere like an older hub would — which makes it far more efficient and reduces unnecessary network traffic.
 
-Task 2: A Primer on Subnetting
+### What is a Router?
+**A router is a networking device that routes data packets between different networks based on IP address.** It operates at Layer 3 (Network layer), connecting a **LAN (Local Area Network) to a WAN (Wide Area Network)** — most commonly, connecting your home or office network to the Internet — and determines the best available path for data to travel.
 
-As we've previously discussed throughout the module so far, Networks can be found in all shapes and sizes - ranging from small to large. Subnetting is the term given to splitting up a network into smaller, miniature networks within itself. Think of it as slicing up a cake for your friends. There's only a certain amount of cake to go around, but everybody wants a piece. Subnetting is you deciding who gets what slice & reserving such a slice of this metaphorical cake.
-Take a business, for example; You will have different departments such as:
-Accounting
-Finance
-Human Resources
-Whilst you know where to send information in real life to the correct department, networks need to know as well. Network administrators use subnetting to categorise and assign specific parts of a network to reflect this.
+```mermaid
+graph LR
+    Internet(("Internet / WAN"))
+    Router[Router]
+    Switch[Switch]
+    PC1[PC]
+    PC2[PC]
 
-Subnetting is achieved by splitting up the number of hosts that can fit within the network, represented by a number called a subnet mask. Let's refer back to our diagram from the first room in this module:
+    Internet --- Router --- Switch
+    Switch --- PC1
+    Switch --- PC2
+```
+*The router is the boundary between the local network (LAN) and the wider Internet (WAN); the switch handles distribution within the LAN itself.*
 
-As we can recall, an IP address is made up of four sections called octets. The same goes for a subnet mask which is also represented as a number of four bytes (32 bits), ranging from 0 to 255 (0-255).
-
-Subnets use IP addresses in three different ways:
-
-Identify the network address
-Identify the host address
-Identify the default gateway
-Let's split these three up to understand their purposes into the table below:
-
-Type	Purpose	Explanation	Example
-Network Address 
-This address identifies the start of the actual network and is used to identify a network's existence.
-For example, a device with the IP address of 192.168.1.100 will be on the network identified by 192.168.1.0
-192.168.1.0
-Host Address
-An IP address here is used to identify a device on the subnet
-For example, a device will have the network address of 192.168.1.1
-192.168.1.100
-Default Gateway
-The default gateway address is a special address assigned to a device on the network that is capable of sending information to another network 
-Any data that needs to go to a device that isn't on the same network (i.e. isn't on 192.168.1.0) will be sent to this device. These devices can use any host address but usually use either the first or last host address in a network (.1 or .254)
-192.168.1.254
-
-Now, in small networks such as at home, you will be on one subnet as there is an unlikely chance that you need more than 254 devices connected at one time.
-
-However, places such as businesses and offices will have much more of these devices (PCs, printers, cameras and sensors), where subnetting takes place.
-
-Subnetting provides a range of benefits, including:
-
-Efficiency
-Security
-Full control
-We'll come on to explore exactly how subnetting provides these benefits at a later date; however, for now, all we need to understand is the security element to it. Let's take the typical café on the street. This cafe will have two networks:
-
-One for employees, cash registers, and other devices for the facility
-One for the general public to use as a hotspot
-
-Subnetting allows you to separate these two use cases from each other whilst having the benefits of a connection to larger networks such as the Internet.
-
-Answer the questions below
-What is the technical term for dividing a network up into smaller pieces?
-Subnetting
-Correct Answer
-How many bits are in a subnet mask?
-32 
-Correct Answer
-What is the range of a section (octet) of a subnet mask?
-0-255
-Correct Answer
-What address is used to identify the start of a network?
-Network address
-Correct Answer
-What address is used to identify devices within a network?
-Host address
-Correct Answer
-What is the name used to identify the device responsible for sending data to another network?
-Default Gateway
-Correct Answer
-
-
-# Some edits I need in this topic:
-
-Subnetting definition: Process where a large network is divided into smaller, more manageable subnets. Maintains scalability and reduce the wastage of IP address. 
-
-A brief note on Default Gateway (pathway of data transmission between different networks)
-
-
-<img width="1409" height="801" alt="image" src="https://github.com/user-attachments/assets/445097ef-21dc-47fb-b100-81d2bfb65cdd" />
-
-<img width="1140" height="390" alt="image" src="https://github.com/user-attachments/assets/ee42bbbf-faac-4969-8c88-eb31a1ca4987" />
-
-<img width="908" height="801" alt="image" src="https://github.com/user-attachments/assets/32194459-f263-497c-913d-42a3e44f5b98" />
-
-
-
-
-
-
-
-
-
-
-
+**Q&A**
+- What does LAN stand for? **Local Area Network**
+- What is the verb given to the job that Routers perform? **Routing**
+- What device centrally connects multiple devices and transmits data to the correct location? **Switch**
+- What topology is cost-efficient to set up? **Bus Topology**
+- What topology is expensive to set up and maintain? **Star Topology**
+- Flag from the interactive topology-breaking lab: **THM{TOPOLOGY_FLAWS}**
 
 ---
 
+## Task 2 — A Primer on Subnetting
+
+**Subnetting** is the process of dividing a large network into smaller, more manageable sub-networks ("subnets"). It maintains scalability and reduces the wastage of IP addresses, while also making networks easier to organize and secure — e.g. keeping an Accounting department's devices logically separate from Human Resources', even though both sit under the same overall network.
+
+Subnetting works via a **subnet mask** — like an IP address, made up of four octets (32 bits total), each ranging 0–255. The subnet mask determines how an IP address is split into a network portion and a host portion (see the subnetting note in the *What is Networking* writeup for a worked example).
+
+### The three address types in a subnet
+
+| Type | Purpose | Example |
+|---|---|---|
+| **Network Address** | Identifies the network itself (not any specific device) | `192.168.1.0` |
+| **Host Address** | Identifies an individual device within the subnet | `192.168.1.100` |
+| **Default Gateway** | The device (almost always a router) responsible for forwarding traffic to *other* networks | `192.168.1.254` |
+
+### A note on the Default Gateway
+Think of the default gateway as the "exit door" of a subnet. Any traffic addressed to a device that *isn't* on the same local subnet gets sent here first, and the gateway device (typically a router) then figures out how to forward it onward — whether that's to another internal subnet or out to the Internet. Without a correctly configured default gateway, a device can talk to others on its own subnet just fine, but has no way to reach anything beyond it.
+
+### Why subnetting matters
+- **Efficiency**: avoids wasting large blocks of IP addresses on networks that don't need them.
+- **Security**: separates traffic — e.g. a café's customer Wi-Fi and internal staff/register network can be fully isolated from each other while both still reach the Internet.
+- **Control**: administrators can apply different rules, monitoring, or access restrictions per subnet.
+
+**Q&A**
+- Technical term for dividing a network into smaller pieces: **Subnetting**
+- How many bits are in a subnet mask? **32**
+- Range of a section (octet) of a subnet mask? **0–255**
+- Address used to identify the start of a network? **Network address**
+- Address used to identify devices within a network? **Host address**
+- Device responsible for sending data to another network? **Default Gateway**
+
+---
+
+## Task 3 — ARP (Address Resolution Protocol)
+
+**ARP is the technology that allows devices to identify themselves on a network by linking their MAC address (physical identifier) to their IP address (logical identifier).** Every device keeps a running log — called a **cache** — of these mappings for other devices it has recently communicated with.
+
+### A note on cache
+A **cache** is fast, temporary local storage that holds frequently or recently used data so it can be retrieved quickly without repeating the same lookup process. In ARP's case, the **ARP cache** is a local table on each device storing recent IP-to-MAC address pairings — so a device doesn't have to broadcast a new ARP request every single time it wants to talk to the same neighbor again.
+
+### How ARP works
+1. **ARP Request**: A device broadcasts a message to the *entire* network — "Who has this IP address?" — with the destination MAC address set to the broadcast address (`FF:FF:FF:FF:FF:FF`), since it doesn't yet know who it's looking for.
+2. **ARP Reply**: Only the device that actually owns that IP address responds directly (unicast) with its MAC address.
+3. The requesting device stores this new IP–MAC mapping in its ARP cache for future use, avoiding the need to repeat the broadcast next time.
+
+```mermaid
+graph LR
+    A[Requesting Device] -->|"ARP Request (broadcast):<br/>Who has 192.168.1.10?"| N[All devices on the network]
+    N -->|"ARP Reply (unicast):<br/>I have it — here's my MAC"| A
+```
+
+**Q&A**
+- What does ARP stand for? **Address Resolution Protocol**
+- Category of ARP packet that asks whether a device has a specific IP? **Request**
+- Address used as a physical identifier for a device? **MAC address**
+- Address used as a logical identifier for a device? **IP address**
+
+---
+
+## Task 4 — DHCP (Dynamic Host Configuration Protocol)
+
+**DHCP is a network service that automatically assigns IP addresses to devices on a network**, sparing administrators from manually configuring one on every single device. Alongside the IP address itself, DHCP typically also hands out other essential network settings — the **subnet mask**, **default gateway**, and **DNS server** to use.
+
+> Everyday example: when your phone connects to a Wi-Fi network, DHCP is what quietly assigns it a working IP address in the background, with no manual setup needed.
+
+### The DHCP process (DORA)
+| Step | Message | Meaning |
+|---|---|---|
+| 1 | **Discover** | Client broadcasts: "Is anyone able to give me an IP address?" |
+| 2 | **Offer** | A DHCP server responds: "You can have this IP address." |
+| 3 | **Request** | Client replies: "I'll take that IP address." |
+| 4 | **ACK** (Acknowledge) | Server confirms: "Confirmed — that address is yours to use for X hours." |
+
+```mermaid
+sequenceDiagram
+    participant Client
+    participant DHCPServer as DHCP Server
+
+    Client->>DHCPServer: DHCP Discover — "Is anyone able to give me an IP?"
+    DHCPServer-->>Client: DHCP Offer — "You can have 192.168.1.10"
+    Client->>DHCPServer: DHCP Request — "I'll take 192.168.1.10"
+    DHCPServer-->>Client: DHCP ACK — "Confirmed, valid for 24 hours"
+```
+
+**Q&A**
+- DHCP packet used by a device to retrieve an IP address? **DHCP Discover**
+- DHCP packet sent once a device has been offered an IP? **DHCP Request**
+- Final DHCP packet sent from server to device? **DHCP ACK**
+
+---
+
+## Key Takeaways
+- Four core topologies: **Star** (scalable, expensive), **Bus** (cheap, bottleneck-prone), **Ring** (simple flow, single break kills it), **Mesh** (most redundant, most expensive).
+- **Switch** = Layer 2, forwards by MAC address, connects devices within a LAN.
+- **Router** = Layer 3, forwards by IP address, connects a LAN to a WAN/the Internet.
+- **Subnetting** splits a network into smaller pieces for efficiency, security, and control — network address, host address, and default gateway are the three key address roles involved.
+- **ARP** maps IP ↔ MAC via a broadcast Request + unicast Reply, cached locally for reuse.
+- **DHCP** automates IP (and related settings) assignment via the Discover → Offer → Request → ACK exchange.
 
 
-<img width="700" height="593" alt="image" src="https://github.com/user-attachments/assets/1db45864-d9e6-4686-8c77-d22e2505b822" />
 
-<img width="1140" height="801" alt="image" src="https://github.com/user-attachments/assets/2332aa08-6fd2-46e2-a2af-783cb625bff5" />
 
-<img width="878" height="801" alt="image" src="https://github.com/user-attachments/assets/cfa9b20e-97e1-4931-a4c8-1b4d81e16666" />
 
-<img width="1409" height="801" alt="image" src="https://github.com/user-attachments/assets/5a3d09c4-9627-4fe1-89c0-6453c42c0d43" />
+
 
