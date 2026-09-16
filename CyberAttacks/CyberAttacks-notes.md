@@ -43,3 +43,18 @@ If a developer implements weak security filters (like blocking the word "localho
  * **Internal Network Mapping (Port Scanning)**: The attacker uses the server as a proxy to test every internal IP address and port (e.g., trying to connect to port 22 for SSH or port 3306 for MySQL). This lets them map out the company's hidden internal network topology.
  * **Accessing Internal APIs and Admin Panels**: Many internal tools (like administrative dashboards or database management consoles) lack strong authentication because developers assume they are safe behind the corporate firewall. An SSRF attack allows the attacker to interact with these consoles with full admin privileges.
  * **Remote Code Execution (RCE)**: In worst-case scenarios, attackers use SSRF to send malicious commands to unauthenticated internal services (like Redis or Webmin), allowing them to take total control over the internal network servers.
+
+## 2. IDOR 
+
+Insecure Direct Object Reference
+
+eg. Access to patients reports/pdf via url means. 
+https://sc1.sukraa.in/LeoLab/pdffiles/_xxxxx.pdf_
+
+Here, the last part (italicized), poses the vulnerability. 
+This specific URL uses the combination of sample ID + Date. This makes it easier for anyone to access other patient records using random IDs and dates. 
+for eg. 12345677-2026-01-01.pdf or 26536378-2026-11-19.pdf (each would be a pdf record of a patient)
+
+Solution: 1. Password protected pdf (unique identifier can be used to open the pdf file that's only accessible to the patient/family)
+          2. UUID (random unique ID) It's when a developer opens the pdf -> open developer tools -> typer in crypto.randomUUID () -> enter (gives you the ID) -> Save this ID to the database -> Rename the pdf with this random UUID. 
+
