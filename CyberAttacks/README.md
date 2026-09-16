@@ -13,3 +13,5 @@ __Not in detail, just what you need to know, really.__
 
 **1. SSRF**
 
+**2. IDOR**
+
