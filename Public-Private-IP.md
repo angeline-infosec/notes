@@ -53,6 +53,19 @@ The basic idea: A DDoS (Distributed Denial of Service) attack floods your connec
 What "sending traffic" means: Every action on the internet involves your device sending/receiving small packets of data (requests and responses) to/from servers. Normally, this is a small, proportional amount, you ask for a webpage, the server sends it back. In a DDoS, thousands of sources flood the target's IP with packets simultaneously: pings, connection requests, data packets. There's no special malicious payload involved; it's about volume and rate, not content. Your router/connection has finite capacity to process incoming packets; when the incoming volume vastly exceeds that, legitimate traffic (your actual browsing, calls) gets crowded out or dropped.
 (Analogy: like thousands of people calling your phone nonstop, none of them say anything threatening, but the line is too busy for any real call to get through.)
 
+### How attackers actually generate the flood of traffic 
+
+Once an attacker has a target IP, their botnet/booter is configured to send traffic using one of a few standard methods:
+
+1. UDP flood: Massive number of UDP packets to random ports. The target has to reply "unreachable" to each, exhausting resources.
+2. ICMP/ping flood: Overwhelming volume of ping requests, saturating bandwidth just from sheer quantity.
+3. SYN flood: Sends TCP connection requests but never completes them. The target holds open "half-open" connections until it runs out of capacity to accept real ones.
+4. Amplification/reflection: Attacker sends a small spoofed request to a third-party server (DNS/NTP) pretending to be the target; the server's large response floods the target instead, small attacker effort, disproportionately large impact.
+5. Application-layer floods: Repeated legitimate-looking requests that force a service to do expensive processing - more relevant to websites/servers than home connections.
+
+   
+For home IPs specifically: almost always a volume flood or amplification attack, routed through a botnet or a paid booter service with a simple dashboard (paste IP, pick attack type, click go). No custom coding needed by the attacker.
+
 ### What resources an attacker actually needs:
 
 A **botnet** or a rented **"booter/stresser" service**: A single attacker's home connection usually can't generate enough traffic to disrupt most connections, since ISP bandwidth is typically higher than what one machine can push. Real attacks need either:
