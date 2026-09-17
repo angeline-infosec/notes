@@ -46,6 +46,37 @@
 - To reduce exposure: keep router firmware updated, don't expose admin panels to the WAN, use strong router passwords, and use a VPN if you want to mask your public IP from sites/services you connect to.
 - A DDoS against your public IP could disrupt your connection, annoying, but not a device compromise.
 
+### How does a DDoS attack on your public IP actually work?
+  
+The basic idea: A DDoS (Distributed Denial of Service) attack floods your connection or a target server with more traffic than it can handle, so legitimate traffic can't get through. It's not "hacking" or breaking in; it's overwhelming by volume.
+
+What "sending traffic" means: Every action on the internet involves your device sending/receiving small packets of data (requests and responses) to/from servers. Normally, this is a small, proportional amount, you ask for a webpage, the server sends it back. In a DDoS, thousands of sources flood the target's IP with packets simultaneously: pings, connection requests, data packets. There's no special malicious payload involved; it's about volume and rate, not content. Your router/connection has finite capacity to process incoming packets; when the incoming volume vastly exceeds that, legitimate traffic (your actual browsing, calls) gets crowded out or dropped.
+(Analogy: like thousands of people calling your phone nonstop, none of them say anything threatening, but the line is too busy for any real call to get through.)
+
+### What resources an attacker actually needs:
+
+A **botnet** or a rented **"booter/stresser" service**: A single attacker's home connection usually can't generate enough traffic to disrupt most connections, since ISP bandwidth is typically higher than what one machine can push. Real attacks need either:
+
+**A botnet**: thousands of compromised devices (infected computers, routers, IoT devices) controlled remotely, all sending traffic at once
+**A booter/stresser service**: paid services that rent out botnet capacity. This is how most troll/script-kiddie-level attacks happen; the person didn't build anything, they paid a small fee to a third-party service
+Bandwidth greater than the target's connection. For a home network, this doesn't need to be huge. A residential fiber connection might have only 100–300 Mbps. Overwhelming that requires sustained traffic meaningfully above that.
+
+**Amplification/reflection techniques**: Attackers often abuse protocols (DNS, NTP, certain UDP services) that respond to a small request with a much larger response, spoofing the target's IP as the "requester." This massively amplifies a small amount of attacker bandwidth before it hits the target why some attacks look disproportionately powerful for how simple they are.
+
+### What actually happens to you if this hits your home connection:
+
+* Internet slows drastically or drops entirely while the attack is ongoing
+* Returns to normal once it stops. No lasting damage, no device compromise, nothing "hacked"
+* ISP may notice unusual traffic and, in some cases, temporarily change your IP or reach out
+  
+Why it's rarely a real threat for ordinary people: Booter services cost money and carry real legal risk. DDoS-for-hire is illegal in essentially every jurisdiction. Spending money/effort to knock an ordinary person offline briefly is rare in practice though it happens mostly in competitive gaming (kicking someone from a match) or targeted harassment, not random trolls making empty threats in chat.
+
+Defense, if genuinely concerned:
+
+* Most ISPs/routers have baseline DDoS mitigation built in
+* Reducing unnecessary IP exposure (per earlier sections) lowers odds of being specifically targeted
+* A VPN helps specifically here. The attacker would hit the VPN provider's IP instead of yours, and VPN providers have infrastructure built to absorb this kind of traffic
+
 
 ## Is a VPN "always recommended"? Not really, it's situational
 
