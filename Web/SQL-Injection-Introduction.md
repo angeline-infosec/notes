@@ -9,8 +9,6 @@ Learn how to detect and exploit SQL Injection vulnerabilities.
 
 > Note: this covers the **SQL Injection** room. Once you've done the **SQL Injection Introduction** room, send over its content and I'll fold any new material into this same file rather than creating a duplicate.
 
----
-
 ## Task 1: Brief
 
 **Definition:** SQL Injection (SQLi) is a web security vulnerability where an attacker inserts malicious SQL commands into input fields — such as a search bar or login box — to trick the application into running unintended database queries. It's one of the oldest web application vulnerabilities, and also one of the most damaging, since a successful attack can expose, alter, or delete an entire database.
@@ -36,8 +34,6 @@ The vulnerability exists specifically at step 2 — the moment raw user input be
 
 **Q&A**
 - What does SQL stand for? **Structured Query Language**
-
----
 
 ## Task 2: What is a Database?
 
