@@ -11,7 +11,7 @@ Learn how to detect and exploit SQL Injection vulnerabilities.
 
 ---
 
-## Task 1 — Brief
+## Task 1: Brief
 
 **Definition:** SQL Injection (SQLi) is a web security vulnerability where an attacker inserts malicious SQL commands into input fields — such as a search bar or login box — to trick the application into running unintended database queries. It's one of the oldest web application vulnerabilities, and also one of the most damaging, since a successful attack can expose, alter, or delete an entire database.
 
@@ -39,7 +39,7 @@ The vulnerability exists specifically at step 2 — the moment raw user input be
 
 ---
 
-## Task 2 — What is a Database?
+## Task 2: What is a Database?
 
 **Definition:** A database is a way of electronically storing a collection of data in an organized manner. It's managed by a **DBMS (Database Management System)**, which falls into one of two categories:
 
@@ -99,7 +99,7 @@ graph TD
 
 ---
 
-## Task 3 — What is SQL?
+## Task 3: What is SQL?
 
 **Definition:** SQL (Structured Query Language) is a standardized programming language used to store, manage, and retrieve data in relational databases. SQL syntax is **not case-sensitive**, though exact syntax can vary slightly between database systems (MySQL, PostgreSQL, SQL Server, etc.) — the examples below use MySQL syntax.
 
@@ -128,7 +128,7 @@ graph TD
 
 ---
 
-## Task 4 — What is SQL Injection?
+## Task 4: What is SQL Injection?
 
 **Definition:** SQL injection is a web security vulnerability where an attacker inserts malicious SQL commands into input fields — such as a search bar or login box — to trick the application into running unintended database queries. (Same core definition as Task 1 — this task shows it in action.)
 
@@ -160,7 +160,7 @@ The `;` ends the SQL statement early, and `--` comments out everything after it 
 
 ---
 
-## Task 5 — In-Band SQLi
+## Task 5: In-Band SQLi
 
 **In-Band SQL Injection** is the easiest type to detect and exploit — the same channel used to send the malicious input is also used to retrieve results.
 
@@ -174,7 +174,7 @@ The `;` ends the SQL statement early, and `--` comments out everything after it 
 
 ---
 
-## Task 6 — Blind SQLi: Authentication Bypass
+## Task 6: Blind SQLi: Authentication Bypass
 
 **Blind SQLi** gives little to no direct feedback about whether an injected query succeeded (error messages are disabled) — yet the injection still works underneath.
 
@@ -193,7 +193,7 @@ Since `1=1` is always true and it's joined with `OR`, the whole condition evalua
 
 ---
 
-## Task 7 — Blind SQLi: Boolean-Based
+## Task 7: Blind SQLi: Boolean-Based
 
 **Boolean-based SQLi** relies on a response that can only be one of two states — true/false, yes/no, 1/0. Even with just that binary signal, it's possible to enumerate an entire database character by character.
 
@@ -204,7 +204,7 @@ Since `1=1` is always true and it's joined with `OR`, the whole condition evalua
 
 ---
 
-## Task 8 — Blind SQLi: Time-Based
+## Task 8: Blind SQLi: Time-Based
 
 **Time-based SQLi** is used when there's *no* visible true/false signal at all. Instead, success is measured by how long the response takes — using a built-in delay function like `SLEEP(x)`, which only executes if the injected `UNION SELECT` was actually valid.
 
@@ -215,7 +215,7 @@ Example: `UNION SELECT SLEEP(5);--` — if the response is delayed by 5 seconds,
 
 ---
 
-## Task 9 — Out-of-Band SQLi
+## Task 9: Out-of-Band SQLi
 
 **Out-of-band SQLi** is less common, since it depends on specific database features being enabled, or on application logic that triggers an external network call based on query results. It's defined by using **two separate channels**: one to send the attack, and a completely different one to receive the results (e.g. monitoring DNS or HTTP requests hitting a server the attacker controls).
 
@@ -231,7 +231,7 @@ graph LR
 
 ---
 
-## Task 10 — Remediation
+## Task 10: Remediation
 
 Three main defenses against SQL injection, from most to least effective:
 
