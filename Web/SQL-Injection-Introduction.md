@@ -93,7 +93,6 @@ graph TD
 - Acronym for the software that controls a database? **DBMS**
 - Name of the grid-like structure that holds the data? **table**
 
----
 
 ## Task 3: What is SQL?
 
@@ -122,7 +121,6 @@ graph TD
 - SQL clause used to retrieve data from multiple tables? **UNION**
 - SQL statement used to add data? **INSERT**
 
----
 
 ## Task 4: What is SQL Injection?
 
@@ -154,7 +152,6 @@ The `;` ends the SQL statement early, and `--` comments out everything after it 
 **Q&A**
 - What character signifies the end of an SQL query? **`;`**
 
----
 
 ## Task 5: In-Band SQLi
 
@@ -168,7 +165,6 @@ The `;` ends the SQL statement early, and `--` comments out everything after it 
 **Q&A**
 - Flag after completing level 1: **THM{SQL_INJECTION_3840}**
 
----
 
 ## Task 6: Blind SQLi: Authentication Bypass
 
@@ -187,7 +183,6 @@ Since `1=1` is always true and it's joined with `OR`, the whole condition evalua
 **Q&A**
 - Flag after completing level 2: **THM{SQL_INJECTION_9581}**
 
----
 
 ## Task 7: Blind SQLi: Boolean-Based
 
@@ -198,7 +193,6 @@ Since `1=1` is always true and it's joined with `OR`, the whole condition evalua
 **Q&A**
 - Flag after completing level 3: **THM{SQL_INJECTION_1093}**
 
----
 
 ## Task 8: Blind SQLi: Time-Based
 
@@ -209,7 +203,6 @@ Example: `UNION SELECT SLEEP(5);--` — if the response is delayed by 5 seconds,
 **Q&A**
 - Final flag after completing level 4: **THM{SQL_INJECTION_MASTER}**
 
----
 
 ## Task 9: Out-of-Band SQLi
 
@@ -225,7 +218,6 @@ graph LR
 **Q&A**
 - Protocol beginning with D used to exfiltrate data from a database? **DNS**
 
----
 
 ## Task 10: Remediation
 
@@ -238,7 +230,6 @@ Three main defenses against SQL injection, from most to least effective:
 **Q&A**
 - Name a method of protecting yourself from an SQL injection exploit: **Prepared statements**
 
----
 
 ## Key Takeaways
 - SQLi happens when unvalidated user input becomes part of an executed SQL command, rather than staying pure data.
