@@ -237,3 +237,13 @@ Three main defenses against SQL injection, from most to least effective:
 - `UNION`-based attacks require matching the target query's column count exactly — that's why column-count probing (`1`, `1,2`, `1,2,3`...) is always the first step.
 - `information_schema` is the key to enumerating unknown database/table/column names once a UNION injection point is found.
 - The strongest defense is **prepared statements/parameterized queries** — input validation and escaping are useful supplements, not substitutes.
+
+
+
+
+
+---
+
+
+---
+
