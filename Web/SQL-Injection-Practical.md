@@ -85,9 +85,8 @@ All usernames and passwords appear on the page. Find Martin's password and enter
 
 Click Check Password to find the first flag. 
 
-## Flag: THM{SQL_INJECTION_3840}
+### Flag: THM{SQL_INJECTION_3840}
 
----
 
 ## Level 2: Authentication Bypass
 
@@ -124,9 +123,8 @@ The password field is irrelevant because ```--``` removes it from the query befo
 
 Click Login. You will see a message confirming the bypass. Click Level 3 to find the second flag,
 
-## Flag: THM{SQL_INJECTION_9581}
+### Flag: THM{SQL_INJECTION_9581}
 
----
 
 ## Level 3: Boolean-Based Blind SQLi
 
@@ -262,9 +260,8 @@ Work through the same way. The password is 3845.
 
 Enter admin and 3845 in the bottom form. Click Login to find the third flag and get to Level 4.
 
-## Flag: THM{SQL_INJECTION_1093}
+### Flag: THM{SQL_INJECTION_1093}
 
----
 
 ## Level 4: Time-Based Blind SQLi
 
@@ -373,7 +370,7 @@ Enter ```admin``` and ```4961``` in the login form and click Login to get the fi
 <img width="1912" height="806" alt="image" src="https://github.com/user-attachments/assets/fe7eb2f1-6987-484d-acf1-2fb965be0c14" />
 
 
-## Flag: THM{SQL_INJECTION_MASTER}
+### Flag: THM{SQL_INJECTION_MASTER}
 
 Take a moment to think about what you actually did here. You extracted a full set of credentials without the application ever returning a single byte of database content. No data in the page, no error messages, no boolean signal to read. Every digit of that password came from watching whether a response took 3 seconds or arrived immediately, repeated across dozens of requests.
 
