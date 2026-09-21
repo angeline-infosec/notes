@@ -4,7 +4,7 @@ Learn how to detect and exploit SQL Injection vulnerabilities.
 
 **_Contains both [SQL Injection](https://tryhackme.com/room/sqlinjectionlm) and [SQL Injection Introduction](https://tryhackme.com/room/sqlinjectionintroduction) rooms_**
 
-# [SQL Injection](https://tryhackme.com/room/sqlinjectionlm) 
+# SQL Injection
 
 
 > Note: this covers the **SQL Injection** room. Once you've done the **SQL Injection Introduction** room, send over its content and I'll fold any new material into this same file rather than creating a duplicate.
