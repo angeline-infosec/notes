@@ -14,6 +14,8 @@ Learn how to detect and exploit SQL Injection vulnerabilities.
 
 ## SQL Essentials for Injection
 
+**What is SQL?** SQL, which stands for Structured Query Language, is a standardized programming language used to store, manage, and retrieve data stored in relational databases. SQL syntax is not case-sensitive, and changes according to the DB (exact syntax varies slightly between MySQL, PostgreSQL, SQL Server, etc.) — examples below use MySQL.
+
 Before the injection techniques themselves, a few SQL building blocks make the payloads make sense.
 
 ### Core statements
@@ -65,20 +67,35 @@ Every MySQL, MariaDB, and PostgreSQL server has a built-in database called **`in
 
 ## What is a Database?
 
-A **database** is a way of electronically storing a collection of data in an organized manner, managed by a **DBMS (Database Management System)**.
+### About Databases
+- A database is a way of electronically storing a collection of data in an organized manner.
+- A database is managed by the DBMS (Database Management System).
+- Two types of DBMSs: **Relational** and **Non-relational** database.
+- Relational DB examples: MySQL, SQLite, Microsoft SQL, etc.
 
-### Relational vs. Non-Relational
+### Relational Database
+- A **relational database** stores data in structured **tables** made up of rows and columns.
+- Tables can be connected using relationships such as **primary keys** and **foreign keys**.
+- Relational databases generally use **SQL (Structured Query Language)** to store, retrieve, and manage data.
+- They are suitable when data has a clear and consistent structure.
+- Examples: MySQL, PostgreSQL, Oracle, Microsoft SQL Server.
 
-| | Relational | Non-Relational (NoSQL) |
+### Non-Relational Database
+- A **non-relational database (NoSQL)** does not require data to be stored in traditional tables with fixed rows and columns.
+- It can store data as **documents, key-value pairs, graphs, or wide-column structures**.
+- These databases are useful when data is large, unstructured, or changes frequently.
+- Examples: MongoDB, Redis, Cassandra, Neo4j.
+
+| Difference | Relational | Non-Relational |
 |---|---|---|
-| **Data structure** | Tables (rows & columns) | Documents, key-value pairs, graphs, etc. |
-| **Schema** | Usually fixed/structured | Flexible |
-| **Relationships** | Strong support via primary/foreign keys | Usually less dependent on relationships |
-| **Query language** | SQL | Varies by database |
-| **Best suited for** | Structured, consistent data | Flexible or rapidly changing data |
-| **Examples** | MySQL, PostgreSQL, Oracle, SQL Server | MongoDB, Redis, Cassandra, Neo4j |
+| Data structure | Tables (rows & columns) | Documents, key-value, graphs, etc. |
+| Schema | Usually fixed/structured | Flexible |
+| Relationships | Strong support using keys | Usually less dependent on relationships |
+| Query language | SQL | Varies by database |
+| Best suited for | Structured, consistent data | Flexible or rapidly changing data |
+| Example | **MySQL** | **MongoDB** |
 
-**Simple example**: a college database of students/courses/marks fits relational, since the data has clear relationships. A social media app's varied posts/comments/profiles often suits non-relational instead.
+**Simple example:** A college database containing students, courses, and marks would typically use a relational database because the data has clear relationships. A social-media application storing varied user posts, comments, and profiles might use a non-relational database because the data structure can vary.
 
 ### Tables, columns, and rows
 - A **table** is a grid — columns run left to right, rows run top to bottom.
@@ -108,9 +125,32 @@ graph TD
 
 ## What is SQL Injection?
 
-**Definition**: SQL Injection occurs when a web application incorporates user-supplied input directly into a SQL query without proper sanitization or parameterization. The attacker's input gets treated as SQL *code* rather than plain *data*, letting them alter the query's logic.
+**Definition**: SQL injection is a web security vulnerability where an attacker inserts malicious SQL commands into input fields such as the search bar or login box to trick the application into running unintended database queries.
 
-**Worked example**: a blog at `https://website.thm/article?id=1` likely runs:
+### The sequence of events
+1. **The User Inputs Data**: The user types input into a form field (like a login or search box).
+2. **The App Builds a Query**: The web application takes that input and drops it directly into a SQL string without validating or parameterizing it.
+3. **The Database Executes the Code**: The database reads the user's input as an instruction (not just text) and runs it.
+4. **The App Responds (Optional)**: The web application sends a response back to the user based on what the database did.
+
+```mermaid
+graph TD
+    A[1. User inputs data<br/>into a form field, e.g. login or search box] --> B[2. App builds a query<br/>User input dropped directly into a SQL string,<br/>without validating or parameterizing it]
+    B --> C[3. Database executes the code<br/>Input is run as an instruction, not treated as plain text]
+    C --> D[4. App responds optional<br/>Result sent back to the user based on what the database did]
+```
+
+The vulnerability lives specifically at step 2 — the moment raw user input becomes part of the actual SQL command, rather than being treated purely as data.
+
+### Example SQL injection queries
+| Injected input | Effect |
+|---|---|
+| `' OR 1=1;--` | Turns a login check into an always-true condition, bypassing authentication |
+| `1; DROP TABLE users;--` | Appends a destructive command to delete an entire table |
+| `' UNION SELECT username, password FROM users;--` | Pulls extra data (e.g. credentials) into the page's normal output |
+| `admin'--` | Comments out the rest of a query (e.g. a password check) so only the first condition matters |
+
+**Worked example** (how this plays out on a real URL): a blog at `https://website.thm/article?id=1` likely runs:
 ```sql
 SELECT * FROM articles WHERE id = 1 AND public = 1;
 ```
