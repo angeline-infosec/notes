@@ -6,8 +6,6 @@ Learn how to detect and exploit SQL Injection vulnerabilities.
 
 # SQL Injection
 
-## Introduction
-
 **SQL Injection (SQLi)** is one of the most well-known and dangerous web application vulnerabilities, listed under OWASP's Injection category. It occurs when an attacker manipulates the SQL queries a web application sends to its database — with consequences ranging from unauthorized data access and bypassed authentication to full compromise of the database server. Despite being one of the oldest vulnerability classes in web security, it remains at the root of major real-world data breaches, which is exactly why it's a fundamental skill for both offensive (pentesting) and defensive (SOC/detection) roles.
 
 ---
