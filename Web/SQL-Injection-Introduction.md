@@ -6,13 +6,14 @@ Learn how to detect and exploit SQL Injection vulnerabilities.
 
 # SQL Injection
 
-**SQL Injection (SQLi)** is one of the most well-known and dangerous web application vulnerabilities, listed under OWASP's Injection category. It occurs when an attacker manipulates the SQL queries a web application sends to its database — with consequences ranging from unauthorized data access and bypassed authentication to full compromise of the database server. Despite being one of the oldest vulnerability classes in web security, it remains at the root of major real-world data breaches, which is exactly why it's a fundamental skill for both offensive (pentesting) and defensive (SOC/detection) roles.
+**SQL Injection (SQLi)** is one of the most well-known and dangerous web application vulnerabilities, listed under OWASP's Injection category. It occurs when an attacker manipulates the SQL queries a web application sends to its database, with consequences ranging from unauthorized data access and bypassed authentication to full compromise of the database server. Despite being one of the oldest vulnerability classes in web security, it remains at the root of major real-world data breaches.
 
----
 
 ## SQL Essentials for Injection
 
-**What is SQL?** SQL, which stands for Structured Query Language, is a standardized programming language used to store, manage, and retrieve data stored in relational databases. SQL syntax is not case-sensitive, and changes according to the DB (exact syntax varies slightly between MySQL, PostgreSQL, SQL Server, etc.) — examples below use MySQL.
+**What is SQL?** 
+
+SQL, which stands for Structured Query Language, is a standardized programming language used to store, manage, and retrieve data stored in relational databases. SQL syntax is not case-sensitive, and changes according to the DB (exact syntax varies slightly between MySQL, PostgreSQL, SQL Server, etc.); examples below use MySQL.
 
 Before the injection techniques themselves, a few SQL building blocks make the payloads make sense.
 
@@ -22,17 +23,18 @@ Before the injection techniques themselves, a few SQL building blocks make the p
 |---|---|---|
 | **SELECT** | Retrieve data | `SELECT * FROM users;` |
 | **WHERE** | Filter which rows are returned | `SELECT * FROM users WHERE username='admin';` |
-| **LIKE** + wildcards | Pattern-match strings — `%` matches any sequence, `_` matches exactly one character | `SELECT * FROM users WHERE username LIKE 'adm%';` → matches admin, administrator, etc. |
+| **LIKE** + wildcards | Pattern-match strings. `%` matches any sequence, `_` matches exactly one character | `SELECT * FROM users WHERE username LIKE 'adm%';` → matches admin, administrator, etc. |
 | **LIMIT** | Restrict rows returned; `LIMIT offset, count` skips rows then returns a count | `SELECT * FROM users LIMIT 2,1;` → skips 2 rows, returns the 3rd |
 | **UNION** | Combines results from two or more `SELECT` statements into one result set | `SELECT name FROM customers UNION SELECT company FROM suppliers;` |
 | **INSERT** | Add a new row | `INSERT INTO users (username,password) VALUES ('bob','pw123');` |
 | **UPDATE** | Modify existing row(s) | `UPDATE users SET password='new' WHERE username='admin';` |
-| **DELETE** | Remove row(s) — ⚠️ no `WHERE` clause deletes *everything* | `DELETE FROM users WHERE username='martin';` |
+| **DELETE** | Remove row(s). No `WHERE` clause deletes *everything* | `DELETE FROM users WHERE username='martin';` |
 
-**UNION's one hard rule**: both `SELECT` statements must return the **same number of columns**, with compatible data types, in the same order. This single rule is exactly what makes Union-Based SQLi both a *technique* (an attacker must match column count to append their own data) and a *detectable fingerprint* (mismatched column-count errors are the giveaway).
+**UNION's one hard rule**: both `SELECT` statements must return the same number of columns, with compatible data types, in the same order. This single rule is exactly what makes Union-Based SQLi both a technique (an attacker must match column count to append their own data) and a detectable fingerprint (mismatched column-count errors are the giveaway).
 
 ### SQL Comments
-Comments tell the database to ignore everything after them on the line — critical for injection, since there's often leftover syntax after an injection point that would otherwise cause an error.
+Comments tell the database to ignore everything after them on the line. Critical for injection, since leftover syntax after an injection point would otherwise cause an error.
+
 - `--` (double dash + space) or `#` → single-line comment (MySQL)
 - `/* ... */` → multi-line comment
 
@@ -44,22 +46,22 @@ into:
 ```sql
 SELECT * FROM users WHERE username='admin'-- AND password='secret';
 ```
-Everything after `--` is ignored — the password check never runs.
+Everything after `--` is ignored, and the password check never runs.
 
 ### String functions used in extraction
 - **`group_concat()`**: merges values from multiple rows into a single comma-separated string, e.g. `group_concat(username,':',password SEPARATOR '<br>')` → `admin:pass123<br>martin:secret`. Useful because injection often only has *one* usable output column to work with, so cramming multiple rows/values into that one string is essential.
 - **`CONCAT()`**: joins individual values together for a single row, e.g. `CONCAT(username,':',password)` → `admin:pass123`.
 
 ### The `information_schema` database
-Every MySQL, MariaDB, and PostgreSQL server has a built-in database called **`information_schema`** — metadata about every other database on the server (database names, table names, column names, data types). It's effectively the database's map of itself, and it's the mechanism that turns "I found an injection point" into "I know the entire structure of this database":
-- **`information_schema.tables`** — lists every table (`table_schema` = database name, `table_name` = table name)
-- **`information_schema.columns`** — lists every column (`table_name` + `column_name`)
+Every MySQL, MariaDB, and PostgreSQL server has a built-in database called **`information_schema`**. It contains metadata about every other database on the server (database names, table names, column names, data types). It's effectively the database's map of itself, and it's the mechanism that turns "I found an injection point" into "I know the entire structure of this database":
+- **`information_schema.tables`**: lists every table (`table_schema` = database name, `table_name` = table name)
+- **`information_schema.columns`**: lists every column (`table_name` + `column_name`)
 
-**Note on database engines**: all of the above (and the payloads throughout this writeup) use **MySQL** syntax. MSSQL, PostgreSQL, SQLite, and Oracle each have their own comment syntax, system tables, and functions — the core *concepts* transfer directly, but exact payloads differ per engine.
+**Note on database engines**: all of the above (and the payloads throughout this writeup) use **MySQL** syntax. MSSQL, PostgreSQL, SQLite, and Oracle each have their own comment syntax, system tables, and functions. The core concepts transfer directly, but exact payloads differ per engine.
 
 **Q&A**
 - What SQL statement combines results from two SELECT queries into one result set? **UNION**
-- What built-in database contains metadata about all other databases/tables/columns in MySQL? **`information_schema`**
+- What built-in database contains metadata about all other databases/tables/columns in MySQL? **information_schema**
 
 ---
 
