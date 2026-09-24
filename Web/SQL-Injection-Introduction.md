@@ -63,7 +63,6 @@ Every MySQL, MariaDB, and PostgreSQL server has a built-in database called **`in
 - What SQL statement combines results from two SELECT queries into one result set? **UNION**
 - What built-in database contains metadata about all other databases/tables/columns in MySQL? **information_schema**
 
----
 
 ## What is a Database?
 
