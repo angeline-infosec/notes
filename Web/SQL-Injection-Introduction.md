@@ -291,6 +291,9 @@ The same character-by-character enumeration process as Boolean-based applies —
 
 **Out-of-Band (OOB)** SQLi is used as a last resort — when In-Band gives no visible output, Boolean-based gives no behavioral difference, and Time-based is too unreliable or blocked. It requires **two separate channels**: one to deliver the attack, and a completely different one (usually DNS or HTTP) to receive the exfiltrated results. Critically, it only works if **the database server itself has outbound network access** — if a firewall blocks all outbound traffic from the DB server, OOB isn't viable.
 
+<img width="371" height="357" alt="image" src="https://github.com/user-attachments/assets/4f1fedcd-2dfb-45d4-a21f-04e429fa9fe1" />
+
+
 ```mermaid
 graph LR
     A[Attacker] -->|"1. Sends SQLi payload"| B[Vulnerable Website]
