@@ -15,3 +15,4 @@ __Not in detail, just what you need to know, really.__
 
 **2. IDOR**
 
+**3. SQL Injection (SQLi)**
