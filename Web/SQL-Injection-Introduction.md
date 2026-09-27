@@ -382,7 +382,7 @@ Both rooms' hands-on lab work (Union-Based, Authentication Bypass, Boolean-Based
 | 4 | Time-Based (Blind) | `THM{SQL_INJECTION_MASTER}` |
 
 
-## Cheat Sheet — Common SQLi Payloads
+## Cheat Sheet: Common SQLi Payloads
 
 | Purpose | Payload | Notes |
 |---|---|---|
