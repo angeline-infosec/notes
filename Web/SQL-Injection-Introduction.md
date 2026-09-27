@@ -119,8 +119,6 @@ graph TD
 - Acronym for the software that controls a database? **DBMS**
 - Name of the grid-like structure that holds the data? **table**
 
----
-
 ## What is SQL Injection?
 
 **Definition**: SQL injection is a web security vulnerability where an attacker inserts malicious SQL commands into input fields such as the search bar or login box to trick the application into running unintended database queries.
@@ -138,7 +136,7 @@ graph TD
     C --> D[4. App responds optional<br/>Result sent back to the user based on what the database did]
 ```
 
-The vulnerability lives specifically at step 2 — the moment raw user input becomes part of the actual SQL command, rather than being treated purely as data.
+The vulnerability lives specifically at step 2. The moment raw user input becomes part of the actual SQL command, rather than being treated purely as data.
 
 ### Example SQL injection queries
 | Injected input | Effect |
@@ -162,8 +160,8 @@ SELECT * FROM articles WHERE id = 1 OR 1=1-- AND public = 1;
 
 | Type | Definition | How feedback is received |
 |---|---|---|
-| **In-Band** | Results of the injection are returned directly in the application's response — the same channel used to attack is used to read results | Direct and immediate |
-| **Blind** | The application shows no query results or error messages; success must be inferred from indirect signals | Indirect — behavior change, true/false, or response timing |
+| **In-Band** | Results of the injection are returned directly in the application's response (webpage). The same channel used to attack is used to read results | Direct and immediate |
+| **Blind** | The application shows no query results or error messages; success must be inferred from indirect signals | Indirect: behavior change, true/false, or response timing |
 | **Out-of-Band** | The attacker forces the database server to make an *external* network request (e.g. DNS/HTTP) that carries data out through a completely separate channel | Delivered via a different channel entirely (used when neither of the above works) |
 
 **Subtypes:**
@@ -185,11 +183,11 @@ graph TD
 ```
 
 ### Detecting SQL Injection
-Test every input that touches the database — URL parameters, form fields, cookies, HTTP headers:
-- Inject a single quote `'` — a raw database error suggests unsanitized input.
-- Try `"` — some queries use double quotes instead.
-- Inject `;--` — if behavior changes, comment syntax is being processed.
-- Test `OR 1=1` — if results change, the input sits directly in the query's logic.
+Test every input that touches the database: URL parameters, form fields, cookies, HTTP headers:
+- Inject a single quote `'`: a raw database error suggests unsanitized input.
+- Try `"`: some queries use double quotes instead.
+- Inject `;--`: If behavior changes, comment syntax is being processed.
+- Test `OR 1=1`: If results change, the input sits directly in the query's logic.
 
 If errors are suppressed, fall back to Boolean-based (behavioral difference) or Time-based (response delay) detection.
 
