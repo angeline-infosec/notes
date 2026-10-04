@@ -335,7 +335,7 @@ Something has to be listening for the callback:
 Roughly ordered from strongest to weakest/supplementary:
 
 ### Prepared Statements (Parameterized Queries): *the primary defense*
-**Definition**: a technique where the **SQL query's structure is written and compiled first, with user input passed in *separately* as bound parameters rather than concatenated into the query string**. Because the query structure is fixed before any user input arrives, **the database always distinguishes code from data. User input can never be reinterpreted as SQL syntax, no matter what characters it contains.**
+**Definition**: a technique where the **SQL query's structure is written and compiled first, with user input passed in *separately* as bound parameters rather than concatenated into the query string**. Because the query structure is fixed before any user input arrives, **the database always distinguishes code from data regardless of the input. User input can never be reinterpreted as SQL syntax, no matter what characters it contains.**
 
 Vulnerable (PHP):
 ```php
@@ -354,6 +354,11 @@ The database driver fills in the placeholder (`?` or `%s`) as a literal value, e
 
 ### Input Validation
 **Definition**: **checking and restricting user input against an expected format *before* it ever reaches the database**. Ideally via **allow-listing** (defining exactly what's valid and rejecting everything else) rather than **block-listing** (trying to filter out "bad" characters, which attackers reliably bypass through encoding tricks or unexpected syntax). Example: if a parameter should be a numeric ID, reject anything that isn't purely digits before it's used. Input validation is a useful supplement, never a substitute for prepared statements.
+
+**_Even though parameterized queries are used, the server can still accept the malicious data and place it in the database if the application does not sanitize it. Still, parameterized queries prevent the input from causing SQL injection. Since the application might accept malicious data, all queries must use parameterized queries, and not only for queries directly accepting user input._**
+
+
+Parameterized queries entirely block SQL injection by separating code from data. However, input validation remains crucial as a defense-in-depth practice to ensure data integrity, protect dynamic query elements (like table names), and prevent other vulnerabilities like Cross-Site Scripting (XSS)
 
 ### Escaping User Input
 **Definition**: prefixing SQL's special characters (`' " $ \`) with a backslash so the database engine treats them as literal text rather than syntax: e.g., `'` becomes `\'`. This is an older, weaker, database-engine-specific technique (different engines escape differently), best treated as a last resort for legacy code that can't easily be refactored to use prepared statements.
