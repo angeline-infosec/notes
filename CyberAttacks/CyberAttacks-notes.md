@@ -156,3 +156,280 @@ Solution:
 5. WAF (Web Application Firewall) — an additional layer to catch known injection patterns, though not a substitute for fixing the code itself.
 
 One quick note since your preferences ask for direct feedback: this task (formatting existing knowledge into structured notes) is well within Haiku's range — you don't need Sonnet's reasoning for it, so it'd work fine and save cost.
+
+
+
+
+
+# CyberAttacks Notes
+
+## 2. Cloud Computing Threats
+
+Cloud computing is an on-demand delivery of IT capabilities where infrastructure and applications are provided to subscribers as a metered service over a network. Clients often store sensitive information in the cloud. A flaw in one client's cloud application could let an attacker reach another client's data.
+
+### How Cloud Threats Work
+
+* **Shared Infrastructure:** Many clients run on the same underlying hardware and platform (multi-tenancy).
+* **Shared Responsibility:** The provider secures the platform, but the client is responsible for configuration, access control, and data. Gaps between the two are where attacks happen.
+* **Internet Exposure:** Cloud resources are reachable over the network by design, so a mistake is often visible to the whole internet.
+
+### How Attackers Perform Cloud Attacks
+
+1. **Misconfiguration:** Public storage buckets, open databases, and overly permissive security groups.
+2. **Weak Access Control:** Stolen or leaked credentials, access keys committed to public GitHub repos, accounts without MFA.
+3. **Insecure APIs:** Cloud management APIs with weak authentication or no rate limiting.
+4. **Cross-Tenant Attacks:** Exploiting a flaw in a shared component to move from one client's environment into another's.
+
+### The Risks
+
+* Data breaches and exposure of sensitive customer data
+* Account hijacking and abuse of the victim's cloud resources (for example, crypto mining)
+* Loss of data or service availability
+* Compliance violations
+
+---
+
+## 3. Advanced Persistent Threat (APT)
+
+An Advanced Persistent Threat is a long-term, targeted attack that focuses on stealing information from the victim's machines without the user noticing. APTs mostly target large companies and government networks.
+
+### How APTs Work
+
+* **Slow and Quiet:** APT activity is slow by design, so the effect on computer performance and internet connections is almost unnoticeable.
+* **Vulnerability Driven:** They exploit weaknesses in applications, operating systems, and embedded systems.
+* **Goal:** Stay inside the network for as long as possible and keep collecting data.
+
+### How Attackers Perform APTs
+
+1. **Initial Access:** Spear phishing, exploiting a public-facing application, or compromising a supplier.
+2. **Foothold:** Install a backdoor or remote access tool so they can return at any time.
+3. **Privilege Escalation and Lateral Movement:** Move from machine to machine toward the most valuable systems.
+4. **Data Collection and Exfiltration:** Gather data and send it out in small amounts to avoid detection.
+5. **Persistence:** Hide, clear logs, and keep multiple ways back in.
+
+### The Risks
+
+* Long-term espionage and theft of intellectual property
+* Theft of government or military information
+* Damage that is found months or years after the initial breach
+* Very expensive investigation and recovery
+
+---
+
+## 4. Viruses and Worms
+
+Viruses and worms are the most common networking threats and can infect a network within seconds.
+
+* **Virus:** A self-replicating program that makes a copy of itself by attaching to another program, a computer boot sector, or a document.
+* **Worm:** A malicious program that replicates, executes, and spreads across network connections on its own.
+
+| | Virus | Worm |
+|---|---|---|
+| Needs a host file | Yes | No |
+| Needs user action | Usually (opening the infected file) | No, spreads by itself |
+| Spreads through | Shared files, removable media | Network connections |
+
+### How They Enter a System
+
+* **Viruses:** The attacker shares a malicious file with the victim over the internet or through removable media (USB drives).
+* **Worms:** The victim downloads a malicious file, opens a spam email, or browses a malicious website.
+
+### The Risks
+
+* Files corrupted or deleted
+* Network slowed down or taken offline by the amount of traffic worms create
+* A foothold for installing other malware
+* Fast spread across many machines in seconds
+
+---
+
+## 5. Ransomware
+
+Ransomware is a type of malware that restricts access to a computer system's files and folders and demands an online ransom payment to the malware creator to remove the restrictions.
+
+### How Ransomware Spreads
+
+* Malicious email attachments
+* Infected software applications
+* Infected disks
+* Compromised websites
+
+### How Attackers Perform Ransomware Attacks
+
+1. **Delivery:** The victim opens an attachment or runs an infected program.
+2. **Execution:** The malware runs and starts looking for files and network shares.
+3. **Encryption or Lockout:** Files are encrypted (crypto ransomware) or the whole system is locked (locker ransomware).
+4. **Ransom Note:** A message demands payment, usually in cryptocurrency, in exchange for the decryption key.
+5. **Double Extortion (common now):** Data is stolen before encryption, and the attacker threatens to leak it if the ransom is not paid.
+
+### The Risks
+
+* Loss of access to critical files and systems
+* Business downtime
+* Financial loss, with no guarantee that paying will restore the files
+* Public leak of stolen data
+
+---
+
+## 6. Mobile Threats
+
+Attackers are increasingly targeting mobile devices because smartphones are widely used for both business and personal tasks and usually have fewer security controls than computers.
+
+### How Mobile Threats Work
+
+* **Malicious Apps:** Users download malware (APKs) onto their phones. These can damage other apps and data and send sensitive information to attackers.
+* **Remote Access:** Attackers can access the phone's camera and recording apps to watch user activity and track voice communication, which can help them plan a further attack.
+
+### How Attackers Perform Mobile Attacks
+
+1. **Sideloading APKs:** Users install apps from outside the official store, often fake or modified versions of popular apps.
+2. **Smishing:** Malicious links sent by SMS or messaging apps.
+3. **Excessive Permissions:** An app asks for access to the camera, microphone, contacts, or SMS that it does not need.
+4. **Unsafe Networks:** Public Wi-Fi used to intercept traffic.
+5. **Outdated Software:** Old OS versions with known vulnerabilities.
+
+### The Risks
+
+* Theft of personal and corporate data
+* Spying through the camera and microphone
+* Stolen banking and login details
+* A phone used as an entry point into the company network (BYOD)
+
+---
+
+## 7. Botnet
+
+A botnet is a large network of compromised systems used by attackers to perform denial-of-service attacks.
+
+### How Botnets Work
+
+* **Bots:** Infected devices that follow the attacker's commands, often without the owner knowing.
+* **C2 Server:** A command and control server sends instructions to every bot at once.
+* **Detection Gap:** Antivirus programs may fail to find, or even scan for, spyware and botnets, so tools designed specifically to find and remove them are needed.
+
+### What Bots Are Used For
+
+* **DDoS Attacks:** Thousands of devices flood a target with traffic until it goes offline.
+* **Uploading Viruses:** Spreading more malware to other systems.
+* **Sending Emails:** Spam and phishing emails, sometimes with botnet malware attached.
+* **Stealing Data:** Collecting credentials and other information from infected machines.
+
+### The Risks
+
+* Website and service outages
+* The victim's own device used in attacks on others
+* Stolen data
+* Blacklisted IP addresses and email domains
+
+---
+
+## 8. Insider Threat
+
+An insider threat is an attack launched by someone inside the organization who has authorized access to the network and knows the network architecture.
+
+### Types of Insiders
+
+* **Malicious Insider:** Deliberately steals data or causes damage (for example, a disgruntled employee).
+* **Negligent Insider:** Causes harm by mistake, such as clicking a phishing link or sending data to the wrong person.
+* **Compromised Insider:** An attacker has taken over a legitimate user's account.
+
+### How Insiders Perform Attacks
+
+1. **Abusing Legitimate Access:** They already have credentials, so they do not need to break in.
+2. **Using Network Knowledge:** They know where valuable data is stored and which controls are weak.
+3. **Data Theft:** Copying files to USB drives, personal email, or cloud storage.
+4. **Sabotage:** Deleting data or changing system settings.
+
+### The Risks
+
+* Data theft and leaks
+* Hard to detect because the activity looks like normal work
+* Sabotage of systems
+* Fraud
+
+---
+
+## 9. Phishing
+
+Phishing is the practice of sending an illegitimate email that falsely claims to be from a legitimate site, in order to get a user's personal or account information.
+
+### How Phishing Works
+
+* **Lure:** The email is designed to look like it comes from a trusted source, or it contains a link to a website that looks like the real one.
+* **Delivery Channel:** Malicious links are distributed by email or other communication channels.
+* **Goal:** Collect private information such as account numbers, credit card numbers, and mobile numbers.
+
+### Types of Phishing
+
+1. **Spear Phishing:** Targeted at a specific person or group, using personal details.
+2. **Whaling:** Targeted at senior executives.
+3. **Vishing:** Done over phone calls.
+4. **Smishing:** Done over SMS.
+5. **Clone Phishing:** A real email is copied and resent with a malicious link or attachment.
+
+### Common Warning Signs
+
+* Urgent or threatening language
+* Sender address that does not match the real domain
+* Links that point to a different site than the displayed text
+* Unexpected attachments
+* Requests for passwords or payment details
+
+### The Risks
+
+* Stolen credentials and account takeover
+* Financial fraud
+* Malware infection through attachments or links
+* Often the first step of a larger attack (ransomware, APT)
+
+---
+
+## 10. Web Application Threats
+
+Web application attacks like SQL injection and cross-site scripting make web applications a favorite target for attackers who want to steal credentials, set up a phishing site, or get private information. Many of these attacks come from flawed coding and improper sanitization of input and output data.
+
+### How Web Application Threats Work
+
+* **User Input:** Forms, URL parameters, cookies, and headers all accept data from the user.
+* **Missing Validation:** The application does not check or clean that input properly.
+* **Result:** The application treats attacker input as part of a command or page.
+
+### How Attackers Perform Web Application Attacks
+
+1. **SQL Injection (SQLi):** SQL code is added to an input field so the database returns or changes data it should not (for example, `' OR 1=1 --`).
+2. **Cross-Site Scripting (XSS):** A malicious script is injected into a page and runs in other users' browsers, often to steal session cookies.
+3. **Broken Authentication:** Weak passwords, no lockout, or poor session handling.
+4. **Cross-Site Request Forgery (CSRF):** A logged-in user is tricked into sending an unwanted request.
+
+### The Risks
+
+* Stolen credentials and private data
+* Phishing pages hosted on a compromised site
+* Website defacement or downtime
+* Damage to the performance and security of the website
+
+---
+
+## 11. IoT Threats
+
+IoT devices connected to the internet often have little or no security, which makes them vulnerable to many types of attacks.
+
+### How IoT Threats Work
+
+* **Remote Access Software:** IoT devices run many software applications that are used to access the device remotely.
+* **Hardware Limits:** Because of limited memory and battery, these applications usually lack strong security mechanisms.
+* **Result:** Attackers can reach the device remotely and use it to carry out further attacks.
+
+### How Attackers Perform IoT Attacks
+
+1. **Default Credentials:** Logging in with the factory username and password (for example, admin/admin).
+2. **Unpatched Firmware:** Exploiting known vulnerabilities that were never fixed.
+3. **Open Services:** Telnet, SSH, or web interfaces exposed to the internet.
+4. **Botnet Recruitment:** Infecting devices and adding them to a botnet (the Mirai botnet is a well-known example).
+
+### The Risks
+
+* Devices such as cameras and routers taken over and used for spying
+* Devices added to botnets for DDoS attacks
+* A way into the rest of the network
+* Privacy loss
