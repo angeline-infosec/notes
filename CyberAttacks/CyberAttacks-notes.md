@@ -158,12 +158,7 @@ Solution:
 One quick note since your preferences ask for direct feedback: this task (formatting existing knowledge into structured notes) is well within Haiku's range — you don't need Sonnet's reasoning for it, so it'd work fine and save cost.
 
 
-
-
-
-# CyberAttacks Notes
-
-## 2. Cloud Computing Threats
+## 4. Cloud Computing Threats
 
 Cloud computing is an on-demand delivery of IT capabilities where infrastructure and applications are provided to subscribers as a metered service over a network. Clients often store sensitive information in the cloud. A flaw in one client's cloud application could let an attacker reach another client's data.
 
@@ -187,9 +182,8 @@ Cloud computing is an on-demand delivery of IT capabilities where infrastructure
 * Loss of data or service availability
 * Compliance violations
 
----
 
-## 3. Advanced Persistent Threat (APT)
+## 5. Advanced Persistent Threat (APT)
 
 An Advanced Persistent Threat is a long-term, targeted attack that focuses on stealing information from the victim's machines without the user noticing. APTs mostly target large companies and government networks.
 
@@ -214,9 +208,8 @@ An Advanced Persistent Threat is a long-term, targeted attack that focuses on st
 * Damage that is found months or years after the initial breach
 * Very expensive investigation and recovery
 
----
 
-## 4. Viruses and Worms
+## 6. Viruses and Worms
 
 Viruses and worms are the most common networking threats and can infect a network within seconds.
 
@@ -241,9 +234,8 @@ Viruses and worms are the most common networking threats and can infect a networ
 * A foothold for installing other malware
 * Fast spread across many machines in seconds
 
----
 
-## 5. Ransomware
+## 7. Ransomware
 
 Ransomware is a type of malware that restricts access to a computer system's files and folders and demands an online ransom payment to the malware creator to remove the restrictions.
 
@@ -269,9 +261,8 @@ Ransomware is a type of malware that restricts access to a computer system's fil
 * Financial loss, with no guarantee that paying will restore the files
 * Public leak of stolen data
 
----
 
-## 6. Mobile Threats
+## 8. Mobile Threats
 
 Attackers are increasingly targeting mobile devices because smartphones are widely used for both business and personal tasks and usually have fewer security controls than computers.
 
@@ -295,9 +286,9 @@ Attackers are increasingly targeting mobile devices because smartphones are wide
 * Stolen banking and login details
 * A phone used as an entry point into the company network (BYOD)
 
----
 
-## 7. Botnet
+
+## 9. Botnet
 
 A botnet is a large network of compromised systems used by attackers to perform denial-of-service attacks.
 
@@ -321,9 +312,9 @@ A botnet is a large network of compromised systems used by attackers to perform 
 * Stolen data
 * Blacklisted IP addresses and email domains
 
----
 
-## 8. Insider Threat
+
+## 10. Insider Threat
 
 An insider threat is an attack launched by someone inside the organization who has authorized access to the network and knows the network architecture.
 
@@ -347,9 +338,8 @@ An insider threat is an attack launched by someone inside the organization who h
 * Sabotage of systems
 * Fraud
 
----
 
-## 9. Phishing
+## 11. Phishing
 
 Phishing is the practice of sending an illegitimate email that falsely claims to be from a legitimate site, in order to get a user's personal or account information.
 
@@ -382,9 +372,8 @@ Phishing is the practice of sending an illegitimate email that falsely claims to
 * Malware infection through attachments or links
 * Often the first step of a larger attack (ransomware, APT)
 
----
 
-## 10. Web Application Threats
+## 12. Web Application Threats
 
 Web application attacks like SQL injection and cross-site scripting make web applications a favorite target for attackers who want to steal credentials, set up a phishing site, or get private information. Many of these attacks come from flawed coding and improper sanitization of input and output data.
 
@@ -408,9 +397,8 @@ Web application attacks like SQL injection and cross-site scripting make web app
 * Website defacement or downtime
 * Damage to the performance and security of the website
 
----
 
-## 11. IoT Threats
+## 13. IoT Threats
 
 IoT devices connected to the internet often have little or no security, which makes them vulnerable to many types of attacks.
 
