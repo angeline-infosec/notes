@@ -56,8 +56,6 @@ Capital One, 2019. An attacker used SSRF against a misconfigured web application
 
 **MITRE ATT&CK:** T1190 (Exploit Public-Facing Application), T1552.005 (Cloud Instance Metadata API)
 
----
-
 ## 2. IDOR (Insecure Direct Object Reference)
 
 IDOR happens when an application exposes a direct reference to an object (a record, file, or database key) and doesn't check whether the requesting user is allowed to access that specific object. It falls under Broken Access Control, which is #1 in the OWASP Top 10. In the OWASP API Top 10 it appears as BOLA (Broken Object Level Authorization).
@@ -220,7 +218,6 @@ SQL injection lets an attacker interfere with the database queries an applicatio
 
 **MITRE ATT&CK:** T1190 (Exploit Public-Facing Application)
 
----
 
 ## 4. Cloud Computing Threats
 
@@ -272,7 +269,6 @@ Cloud computing delivers IT resources on demand as a metered service over a netw
 
 **MITRE ATT&CK:** T1078.004 (Valid Accounts: Cloud Accounts), T1530 (Data from Cloud Storage)
 
----
 
 ## 5. Advanced Persistent Threat (APT)
 
@@ -324,7 +320,6 @@ SolarWinds, 2020. Attackers slipped malicious code into a software update for th
 
 **MITRE ATT&CK:** T1566 (Phishing), T1071 (Application Layer Protocol), T1041 (Exfiltration Over C2 Channel)
 
----
 
 ## 6. Viruses and Worms
 
@@ -375,7 +370,6 @@ Viruses and worms are among the most common network threats and can infect a net
 
 **MITRE ATT&CK:** T1210 (Exploitation of Remote Services), T1091 (Replication Through Removable Media)
 
----
 
 ## 7. Ransomware
 
@@ -431,7 +425,6 @@ Many attacks now run as ransomware-as-a-service. Developers rent the malware to 
 
 **MITRE ATT&CK:** T1486 (Data Encrypted for Impact), T1490 (Inhibit System Recovery)
 
----
 
 ## 8. Mobile Threats
 
@@ -483,7 +476,6 @@ Attackers increasingly target mobile devices because phones are used for both wo
 
 **MITRE ATT&CK:** See ATT&CK for Mobile (for example, malicious apps and phishing techniques for Android and iOS).
 
----
 
 ## 9. Botnet
 
@@ -532,7 +524,6 @@ A botnet is a large network of compromised systems controlled by an attacker. It
 
 **MITRE ATT&CK:** T1071 (Application Layer Protocol), T1498 (Network Denial of Service)
 
----
 
 ## 10. Insider Threat
 
@@ -582,7 +573,6 @@ Edward Snowden, 2013. A contractor with legitimate access copied and leaked a la
 
 **MITRE ATT&CK:** T1567 (Exfiltration Over Web Service), T1052.001 (Exfiltration over USB)
 
----
 
 ## 11. Phishing
 
@@ -644,7 +634,6 @@ Twitter, 2020. Attackers phoned employees pretending to be IT support, got crede
 
 **MITRE ATT&CK:** T1566 (Phishing), including T1566.001 (Spearphishing Attachment) and T1566.002 (Spearphishing Link)
 
----
 
 ## 12. Web Application Threats
 
@@ -695,7 +684,6 @@ The Samy worm, 2005. A stored XSS flaw on MySpace let a script spread to over a 
 
 **MITRE ATT&CK:** T1190 (Exploit Public-Facing Application), T1110 (Brute Force)
 
----
 
 ## 13. IoT Threats
 
