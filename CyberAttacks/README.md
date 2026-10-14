@@ -23,10 +23,16 @@ __Not in detail, just what you need to know, really.__
 
 **6. Mobile Threats**
 
-**6. Phishing**
-IoT Threats
-Ransomware
-Insider Threats
-Cloud Computing Threats
-Botnets
-Web Application Threats
+**7. Phishing**
+
+**8. IoT Threats**
+
+**9. Ransomware**
+
+**10. Insider Threats**
+
+**11. Cloud Computing Threats**
+
+**12. Botnets**
+
+**13.Web Application Threats**
