@@ -219,55 +219,54 @@ SQL injection lets an attacker interfere with the database queries an applicatio
 **MITRE ATT&CK:** T1190 (Exploit Public-Facing Application)
 
 
-## 4. Cloud Computing Threats
+## 4. Viruses and Worms
 
-Cloud computing delivers IT resources on demand as a metered service over a network. Clients often store sensitive data there, so a flaw in one client's cloud application can sometimes expose another client's data.
+Viruses and worms are among the most common network threats and can infect a network within seconds.
 
-### How cloud threats work
+- **Virus:** a self-replicating program that copies itself by attaching to another program, a boot sector, or a document.
+- **Worm:** a malicious program that replicates and spreads across network connections on its own.
 
-- **Shared infrastructure (multi-tenancy):** many clients run on the same hardware and platform.
-- **Shared responsibility:** the provider secures the platform, the client secures configuration, access, and data. Attacks happen in the gaps.
-- **Internet exposure:** cloud resources are reachable over the network by design, so one mistake can be visible to everyone.
+| | Virus | Worm |
+|---|---|---|
+| Needs a host file | Yes | No |
+| Needs user action | Usually (opening the infected file) | No, spreads by itself |
+| Spreads through | Shared files, removable media | Network connections |
 
-### How attackers perform cloud attacks
+### How they enter a system
 
-1. **Misconfiguration:** public storage buckets, open databases, security groups open to the whole internet.
-2. **Weak access control:** stolen credentials, access keys committed to public GitHub repos (bots scan for these within minutes), accounts with no MFA.
-3. **Insecure APIs:** management APIs with weak authentication or no rate limiting.
-4. **Cross-tenant attacks:** abusing a flaw in a shared component to move from one client's environment to another.
-5. **SSRF to the metadata service** (see note 1).
+- **Viruses:** the victim opens a malicious file shared over the internet or on removable media like a USB drive.
+- **Worms:** the main route is exploiting a vulnerability in a network service, like SMB. Some also start from a spam email or a malicious download, but the fast spreading comes from the exploit.
 
 ### The risks
 
-- Data breaches of customer data.
-- Account hijacking and abuse of resources (for example, crypto mining on the victim's bill).
-- Loss of data or service availability.
-- Compliance violations.
+- Files corrupted or deleted.
+- Network slowed or taken down by the traffic worms create.
+- A foothold for more malware.
+- Spread to many machines in seconds.
 
 ### Real cases
 
-- Many breaches have come from public S3 buckets, including a 2017 exposure of Verizon customer data held by a partner company.
-- Leaked cloud keys in public repos are a repeat cause of crypto mining abuse.
+- ILOVEYOU, 2000: spread by email and overwrote files.
+- Conficker, 2008: a worm that infected millions of Windows machines.
+- WannaCry, 2017: a worm using the EternalBlue SMB exploit, carrying ransomware.
 
 ### Detection (SOC view)
 
-- **Log sources:** AWS CloudTrail, Azure Activity Log, Google Cloud Audit Logs, plus alerts from GuardDuty or similar.
-- Console login from a new country or an impossible travel pattern.
-- An access key used from a new IP, or used right after being posted publicly.
-- Security group or bucket policy changed to allow `0.0.0.0/0` or public access.
-- Sudden creation of many compute instances (mining) or large data downloads.
-- Root account usage, or MFA being disabled.
+- One host scanning many others, especially on port 445 (SMB).
+- The same unknown file hash showing up on many machines.
+- A sudden spike in internal network traffic.
+- Antivirus or EDR alerts repeating across several hosts.
+- Tier 1 response: isolate the infected host, identify the file or exploit, check for other hosts with the same indicator, escalate.
 
 ### Solution
 
-1. Enforce MFA, especially on admin and root accounts.
-2. Least privilege IAM roles. No long-lived keys where roles will do.
-3. Block public access on storage by default, and scan for it with a CSPM tool.
-4. Never commit keys to repos. Use secret scanning and rotate any key that leaks.
-5. Turn on logging and alerts (CloudTrail, GuardDuty) in every region.
-6. Encrypt data at rest and in transit.
+1. Patch quickly, especially network-facing services (WannaCry hit unpatched systems).
+2. Disable SMBv1 and block port 445 at the network edge.
+3. Keep antivirus and EDR up to date.
+4. Segment the network so a worm can't cross freely.
+5. Email filtering and USB controls.
 
-**MITRE ATT&CK:** T1078.004 (Valid Accounts: Cloud Accounts), T1530 (Data from Cloud Storage)
+**MITRE ATT&CK:** T1210 (Exploitation of Remote Services), T1091 (Replication Through Removable Media)
 
 
 ## 5. Advanced Persistent Threat (APT)
@@ -321,112 +320,7 @@ SolarWinds, 2020. Attackers slipped malicious code into a software update for th
 **MITRE ATT&CK:** T1566 (Phishing), T1071 (Application Layer Protocol), T1041 (Exfiltration Over C2 Channel)
 
 
-## 6. Viruses and Worms
-
-Viruses and worms are among the most common network threats and can infect a network within seconds.
-
-- **Virus:** a self-replicating program that copies itself by attaching to another program, a boot sector, or a document.
-- **Worm:** a malicious program that replicates and spreads across network connections on its own.
-
-| | Virus | Worm |
-|---|---|---|
-| Needs a host file | Yes | No |
-| Needs user action | Usually (opening the infected file) | No, spreads by itself |
-| Spreads through | Shared files, removable media | Network connections |
-
-### How they enter a system
-
-- **Viruses:** the victim opens a malicious file shared over the internet or on removable media like a USB drive.
-- **Worms:** the main route is exploiting a vulnerability in a network service, like SMB. Some also start from a spam email or a malicious download, but the fast spreading comes from the exploit.
-
-### The risks
-
-- Files corrupted or deleted.
-- Network slowed or taken down by the traffic worms create.
-- A foothold for more malware.
-- Spread to many machines in seconds.
-
-### Real cases
-
-- ILOVEYOU, 2000: spread by email and overwrote files.
-- Conficker, 2008: a worm that infected millions of Windows machines.
-- WannaCry, 2017: a worm using the EternalBlue SMB exploit, carrying ransomware.
-
-### Detection (SOC view)
-
-- One host scanning many others, especially on port 445 (SMB).
-- The same unknown file hash showing up on many machines.
-- A sudden spike in internal network traffic.
-- Antivirus or EDR alerts repeating across several hosts.
-- Tier 1 response: isolate the infected host, identify the file or exploit, check for other hosts with the same indicator, escalate.
-
-### Solution
-
-1. Patch quickly, especially network-facing services (WannaCry hit unpatched systems).
-2. Disable SMBv1 and block port 445 at the network edge.
-3. Keep antivirus and EDR up to date.
-4. Segment the network so a worm can't cross freely.
-5. Email filtering and USB controls.
-
-**MITRE ATT&CK:** T1210 (Exploitation of Remote Services), T1091 (Replication Through Removable Media)
-
-
-## 7. Ransomware
-
-Ransomware is malware that restricts access to a computer's files and folders and demands an online ransom payment to the malware creator to remove the restrictions.
-
-### How ransomware spreads
-
-- Malicious email attachments
-- Infected software applications
-- Infected disks
-- Compromised websites
-- Exposed remote access (like RDP) and unpatched systems
-
-### How attackers perform ransomware attacks
-
-1. **Delivery:** the victim opens an attachment or runs an infected program.
-2. **Execution:** the malware runs and starts looking for files and network shares.
-3. **Encryption or lockout:** files are encrypted (crypto ransomware) or the whole system is locked (locker ransomware). Backups and shadow copies are often deleted first.
-4. **Ransom note:** a message demands payment, usually in cryptocurrency, for the decryption key.
-5. **Double extortion:** data is stolen before encryption, and the attacker threatens to leak it if the ransom isn't paid.
-
-Many attacks now run as ransomware-as-a-service. Developers rent the malware to affiliates who carry out the attack and share the profit.
-
-### The risks
-
-- Loss of access to critical files and systems.
-- Business downtime.
-- Financial loss, with no guarantee that paying restores anything.
-- Public leak of stolen data.
-
-### Real cases
-
-- WannaCry, 2017: hit hundreds of thousands of machines, including hospitals.
-- Colonial Pipeline, 2021: a DarkSide attack that shut down a major US fuel pipeline for days.
-
-### Detection (SOC view)
-
-- Many files renamed or given a new extension in a short time.
-- Ransom note files (README or similar) appearing in many folders.
-- `vssadmin delete shadows` or other commands that delete backups and shadow copies.
-- Heavy disk activity from one process, or EDR alerts for encryption behavior.
-- Before encryption: unusual logins, lateral movement, and large outbound data transfers.
-- Tier 1 response: isolate the host immediately and escalate. Don't wait.
-
-### Solution
-
-1. Offline or immutable backups, and test restores.
-2. Patch systems and close exposed RDP.
-3. Email filtering and user training.
-4. EDR with ransomware behavior detection.
-5. Segmentation and least privilege, to limit how far it spreads.
-6. A tested incident response plan.
-
-**MITRE ATT&CK:** T1486 (Data Encrypted for Impact), T1490 (Inhibit System Recovery)
-
-
-## 8. Mobile Threats
+## 6. Mobile Threats
 
 Attackers increasingly target mobile devices because phones are used for both work and personal tasks and often have fewer security controls than computers.
 
@@ -477,104 +371,7 @@ Attackers increasingly target mobile devices because phones are used for both wo
 **MITRE ATT&CK:** See ATT&CK for Mobile (for example, malicious apps and phishing techniques for Android and iOS).
 
 
-## 9. Botnet
-
-A botnet is a large network of compromised systems controlled by an attacker. It is used for things like denial-of-service attacks, spam, and data theft.
-
-### How botnets work
-
-- **Bots:** infected devices that follow the attacker's commands, often without the owner knowing.
-- **C2 server:** a command and control server sends instructions to all the bots at once.
-- **Detection gap:** antivirus alone often misses bots, so EDR and network monitoring are needed to catch them.
-
-### What bots are used for
-
-- **DDoS attacks:** thousands of devices flood a target with traffic until it goes offline. Main types are volumetric (raw bandwidth), protocol (like SYN floods), and application layer (like HTTP floods).
-- **Spreading malware:** pushing more malware to other systems.
-- **Sending email:** spam and phishing, sometimes with botnet malware attached.
-- **Stealing data:** collecting credentials and other info from infected machines.
-
-### The risks
-
-- Website and service outages.
-- The victim's own device used to attack others.
-- Stolen data.
-- Blacklisted IP addresses and email domains.
-
-### Real cases
-
-- Mirai, 2016: infected IoT devices with default passwords and took down large parts of the internet through the Dyn DNS attack.
-- Emotet: a botnet that delivered other malware, including ransomware.
-
-### Detection (SOC view)
-
-- Beaconing to the same IP or domain at regular intervals.
-- DNS lookups for random-looking domains (domain generation algorithms).
-- A workstation sending SMTP traffic when it shouldn't.
-- Spikes in outbound traffic, or traffic to IPs flagged in threat intel feeds as C2.
-- Tier 1 response: isolate the host, check the destination against threat intel, look for other hosts talking to it, escalate.
-
-### Solution
-
-1. EDR and network monitoring, with threat intel feeds on C2 IPs and domains.
-2. DNS filtering and egress filtering.
-3. Patch systems and change default credentials on devices.
-4. Rate limiting and DDoS protection services for your own servers.
-5. Email filtering against the malware that recruits bots.
-
-**MITRE ATT&CK:** T1071 (Application Layer Protocol), T1498 (Network Denial of Service)
-
-
-## 10. Insider Threat
-
-An insider threat is an attack by someone inside the organization who has authorized access to the network and knows how it's set up.
-
-### Types of insiders
-
-- **Malicious insider:** deliberately steals data or causes damage (a disgruntled employee, for example).
-- **Negligent insider:** causes harm by mistake, like clicking a phishing link or emailing data to the wrong person.
-- **Compromised insider:** an outside attacker has taken over a real user's account. This is really account takeover, but it looks like an insider in the logs.
-
-### How insiders perform attacks
-
-1. **Abusing legitimate access:** they already have credentials, so they don't need to break in.
-2. **Using network knowledge:** they know where valuable data lives and which controls are weak.
-3. **Data theft:** copying files to USB drives, personal email, or cloud storage.
-4. **Sabotage:** deleting data or changing system settings.
-
-### The risks
-
-- Data theft and leaks.
-- Hard to detect, because the activity looks like normal work.
-- Sabotage of systems.
-- Fraud.
-
-### Real case
-
-Edward Snowden, 2013. A contractor with legitimate access copied and leaked a large amount of classified data.
-
-### Detection (SOC view)
-
-- DLP alerts for sensitive files going to personal email, USB, or cloud storage.
-- Large or unusual downloads, especially right before a resignation.
-- Access to data outside the person's job role.
-- Off-hours access, or access from unusual locations.
-- Use of removable media on machines where it's normally blocked.
-- Activity after notice of termination or after access should have been removed.
-- Tier 1 role: document and escalate. Insider cases often involve HR and legal, so don't confront the user.
-
-### Solution
-
-1. Least privilege and separation of duties.
-2. DLP and activity monitoring on sensitive data.
-3. Proper offboarding, with access removed on the last day.
-4. Regular access reviews.
-5. Security awareness training and a culture where mistakes get reported.
-
-**MITRE ATT&CK:** T1567 (Exfiltration Over Web Service), T1052.001 (Exfiltration over USB)
-
-
-## 11. Phishing
+## 7. Phishing
 
 Phishing is sending a fake email that claims to be from a legitimate source, in order to get someone's personal or account information.
 
@@ -635,7 +432,257 @@ Twitter, 2020. Attackers phoned employees pretending to be IT support, got crede
 **MITRE ATT&CK:** T1566 (Phishing), including T1566.001 (Spearphishing Attachment) and T1566.002 (Spearphishing Link)
 
 
-## 12. Web Application Threats
+## 8. IoT Threats
+
+IoT devices connected to the internet often have little or no security, so they are open to many types of attack.
+
+### How IoT threats work
+
+- **Remote access software:** IoT devices run software that lets people manage them remotely.
+- **Hardware limits:** because of limited memory and battery, that software usually lacks strong security.
+- **Result:** attackers can reach the device remotely and use it for further attacks.
+
+### How attackers perform IoT attacks
+
+1. **Default credentials:** logging in with factory logins like `admin/admin`.
+2. **Unpatched firmware:** using known vulnerabilities that were never fixed.
+3. **Open services:** Telnet, SSH, or web interfaces exposed to the internet. Attackers find them with search engines like Shodan.
+4. **Botnet recruitment:** infecting devices and adding them to a botnet (see note 12).
+
+### The risks
+
+- Cameras and routers taken over and used for spying.
+- Devices added to botnets for DDoS attacks.
+- A way into the rest of the network.
+- Privacy loss.
+
+### Real case
+
+Mirai, 2016. It scanned the internet for IoT devices (cameras, routers) still using default passwords, infected them, and used them for record-size DDoS attacks.
+
+### Detection (SOC view)
+
+- A camera, printer, or router suddenly talking to new external IPs.
+- Scanning or login attempts on ports 23 and 2323 (Telnet), the ones Mirai-style malware favors.
+- Many failed Telnet or SSH logins from or to an IoT device.
+- A device sending far more traffic than normal.
+- Devices showing up on the network that aren't in the asset inventory.
+
+### Solution
+
+1. Change default credentials on every device.
+2. Keep firmware updated, and replace devices that no longer get updates.
+3. Put IoT devices on a separate VLAN so they can't reach important systems.
+4. Disable services you don't use (Telnet, UPnP) and don't expose devices to the internet.
+5. Keep an asset inventory and monitor IoT traffic.
+
+**MITRE ATT&CK:** T1110 (Brute Force), T1498 (Network Denial of Service). See also ATT&CK for ICS if you work with industrial devices.
+
+
+## 9. Ransomware
+
+Ransomware is malware that restricts access to a computer's files and folders and demands an online ransom payment to the malware creator to remove the restrictions.
+
+### How ransomware spreads
+
+- Malicious email attachments
+- Infected software applications
+- Infected disks
+- Compromised websites
+- Exposed remote access (like RDP) and unpatched systems
+
+### How attackers perform ransomware attacks
+
+1. **Delivery:** the victim opens an attachment or runs an infected program.
+2. **Execution:** the malware runs and starts looking for files and network shares.
+3. **Encryption or lockout:** files are encrypted (crypto ransomware) or the whole system is locked (locker ransomware). Backups and shadow copies are often deleted first.
+4. **Ransom note:** a message demands payment, usually in cryptocurrency, for the decryption key.
+5. **Double extortion:** data is stolen before encryption, and the attacker threatens to leak it if the ransom isn't paid.
+
+Many attacks now run as ransomware-as-a-service. Developers rent the malware to affiliates who carry out the attack and share the profit.
+
+### The risks
+
+- Loss of access to critical files and systems.
+- Business downtime.
+- Financial loss, with no guarantee that paying restores anything.
+- Public leak of stolen data.
+
+### Real cases
+
+- WannaCry, 2017: hit hundreds of thousands of machines, including hospitals.
+- Colonial Pipeline, 2021: a DarkSide attack that shut down a major US fuel pipeline for days.
+
+### Detection (SOC view)
+
+- Many files renamed or given a new extension in a short time.
+- Ransom note files (README or similar) appearing in many folders.
+- `vssadmin delete shadows` or other commands that delete backups and shadow copies.
+- Heavy disk activity from one process, or EDR alerts for encryption behavior.
+- Before encryption: unusual logins, lateral movement, and large outbound data transfers.
+- Tier 1 response: isolate the host immediately and escalate. Don't wait.
+
+### Solution
+
+1. Offline or immutable backups, and test restores.
+2. Patch systems and close exposed RDP.
+3. Email filtering and user training.
+4. EDR with ransomware behavior detection.
+5. Segmentation and least privilege, to limit how far it spreads.
+6. A tested incident response plan.
+
+**MITRE ATT&CK:** T1486 (Data Encrypted for Impact), T1490 (Inhibit System Recovery)
+
+
+## 10. Insider Threat
+
+An insider threat is an attack by someone inside the organization who has authorized access to the network and knows how it's set up.
+
+### Types of insiders
+
+- **Malicious insider:** deliberately steals data or causes damage (a disgruntled employee, for example).
+- **Negligent insider:** causes harm by mistake, like clicking a phishing link or emailing data to the wrong person.
+- **Compromised insider:** an outside attacker has taken over a real user's account. This is really account takeover, but it looks like an insider in the logs.
+
+### How insiders perform attacks
+
+1. **Abusing legitimate access:** they already have credentials, so they don't need to break in.
+2. **Using network knowledge:** they know where valuable data lives and which controls are weak.
+3. **Data theft:** copying files to USB drives, personal email, or cloud storage.
+4. **Sabotage:** deleting data or changing system settings.
+
+### The risks
+
+- Data theft and leaks.
+- Hard to detect, because the activity looks like normal work.
+- Sabotage of systems.
+- Fraud.
+
+### Real case
+
+Edward Snowden, 2013. A contractor with legitimate access copied and leaked a large amount of classified data.
+
+### Detection (SOC view)
+
+- DLP alerts for sensitive files going to personal email, USB, or cloud storage.
+- Large or unusual downloads, especially right before a resignation.
+- Access to data outside the person's job role.
+- Off-hours access, or access from unusual locations.
+- Use of removable media on machines where it's normally blocked.
+- Activity after notice of termination or after access should have been removed.
+- Tier 1 role: document and escalate. Insider cases often involve HR and legal, so don't confront the user.
+
+### Solution
+
+1. Least privilege and separation of duties.
+2. DLP and activity monitoring on sensitive data.
+3. Proper offboarding, with access removed on the last day.
+4. Regular access reviews.
+5. Security awareness training and a culture where mistakes get reported.
+
+**MITRE ATT&CK:** T1567 (Exfiltration Over Web Service), T1052.001 (Exfiltration over USB)
+
+
+## 11. Cloud Computing Threats
+
+Cloud computing delivers IT resources on demand as a metered service over a network. Clients often store sensitive data there, so a flaw in one client's cloud application can sometimes expose another client's data.
+
+### How cloud threats work
+
+- **Shared infrastructure (multi-tenancy):** many clients run on the same hardware and platform.
+- **Shared responsibility:** the provider secures the platform, the client secures configuration, access, and data. Attacks happen in the gaps.
+- **Internet exposure:** cloud resources are reachable over the network by design, so one mistake can be visible to everyone.
+
+### How attackers perform cloud attacks
+
+1. **Misconfiguration:** public storage buckets, open databases, security groups open to the whole internet.
+2. **Weak access control:** stolen credentials, access keys committed to public GitHub repos (bots scan for these within minutes), accounts with no MFA.
+3. **Insecure APIs:** management APIs with weak authentication or no rate limiting.
+4. **Cross-tenant attacks:** abusing a flaw in a shared component to move from one client's environment to another.
+5. **SSRF to the metadata service** (see note 1).
+
+### The risks
+
+- Data breaches of customer data.
+- Account hijacking and abuse of resources (for example, crypto mining on the victim's bill).
+- Loss of data or service availability.
+- Compliance violations.
+
+### Real cases
+
+- Many breaches have come from public S3 buckets, including a 2017 exposure of Verizon customer data held by a partner company.
+- Leaked cloud keys in public repos are a repeat cause of crypto mining abuse.
+
+### Detection (SOC view)
+
+- **Log sources:** AWS CloudTrail, Azure Activity Log, Google Cloud Audit Logs, plus alerts from GuardDuty or similar.
+- Console login from a new country or an impossible travel pattern.
+- An access key used from a new IP, or used right after being posted publicly.
+- Security group or bucket policy changed to allow `0.0.0.0/0` or public access.
+- Sudden creation of many compute instances (mining) or large data downloads.
+- Root account usage, or MFA being disabled.
+
+### Solution
+
+1. Enforce MFA, especially on admin and root accounts.
+2. Least privilege IAM roles. No long-lived keys where roles will do.
+3. Block public access on storage by default, and scan for it with a CSPM tool.
+4. Never commit keys to repos. Use secret scanning and rotate any key that leaks.
+5. Turn on logging and alerts (CloudTrail, GuardDuty) in every region.
+6. Encrypt data at rest and in transit.
+
+**MITRE ATT&CK:** T1078.004 (Valid Accounts: Cloud Accounts), T1530 (Data from Cloud Storage)
+
+
+## 12. Botnet
+
+A botnet is a large network of compromised systems controlled by an attacker. It is used for things like denial-of-service attacks, spam, and data theft.
+
+### How botnets work
+
+- **Bots:** infected devices that follow the attacker's commands, often without the owner knowing.
+- **C2 server:** a command and control server sends instructions to all the bots at once.
+- **Detection gap:** antivirus alone often misses bots, so EDR and network monitoring are needed to catch them.
+
+### What bots are used for
+
+- **DDoS attacks:** thousands of devices flood a target with traffic until it goes offline. Main types are volumetric (raw bandwidth), protocol (like SYN floods), and application layer (like HTTP floods).
+- **Spreading malware:** pushing more malware to other systems.
+- **Sending email:** spam and phishing, sometimes with botnet malware attached.
+- **Stealing data:** collecting credentials and other info from infected machines.
+
+### The risks
+
+- Website and service outages.
+- The victim's own device used to attack others.
+- Stolen data.
+- Blacklisted IP addresses and email domains.
+
+### Real cases
+
+- Mirai, 2016: infected IoT devices with default passwords and took down large parts of the internet through the Dyn DNS attack.
+- Emotet: a botnet that delivered other malware, including ransomware.
+
+### Detection (SOC view)
+
+- Beaconing to the same IP or domain at regular intervals.
+- DNS lookups for random-looking domains (domain generation algorithms).
+- A workstation sending SMTP traffic when it shouldn't.
+- Spikes in outbound traffic, or traffic to IPs flagged in threat intel feeds as C2.
+- Tier 1 response: isolate the host, check the destination against threat intel, look for other hosts talking to it, escalate.
+
+### Solution
+
+1. EDR and network monitoring, with threat intel feeds on C2 IPs and domains.
+2. DNS filtering and egress filtering.
+3. Patch systems and change default credentials on devices.
+4. Rate limiting and DDoS protection services for your own servers.
+5. Email filtering against the malware that recruits bots.
+
+**MITRE ATT&CK:** T1071 (Application Layer Protocol), T1498 (Network Denial of Service)
+
+
+## 13. Web Application Threats
 
 Web apps are a favorite target because attackers can use them to steal credentials, set up phishing sites, or get private information. Many of these attacks come from flawed code and poor handling of input and output data. The OWASP Top 10 is the standard list of the most common ones. SQL injection and IDOR have their own notes (2 and 3), so this note covers the rest.
 
@@ -683,50 +730,3 @@ The Samy worm, 2005. A stored XSS flaw on MySpace let a script spread to over a 
 5. Keep frameworks and libraries updated, and test with the OWASP Top 10 as a checklist.
 
 **MITRE ATT&CK:** T1190 (Exploit Public-Facing Application), T1110 (Brute Force)
-
-
-## 13. IoT Threats
-
-IoT devices connected to the internet often have little or no security, so they are open to many types of attack.
-
-### How IoT threats work
-
-- **Remote access software:** IoT devices run software that lets people manage them remotely.
-- **Hardware limits:** because of limited memory and battery, that software usually lacks strong security.
-- **Result:** attackers can reach the device remotely and use it for further attacks.
-
-### How attackers perform IoT attacks
-
-1. **Default credentials:** logging in with factory logins like `admin/admin`.
-2. **Unpatched firmware:** using known vulnerabilities that were never fixed.
-3. **Open services:** Telnet, SSH, or web interfaces exposed to the internet. Attackers find them with search engines like Shodan.
-4. **Botnet recruitment:** infecting devices and adding them to a botnet (see note 9).
-
-### The risks
-
-- Cameras and routers taken over and used for spying.
-- Devices added to botnets for DDoS attacks.
-- A way into the rest of the network.
-- Privacy loss.
-
-### Real case
-
-Mirai, 2016. It scanned the internet for IoT devices (cameras, routers) still using default passwords, infected them, and used them for record-size DDoS attacks.
-
-### Detection (SOC view)
-
-- A camera, printer, or router suddenly talking to new external IPs.
-- Scanning or login attempts on ports 23 and 2323 (Telnet), the ones Mirai-style malware favors.
-- Many failed Telnet or SSH logins from or to an IoT device.
-- A device sending far more traffic than normal.
-- Devices showing up on the network that aren't in the asset inventory.
-
-### Solution
-
-1. Change default credentials on every device.
-2. Keep firmware updated, and replace devices that no longer get updates.
-3. Put IoT devices on a separate VLAN so they can't reach important systems.
-4. Disable services you don't use (Telnet, UPnP) and don't expose devices to the internet.
-5. Keep an asset inventory and monitor IoT traffic.
-
-**MITRE ATT&CK:** T1110 (Brute Force), T1498 (Network Denial of Service). See also ATT&CK for ICS if you work with industrial devices.
