@@ -23,7 +23,7 @@ __Not in detail, just what you need to know, really.__
 
 **6. Mobile Threats**
 
-Phishing
+**6. Phishing**
 IoT Threats
 Ransomware
 Insider Threats
