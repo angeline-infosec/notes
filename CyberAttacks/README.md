@@ -16,3 +16,17 @@ __Not in detail, just what you need to know, really.__
 **2. IDOR**
 
 **3. SQL Injection (SQLi)**
+
+**4. Viruses and Worms**
+
+**5. APTs**
+
+**6. Mobile Threats**
+
+Phishing
+IoT Threats
+Ransomware
+Insider Threats
+Cloud Computing Threats
+Botnets
+Web Application Threats
