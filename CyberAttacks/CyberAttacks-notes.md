@@ -320,6 +320,8 @@ SolarWinds, 2020. Attackers slipped malicious code into a software update for th
 **MITRE ATT&CK:** T1566 (Phishing), T1071 (Application Layer Protocol), T1041 (Exfiltration Over C2 Channel)
 
 
+**Quick note: APT is a classification applied to a threat actor and how that actor operates, not an attack vector or technique in itself. The three words describe the pattern: advanced (skilled, well-resourced, often custom tooling), persistent (long-term presence, not a smash and grab), and typically targeted and stealthy. An APT group still has to get in and move around using real vectors (spear phishing, exploiting a public-facing app, a supply chain compromise), the label just describes a patient, well-funded group running a long-term operation with those vectors, rather than the vector itself.**
+
 ## 6. Mobile Threats
 
 Attackers increasingly target mobile devices because phones are used for both work and personal tasks and often have fewer security controls than computers.
