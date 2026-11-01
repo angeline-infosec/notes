@@ -383,6 +383,8 @@ Phishing is sending a fake email that claims to be from a legitimate source, in 
 - **Delivery channel:** links are sent by email or other channels.
 - **Goal:** collect private information like account numbers, card numbers, and passwords, or get the user to run malware.
 
+Authority(Security Team, CEO, Admin), urgency(Should take action now), fear(Account Compromised, Suspended, or Banned), and curiosity(Document sent to you, You have a private message, You won this, etc) are the primary psychological triggers weaponized in social engineering and phishing attacks to bypass critical thinking and force immediate action
+
 ### Types of phishing
 
 1. **Spear phishing:** aimed at a specific person or group, using personal details.
