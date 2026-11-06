@@ -1,11 +1,6 @@
 # [AI Models & Data](https://tryhackme.com/room/aimodelsdata) - TryHackMe
 
 
----
-
- # [AI Security Threat](https://tryhackme.com/room/aisecuritythreats) - TryHackMe
-
-
 
 ---
 
