@@ -2,8 +2,6 @@
 
 **Path:** AI Fundamentals, Room 2
 
-**Difficulty:** Beginner
-
 **Focus:** Vulnerabilities AI models introduce, how attackers use AI to enhance existing attacks, how defenders use AI, and how to adopt AI securely
 
 ## Overview
