@@ -60,6 +60,23 @@ A single recall sheet for interviews and SOC work, covering the TryHackMe AI Fun
 | LLM09 | Misinformation | False content generated |
 | LLM10 | Unbounded Consumption | Resource exhaustion or runaway cost |
 
+**LLM attack surface by category (LLM Security room cheat sheet)**
+
+| Category | Threat | What it targets | Result |
+|---|---|---|---|
+| Data-based | Training data extraction | Training dataset | Memorised text, PII or secrets reproduced |
+| Data-based | Membership inference | Whether a sample was in the training data | A yes/no (or probability) answer |
+| Data-based | System prompt leakage (LLM07) | Developer instructions | Hidden prompt disclosed |
+| Model-based | Weight extraction (model stealing) | Model parameters | A surrogate model built from many API queries |
+| Model-based | Model inversion | Internal representations | Training data or attributes reconstructed |
+| System-based | Context window poisoning (prompt injection) | Context window and instruction hierarchy | Altered behaviour, policy bypass, unintended actions |
+| System-based | Context overflow (LLM10) | Context size and resources | Truncated safeguards, degraded service or denial of service |
+| System-based | Memory poisoning | Persistent conversation memory | Corrupted or misleading future responses |
+| User-based | LLM-powered social engineering | Human decision-making | Phishing, fraud and coerced actions |
+| User-based | Trust exploitation (LLM09) | User trust | False or unsafe information accepted |
+
+The pattern to remember is that LLMs process every input as one context, so the attack surface covers the data they learned from, the model itself, the system around it and the people using it.
+
 **The AI data and model supply chain**
 
 - **Provenance:** being able to say where data came from, when it was collected and whether it was modified. Most AI supply chains cannot. The AI equivalent of an SBOM is the **ML-BOM**.
@@ -156,4 +173,5 @@ In a SOC, ATT&CK is mostly a shared language: tag alerts with technique IDs, che
 - MITRE ATT&CK (attack.mitre.org) and NIST AI 100-4 (nist.gov) are **primary** sources I checked. The C2PA specification (spec.c2pa.org) is also primary.
 - OWASP Top 10 for LLM Applications (genai.owasp.org) is the primary site. The category names follow the 2025 list as given in the TryHackMe room and a secondary summary, so check the official PDF before quoting wording. The official site still presents the 2025 list as current, but a search result mentioned a 2026 resource, so check for a newer edition.
 - The 16-tactic count for ATLAS comes from secondary sources, and the NIST AI RMF functions, ISO/IEC 27090, the IBM figures and the Truffle Security figures are as the TryHackMe rooms present them. Truffle's own post matches the numbers above.
+- The LLM attack surface table is as the TryHackMe LLM Security room presents it, and I have not checked it against primary sources.
 - Tool names are as the rooms list them, and vendor features change.
