@@ -35,6 +35,19 @@ A single recall sheet for interviews and SOC work, covering the TryHackMe AI Fun
 
 ## 3. Threats to AI systems
 
+**AI assets to protect**
+
+Training data is the raw material the model learns from (text, images, logs), not a database of facts that the model looks up. Model weights are the numbers that encode the patterns it learned from that data, and they are the model itself.
+
+| Asset | What it is | Why it matters |
+|---|---|---|
+| Training data | The datasets used to teach the model its behaviour | Poisoning it corrupts the model at the source, and the damage is baked into the model |
+| Model weights / parameters | The numerical values that define what the model has learned | Stealing them gives an attacker a working copy of the model |
+| Embedding vectors | Numerical representations of text or data, used for similarity search, retrieval (RAG) and as inputs to other models | Poisoning or manipulating them changes what information the model sees at query time |
+| System prompts | Instructions that define the model's behaviour, constraints and persona | Leaking them reveals security controls, business logic and guardrails, which gives attackers a roadmap |
+| Feature stores | Preprocessed data repositories that feed real-time model inputs | Tampering changes what the model sees at inference time without touching the model |
+| Model registry / artifacts | A versioned store of trained models ready for deployment | A compromised registry lets an attacker swap a legitimate model for a backdoored one (this is unrelated to the Windows Registry) |
+
 **The five model vulnerabilities**
 
 | Vulnerability | Meaning | Impact |
@@ -105,9 +118,58 @@ The pattern to remember is that LLMs process every input as one context, so the 
 | NIST AI 100-4 | How are AI-generated content provenance, watermarking and detection approached? |
 | ISO/IEC 27090 | Guidance on security threats specific to AI systems (named in the room) |
 
+**ATT&CK vs ATLAS**
+
+| | MITRE ATT&CK | MITRE ATLAS |
+|---|---|---|
+| Covers | Attacks on conventional IT (endpoints, networks, cloud) | Attacks on AI and ML systems (training data, models, inference APIs, LLM applications) |
+| Structure | Tactics (why), techniques (how), sub-techniques, mitigations | The same structure, plus case studies of real AI attacks |
+| Size | Enterprise matrix v20: 15 tactics | 16 tactics, 155 techniques, 35 mitigations, 52 case studies (room, early 2026, and the counts keep growing) |
+| AI-specific tactics | None | For example AI Model Access and AI Attack Staging |
+| Example techniques | Phishing, Valid Accounts, Command and Scripting Interpreter | LLM Prompt Injection, Training Data Poisoning, Extract AI Model, Evade AI Model |
+| Overlap | | Reuses some ATT&CK techniques (such as Phishing and Valid Accounts) and adds AI-specific ones |
+| Use it for | Tagging alerts, planning hunts and checking detection coverage for conventional intrusions | Threat modelling AI systems and describing incidents that involve them |
+
+They are complementary, with the same structure applied to a different domain. An incident involving an AI system often maps to both.
+
 In a SOC, ATT&CK is mostly a shared language: tag alerts with technique IDs, check detection coverage, plan hunts and describe incidents consistently. An incident involving an AI system can be described in both ATLAS and ATT&CK.
 
-## 6. AI used by defenders
+## 6. Threat modelling AI systems (STRIDE, ATLAS, OWASP)
+
+The three work as zoom levels. STRIDE-AI gives the wide view of what could go wrong, ATLAS gives the technical detail of how an attacker would do it, and the OWASP LLM Top 10 shows where each risk lives in the architecture and how critical it is. In practice: break the system into components, walk each one through the six STRIDE categories, look up the matching ATLAS technique, map the OWASP risk to the component, then apply mitigations. See the general STRIDE note for the basics.
+
+| STRIDE | Primary AI manifestation | Other AI threats | Example |
+|---|---|---|---|
+| Spoofing | Data source impersonation (RAG injection) | Model impersonation, adversarial identity attacks | Fake policy documents injected into a chatbot's knowledge base |
+| Tampering | Data poisoning | Model manipulation, prompt injection, feature tampering | Crafted transactions shift a fraud model's decision boundary |
+| Repudiation | No audit trail for model decisions | Context volatility, model version ambiguity | Cannot explain why the fraud model approved a suspicious transaction |
+| Information disclosure | Model extraction (stealing) | Training data extraction, prompt leakage, embedding inversion | A competitor rebuilds a recommendation engine through API queries |
+| Denial of service | Inference cost exploitation (denial of wallet) | GPU exhaustion, sponge examples, pipeline disruption | Expensive prompts push the cloud bill up 12 times while the service stays up |
+| Elevation of privilege | Jailbreaking and guardrail bypass | Excessive agency, tool exploitation, cross-plugin escalation | A jailbroken chatbot uses its database tools to pull customer PII |
+
+Prompt injection's STRIDE category depends on context: it is Tampering when the attacker alters the model's input, and Elevation of Privilege when the goal is bypassing guardrails. STRIDE also misses adversarial examples, model bias and emergent behaviour, which is why ATLAS is added.
+
+**Key ATLAS techniques and their STRIDE category**
+
+| Technique | ID | STRIDE |
+|---|---|---|
+| Training Data Poisoning | AML.T0020 | Tampering |
+| Extract AI Model (model stealing) | AML.T0024.002 | Information disclosure |
+| Infer Training Data Membership | AML.T0024.000 | Information disclosure |
+| Evade AI Model (adversarial inputs) | AML.T0015 | Tampering, Spoofing or Elevation of Privilege |
+| LLM Prompt Injection (direct .000, indirect .001) | AML.T0051 | Tampering |
+| Backdoor ML Model (hidden trigger planted in training) | AML.T0018 | Tampering |
+
+Two case studies to know: ShadowRay (AML.CS0023), where attackers exploited the Ray framework used for distributed AI workloads, showing that AI supply chain attacks happen in production, and the Morris II worm (AML.CS0024), a self-replicating prompt injection that spread between AI agents through RAG-based email systems.
+
+**Where the OWASP risks live (read it in both directions)**
+
+- The LLM inference endpoint carries the most risk, appearing in seven of the ten entries (LLM01, 02, 05, 06, 07, 09 and 10), so it needs the most hardening.
+- The vector database and RAG pipeline carry indirect prompt injection (LLM01), embedding weaknesses (LLM08) and misinformation from stale sources (LLM09). Harden them with input validation on indexed content, access control and freshness monitoring.
+- The training pipeline carries sensitive data entering training (LLM02), supply chain (LLM03) and poisoning (LLM04).
+- Going from component to risk is the useful direction: when a new component is added, look up which OWASP entries it inherits.
+
+## 7. AI used by defenders
 
 **Where it shows up (SIEM, EDR, email security, DFIR)**
 
@@ -128,7 +190,7 @@ In a SOC, ATT&CK is mostly a shared language: tag alerts with technique IDs, che
 
 **Lessons from the Digital Trail lab:** the ML scripts surfaced three log lines and nine files quickly and caught a disguised reverse shell, but they flagged legitimate source code as suspicious, never looked in the home directory where the phishing document lived, and explained none of their flags. A human followed the leads, built the timeline and separated true from false positives.
 
-## 7. Legal and ethical points (DFIR)
+## 8. Legal and ethical points (DFIR)
 
 - **Explainability:** black-box output can fail admissibility standards such as Daubert if nobody can explain why something was flagged.
 - **Bias:** models reproduce skew in their training data, and facial recognition has produced wrongful arrests, so tools need validation.
@@ -137,7 +199,7 @@ In a SOC, ATT&CK is mostly a shared language: tag alerts with technique IDs, che
 
 **Identifying AI-generated media:** no single test works. NIST groups approaches into provenance (such as C2PA Content Credentials, a signed record that shows whether a file changed and who signed it, but not whether the content is true), watermarking, and detection (classifiers such as ELA plus CNN). Detectors are probabilistic and chase new generators, so conclusions should rest on several methods together.
 
-## 8. Securing and adopting AI safely
+## 9. Securing and adopting AI safely
 
 - Least privilege for every AI component, read-only by default, with RBAC and MFA on who can interact with it.
 - Human approval before any write, delete or deployment action.
@@ -149,7 +211,7 @@ In a SOC, ATT&CK is mostly a shared language: tag alerts with technique IDs, che
 - Monitor deployed models for drift and odd outputs, and use explainability tools such as SHAP and LIME.
 - Vet third-party models: model card, provenance, licence, base version, and documentation of any compression.
 
-## 9. What a Tier 1 analyst should remember
+## 10. What a Tier 1 analyst should remember
 
 - AI output is a lead, not a verdict. Verify it against the evidence.
 - A model only looks where it was pointed, and it can say something is unusual without saying why.
@@ -157,13 +219,14 @@ In a SOC, ATT&CK is mostly a shared language: tag alerts with technique IDs, che
 - Fluent phishing, voice and video impersonation are cheap now, so rely on domain checks, out-of-band verification and behaviour.
 - Document what is proven versus inferred, and note any AI-assisted step.
 
-## 10. Likely interview questions
+## 11. Likely interview questions
 
 - **How is AI changing the threat landscape?** Attackers get fluent phishing, deepfakes and faster malware, and organisations add attack surface through AI systems themselves.
 - **What is prompt injection?** Input that makes a model ignore its instructions. It works because the model sees system and user text as one stream.
 - **How would you triage an AI-generated alert?** Treat it as a lead, check the underlying logs, look at precision and false positives, and document the reasoning.
 - **What is model drift and why is it a security issue?** Accuracy falls as the data changes, so detections quietly stop catching new attacks.
-- **ATT&CK vs ATLAS?** ATT&CK covers conventional intrusions and ATLAS covers attacks on AI systems.
+- **ATT&CK vs ATLAS?** ATT&CK covers conventional intrusions and ATLAS covers attacks on AI systems. They share the same tactic and technique structure and are used together.
+- **How would you threat model an AI system?** Break it into components, walk each through STRIDE, enrich the findings with ATLAS techniques, map OWASP LLM risks to the components, then apply mitigations.
 - **Why might AI evidence be rejected in court?** It may be unexplainable, biased, undocumented in the chain of custody, or privacy-violating.
 - **Precision vs recall?** Precision is how many flags were right, and recall is how many real threats were found. You need both.
 - **What is the inheritance problem?** Fine-tuned models carry the base model's data, biases and weaknesses.
@@ -174,4 +237,6 @@ In a SOC, ATT&CK is mostly a shared language: tag alerts with technique IDs, che
 - OWASP Top 10 for LLM Applications (genai.owasp.org) is the primary site. The category names follow the 2025 list as given in the TryHackMe room and a secondary summary, so check the official PDF before quoting wording. The official site still presents the 2025 list as current, but a search result mentioned a 2026 resource, so check for a newer edition.
 - The 16-tactic count for ATLAS comes from secondary sources, and the NIST AI RMF functions, ISO/IEC 27090, the IBM figures and the Truffle Security figures are as the TryHackMe rooms present them. Truffle's own post matches the numbers above.
 - The LLM attack surface table is as the TryHackMe LLM Security room presents it, and I have not checked it against primary sources.
+- ATLAS IDs: I confirmed Extract AI Model as AML.T0024.002 on MITRE's D3FEND site (primary). The other IDs (T0024.000, T0015, T0020, T0051) match secondary sources, and T0018 is as the room states it, so check atlas.mitre.org. The room labels model extraction as AML.T0024 and membership inference as AML.T0025, but current ATLAS lists both as sub-techniques of AML.T0024.
+- The STRIDE-AI table, the ATLAS counts and the case studies are as the TryHackMe AI Threat Modelling room presents them.
 - Tool names are as the rooms list them, and vendor features change.
