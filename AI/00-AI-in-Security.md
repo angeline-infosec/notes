@@ -136,7 +136,11 @@ In a SOC, ATT&CK is mostly a shared language: tag alerts with technique IDs, che
 
 ## 6. Threat modelling AI systems (STRIDE, ATLAS, OWASP)
 
-The three work as zoom levels. STRIDE-AI gives the wide view of what could go wrong, ATLAS gives the technical detail of how an attacker would do it, and the OWASP LLM Top 10 shows where each risk lives in the architecture and how critical it is. In practice: break the system into components, walk each one through the six STRIDE categories, look up the matching ATLAS technique, map the OWASP risk to the component, then apply mitigations. See the general STRIDE note for the basics.
+STRIDE is a widely used threat modelling framework created by Microsoft.
+
+The three work as zoom levels. STRIDE-AI gives the wide view of what could go wrong, ATLAS gives the technical detail of how an attacker would do it, and the OWASP LLM Top 10 shows where each risk lives in the architecture and how critical it is. 
+
+In practice: break the system into components, walk each one through the six STRIDE categories, look up the matching ATLAS technique, map the OWASP risk to the component, then apply mitigations. See the general STRIDE note for the basics.
 
 | STRIDE | Primary AI manifestation | Other AI threats | Example |
 |---|---|---|---|
