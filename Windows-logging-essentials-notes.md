@@ -148,6 +148,13 @@ The Status field gives the reason a logon failed. SubStatus gives more detail. M
 
 Source for this section: Microsoft's Sysmon page (**MS**). Sysmon writes to `Applications and Services Logs/Microsoft/Windows/Sysmon/Operational`.
 
+Registry background (hives, Run keys, Sysmon 12/13/14): see [Windows-Registry.md](https://github.com/angeline-infosec/notes/blob/main/Windows/Windows-Registry.md)
+
+(For Instance, the Windows Registry is a vault of settings, and Sysmon is the security camera watching it.
+• Windows Registry: A massive database storing system settings and startup programs. Malware loves to sneak in here so it can automatically run every time the computer boots up.
+• Sysmon: A security tool that constantly watches the Registry. The moment a program tries to add, change, or delete a setting, Sysmon catches it and logs the activity.
+ie, the Registry is what hackers try to tamper with, and Sysmon is the alarm system that alerts security teams when it happens.)
+
 ### The full list
 
 | ID | Event | What it records |
