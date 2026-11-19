@@ -44,3 +44,23 @@ __Not in detail, just what you need to know, really.__
 
 ---
 
+
+**1. Virus**
+
+**2. Worms**
+
+**3. Spyware**
+
+**4. Adware**
+
+**5. Ransomware**
+
+**6. Trojan Horse**
+
+**7. Keylogger**
+
+**8. Logic Bomb**
+
+**9. Rootkit**
+
+**10. Backdoor** 
