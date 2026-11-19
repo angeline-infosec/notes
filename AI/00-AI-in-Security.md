@@ -234,6 +234,30 @@ Two case studies to know: ShadowRay (AML.CS0023), where attackers exploited the 
 - **Why might AI evidence be rejected in court?** It may be unexplainable, biased, undocumented in the chain of custody, or privacy-violating.
 - **Precision vs recall?** Precision is how many flags were right, and recall is how many real threats were found. You need both.
 - **What is the inheritance problem?** Fine-tuned models carry the base model's data, biases and weaknesses.
+- Q: Tell me about a time an AI tool gave you a wrong technical explanation, and how you caught it.
+  ANS:  I was going through a TryHackMe room where an AI assistant reviews code for security issues. It looked at this PHP code:
+$user = $_POST['username'] ?? '';
+$pass = $_POST['password'] ?? '';
+
+It said the ?? symbol was the cause of a SQL injection problem. That's wrong. ?? just means "use this value, or use an empty string if it's missing." It has nothing to do with security. I noticed because I already knew what ?? does, so the explanation didn't add up.
+The actual problem was somewhere else in the code: user input was being put straight into a SQL query with no safety check. And the same AI even said, a few lines later, that the fix was to use a safer way of building SQL queries, which is the right answer. So it gave the right fix while blaming the wrong line of code.
+
+OR
+
+An AI code reviewer blamed a basic PHP operator for a SQL injection bug, when that operator has nothing to do with security. The real bug was unescaped input going into a SQL query. I caught it because I knew what the operator actually does, and it's a good reminder to check AI's reasoning against the actual code."
+
+## 12. Case example: an AI assistant across red, blue and software tasks
+
+From the TryHackMe room "AI in Security - old sAInt nick" (Advent of Cyber 2026). A fictional company's assistant, Van SolveIT, walked through the same SQL injection across three roles: writing an exploit, analysing the resulting log, and reviewing the vulnerable code. Running it myself gave two concrete examples of the "verify, don't trust" point in section 10.
+
+**What worked.** The red team stage produced a working Python script against `login.php` using the classic `' OR 1=1 -- -` payload, and it returned `FLAG: THM{SQLI_EXPLOIT}` when run. This is the uplift side: generating a correct exploit for a known vulnerability class is a fast, mechanical task, and the model did it correctly.
+
+**Where it went wrong.** The other two stages both show an AI assistant explaining itself incorrectly, which is useful because the errors are concrete and easy to point to.
+
+- *Software stage:* the assistant reviewed `$user = $_POST['username'] ?? '';` and called the `??` operator the cause of the SQL injection vulnerability, saying it "is not a strong method for escaping." That is wrong. `??` is PHP's null coalescing operator; it only supplies a default value when the variable is unset, and has nothing to do with sanitisation. The real vulnerability is that the username and password are later concatenated into a SQL query instead of being passed through a parameterised query or prepared statement. The assistant's own "best practices" answer even said to use prepared statements, which contradicts its own diagnosis one paragraph earlier.
+- *Blue team stage:* the log line was `"username=alice%27+OR+1%3D1+--+-&password=test"`. The injected payload is in the `username` field. The assistant's analysis read: "The password parameter contains `username=alice%27+OR+1%3D1+--+-&password=test`," which misattributes the whole query string to the wrong field. A few lines earlier, in the red team stage, the same assistant had correctly said the injection was in the username field, so it contradicted itself across stages.
+
+**The takeaway.** Both errors would be easy to miss if you were reading quickly or trusting the explanation rather than the evidence. A Tier 1 analyst reading an AI-prepared summary needs to check the claim against the actual log line or code, the same discipline covered in section 10 and in the AI in the Modern SOC case note. Fluent, confident-sounding prose is not a sign the reasoning is correct.
 
 ## Sources and verification notes
 
@@ -244,3 +268,4 @@ Two case studies to know: ShadowRay (AML.CS0023), where attackers exploited the 
 - ATLAS IDs: I confirmed Extract AI Model as AML.T0024.002 on MITRE's D3FEND site (primary). The other IDs (T0024.000, T0015, T0020, T0051) match secondary sources, and T0018 is as the room states it, so check atlas.mitre.org. The room labels model extraction as AML.T0024 and membership inference as AML.T0025, but current ATLAS lists both as sub-techniques of AML.T0024.
 - The STRIDE-AI table, the ATLAS counts and the case studies are as the TryHackMe AI Threat Modelling room presents them.
 - Tool names are as the rooms list them, and vendor features change.
+-  The worked example in section 12 is from running the TryHackMe room myself (primary, firsthand observation), not a claim I am citing from elsewhere.
