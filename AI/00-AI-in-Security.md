@@ -235,6 +235,7 @@ Two case studies to know: ShadowRay (AML.CS0023), where attackers exploited the 
 - **Precision vs recall?** Precision is how many flags were right, and recall is how many real threats were found. You need both.
 - **What is the inheritance problem?** Fine-tuned models carry the base model's data, biases and weaknesses.
 - Q: Tell me about a time an AI tool gave you a wrong technical explanation, and how you caught it.
+
   ANS:  I was going through a TryHackMe room where an AI assistant reviews code for security issues. It looked at this PHP code:
 $user = $_POST['username'] ?? '';
 $pass = $_POST['password'] ?? '';
