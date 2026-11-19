@@ -36,3 +36,11 @@ __Not in detail, just what you need to know, really.__
 **12. Botnets**
 
 **13.Web Application Threats**
+
+
+---
+
+[Malware Notes](https://github.com/angeline-infosec/notes/blob/main/CyberAttacks/Malware.md)
+
+---
+
