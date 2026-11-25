@@ -1,4 +1,3 @@
-
 # OWASP Top 10:2025
 
 The OWASP Top 10 is an awareness document listing ten broad classes of web application risk. It is a ranking of categories, not a checklist of individual bugs. Each category groups many related weaknesses (CWEs), so the useful skill is recognizing an attack pattern and knowing which category it belongs to.
