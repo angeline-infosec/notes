@@ -1,10 +1,9 @@
-# OWASP Top 10:2025
+# OWASP Top 10 (2025)
 
-The OWASP Top 10 is an awareness document listing ten broad classes of web application risk. It is a ranking of categories, not a checklist of individual bugs. Each category groups many related weaknesses (CWEs), so the useful skill is recognizing an attack pattern and knowing which category it belongs to.
+The OWASP Top 10 is the standard list of the most common types of web application security threats.
 
-Source: [OWASP Top 10:2025](https://owasp.org/Top10/2025/) (official OWASP project page)
+It is a ranking of categories, not a checklist of individual bugs. Each category groups many related weaknesses (CWEs), so the useful skill is recognizing an attack pattern and knowing which category it belongs to.
 
-> Some articles label this list "2026". The official OWASP release is the 2025 edition.
 
 ## The list
 
@@ -21,6 +20,12 @@ Source: [OWASP Top 10:2025](https://owasp.org/Top10/2025/) (official OWASP proje
 | A09 | Security Logging and Alerting Failures | Attacks go unseen because logging or alerting is weak |
 | A10 | Mishandling of Exceptional Conditions | The app handles errors and unusual states badly (new in 2025) |
 
+### Quick Note: 
+
+**Access control** is the security mechanism that determines who or what can view, use, or interact with specific data, systems, or network resources, while **least privilege** is a security principle that restricts users, apps, and processes to only the minimum permissions required to perform a specific task. Rather than competing concepts, least privilege is a guiding rule applied within access control systems.
+
+**How Access Control Works** is that it needs **Identification** (needs to identify the person), **Authentication** (verifying the identity), **Authorization** (Deciding what actions the verified user/system is allowed to do), and **Auditing** ( Logging and reviewing access events to maintain accountability and enforce least privilege)
+
 ## Examples per category
 
 - **A01 Broken Access Control:** changing an ID in a request to see another user's data, reaching admin pages without being an admin.
@@ -36,7 +41,7 @@ Source: [OWASP Top 10:2025](https://owasp.org/Top10/2025/) (official OWASP proje
 
 ## What it looks like in logs
 
-These four are the ones a Tier 1 analyst is most likely to meet. Each point is tagged with where it comes from. Exact field names and log formats depend on the log source, so treat these as patterns to look for, not ready-made queries.
+These four are the ones a Tier 1 analyst is most likely to meet. Each point is tagged with its source. Exact field names and log formats depend on the log source, so these are patterns to look for and not ready-made queries.
 
 ### A05 Injection
 
@@ -79,4 +84,4 @@ This one is about gaps in your own visibility, so the signs are often things tha
 - [A01, A05, A07, A09 and A10 category pages](https://top10.owasp.org/2025/)
 - [MITRE ATT&CK T1190 Exploit Public-Facing Application](https://attack.mitre.org/techniques/T1190/)
 - [MITRE ATT&CK T1110 Brute Force](https://attack.mitre.org/techniques/T1110)
-- [MITRE DET0080 detection strategy](https://attack.mitre.org/detectionstrategies/DET0080
+- [MITRE DET0080 detection strategy](https://attack.mitre.org/detectionstrategies/DET0080)
